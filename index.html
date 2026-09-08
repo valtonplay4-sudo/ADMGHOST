@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADM | Anúncio Fantasma</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
+    body { 
+      background: #030712; 
+      color: #f8fafc; 
+      padding: 20px; 
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ==================== HEADER ==================== */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .header h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header h2 span {
+      background: rgba(99, 102, 241, 0.2);
+      color: #6366f1;
+      font-size: 0.7rem;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* ==================== ESTATÍSTICAS ==================== */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 14px 18px;
+    }
+
+    .stat-card .number {
+      font-size: 1.6rem;
+      font-weight: 800;
+    }
+
+    .stat-card .label {
+      font-size: 0.65rem;
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-card.total .number { color: #6366f1; }
+    .stat-card.active .number { color: #10b981; }
+    .stat-card.pending .number { color: #f59e0b; }
+    .stat-card.expired .number { color: #ef4444; }
+
+    /* ==================== BARRA DE PESQUISA ==================== */
+    .search-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar input {
+      flex: 1;
+      min-width: 200px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 10px 16px;
+      color: #fff;
+      font-size: 0.85rem;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    .search-bar input:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    }
+
+    .search-bar input::placeholder {
+      color: #64748b;
+    }
+
+    .search-bar .filter-btns {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: #94a3b8;
+      font-size: 0.7rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .filter-btn:hover {
+      background: rgba(99, 102, 241, 0.15);
+      color: #fff;
+    }
+
+    .filter-btn.active {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: #6366f1;
+      color: #38bdf8;
+    }
+
+    /* ==================== TABELA ==================== */
+    .table-wrapper {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      overflow: hidden;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+      min-width: 600px;
+    }
+
+    thead {
+      background: rgba(3, 7, 18, 0.6);
+    }
+
+    th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      font-size: 0.6rem;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: rgba(99, 102, 241, 0.04);
+    }
+
+    .domain-cell {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .user-cell {
+      color: #e2e8f0;
+    }
+
+    .plan-cell {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 10px;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+
+    .plan-free {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+    }
+
+    .plan-daily {
+      background: rgba(99, 102, 241, 0.15);
+      color: #6366f1;
+    }
+
+    .plan-weekly {
+      background: rgba(56, 189, 248, 0.15);
+      color: #38bdf8;
+    }
+
+    .plan-monthly {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.6rem;
+      font-weight: 700;
+    }
+
+    .status-active {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+    }
+
+    .status-pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+    }
+
+    .status-expired {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+    }
+
+    /* ==================== BOTÕES ==================== */
+    .btn {
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.65rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-approve {
+      background: #10b981;
+      color: #000;
+    }
+    .btn-approve:hover {
+      background: #059669;
+      transform: scale(1.02);
+    }
+
+    .btn-delete {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+    .btn-delete:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .btn-danger-big {
+      background: rgba(239, 68, 68, 0.15);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+      padding: 8px 16px;
+      font-size: 0.7rem;
+    }
+    .btn-danger-big:hover {
+      background: #ef4444;
+      color: #fff;
+    }
+
+    .btn-refresh {
+      background: rgba(99, 102, 241, 0.15);
+      color: #6366f1;
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      padding: 8px 16px;
+      font-size: 0.7rem;
+    }
+    .btn-refresh:hover {
+      background: rgba(99, 102, 241, 0.25);
+    }
+
+    /* ==================== EMPTY STATE ==================== */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #64748b;
+    }
+
+    .empty-state .icon {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+    }
+
+    .empty-state .text {
+      font-size: 0.85rem;
+    }
+
+    /* ==================== MOBILE ==================== */
+    @media (max-width: 768px) {
+      body { padding: 12px; }
+      .header h2 { font-size: 1.1rem; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .search-bar { flex-direction: column; }
+      .search-bar input { min-width: 100%; }
+      .filter-btns { justify-content: center; }
+      th, td { padding: 8px 10px; font-size: 0.7rem; }
+      .btn { font-size: 0.6rem; padding: 4px 8px; }
+    }
+
+    /* ==================== SCROLLBAR ==================== */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.3); }
+    ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 3px; }
+  </style>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- ==================== HEADER ==================== -->
+  <div class="header">
+    <h2>
+      🛡️ Gestão de Licenças
+      <span>ADM</span>
+    </h2>
+    <div class="header-actions">
+      <button class="btn btn-refresh" onclick="carregarDados()">🔄 Recarregar</button>
+      <button class="btn btn-danger-big" onclick="deleteAll()">🗑️ EXCLUIR TUDO</button>
+    </div>
+  </div>
+
+  <!-- ==================== ESTATÍSTICAS ==================== -->
+  <div class="stats" id="statsContainer">
+    <div class="stat-card total">
+      <div class="number" id="statTotal">0</div>
+      <div class="label">Total de Licenças</div>
+    </div>
+    <div class="stat-card active">
+      <div class="number" id="statActive">0</div>
+      <div class="label">✅ Ativas</div>
+    </div>
+    <div class="stat-card pending">
+      <div class="number" id="statPending">0</div>
+      <div class="label">⏳ Pendentes</div>
+    </div>
+    <div class="stat-card expired">
+      <div class="number" id="statExpired">0</div>
+      <div class="label">⏰ Expiradas</div>
+    </div>
+  </div>
+
+  <!-- ==================== BARRA DE PESQUISA ==================== -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="🔍 Buscar por domínio, usuário ou ID..." onkeyup="filtrarTabela()">
+    <div class="filter-btns">
+      <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">📋 Todos</button>
+      <button class="filter-btn" data-filter="active" onclick="setFilter('active')">✅ Ativos</button>
+      <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">⏳ Pendentes</button>
+      <button class="filter-btn" data-filter="expired" onclick="setFilter('expired')">⏰ Expirados</button>
+    </div>
+  </div>
+
+  <!-- ==================== TABELA ==================== -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Usuário</th>
+          <th>Domínio</th>
+          <th>Plano</th>
+          <th>Valor</th>
+          <th>Status</th>
+          <th>Expiração</th>
+          <th style="text-align: center;">Ações</th>
+        </tr>
+      </thead>
+      <tbody id="admTable"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<script>
+  const firebaseConfig = {
+    databaseURL: "https://maestro-server-pro-default-rtdb.firebaseio.com"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  let todasLicencas = [];
+  let filtroAtual = 'all';
+  let searchTerm = '';
+
+  // ==================== CARREGAR DADOS ====================
+  function carregarDados() {
+    db.ref('licenses').once('value', snapshot => {
+      const data = snapshot.val();
+      todasLicencas = [];
+      
+      if (data) {
+        Object.keys(data).forEach(k => {
+          const item = data[k];
+          todasLicencas.push({ id: k, ...item });
+        });
+      }
+      
+      atualizarTabela();
+      atualizarStats();
+    });
+  }
+
+  // Escuta em tempo real
+  db.ref('licenses').on('value', snapshot => {
+    const data = snapshot.val();
+    todasLicencas = [];
+    
+    if (data) {
+      Object.keys(data).forEach(k => {
+        const item = data[k];
+        todasLicencas.push({ id: k, ...item });
+      });
+    }
+    
+    atualizarTabela();
+    atualizarStats();
+  });
+
+  // ==================== ATUALIZAR ESTATÍSTICAS ====================
+  function atualizarStats() {
+    const total = todasLicencas.length;
+    const active = todasLicencas.filter(l => l.active === true).length;
+    const pending = todasLicencas.filter(l => l.active === false && l.planName !== 'Grátis').length;
+    const expired = todasLicencas.filter(l => {
+      if (l.active === true) return false;
+      if (l.planName === 'Grátis' && l.expiresAt) {
+        return new Date(l.expiresAt) < new Date();
+      }
+      return false;
+    }).length;
+
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statActive').textContent = active;
+    document.getElementById('statPending').textContent = pending;
+    document.getElementById('statExpired').textContent = expired;
+  }
+
+  // ==================== FILTRAR TABELA ====================
+  function setFilter(filter) {
+    filtroAtual = filter;
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.filter === filter);
+    });
+    atualizarTabela();
+  }
+
+  function filtrarTabela() {
+    searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    atualizarTabela();
+  }
+
+  function getFilteredData() {
+    let data = [...todasLicencas];
+
+    // Filtro de status
+    if (filtroAtual === 'active') {
+      data = data.filter(l => l.active === true);
+    } else if (filtroAtual === 'pending') {
+      data = data.filter(l => l.active === false && l.planName !== 'Grátis');
+    } else if (filtroAtual === 'expired') {
+      data = data.filter(l => {
+        if (l.active === true) return false;
+        if (l.planName === 'Grátis' && l.expiresAt) {
+          return new Date(l.expiresAt) < new Date();
+        }
+        return false;
+      });
+    }
+
+    // Pesquisa
+    if (searchTerm) {
+      data = data.filter(l => {
+        const domain = (l.domain || '').toLowerCase();
+        const user = (l.userName || '').toLowerCase();
+        const id = (l.id || '').toLowerCase();
+        return domain.includes(searchTerm) || user.includes(searchTerm) || id.includes(searchTerm);
+      });
+    }
+
+    return data;
+  }
+
+  // ==================== ATUALIZAR TABELA ====================
+  function atualizarTabela() {
+    const tbody = document.getElementById('admTable');
+    const dados = getFilteredData();
+
+    if (dados.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7">
+            <div class="empty-state">
+              <div class="icon">📭</div>
+              <div class="text">Nenhuma licença encontrada</div>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    // Ordenar por data de criação (mais recente primeiro)
+    dados.sort((a, b) => {
+      const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return dateB - dateA;
+    });
+
+    tbody.innerHTML = '';
+    dados.forEach(item => {
+      const tr = document.createElement('tr');
+
+      // Plano
+      let planClass = 'plan-free';
+      if (item.planName === 'Diário') planClass = 'plan-daily';
+      else if (item.planName === 'Semanal') planClass = 'plan-weekly';
+      else if (item.planName === 'Mensal') planClass = 'plan-monthly';
+
+      // Status
+      let statusClass = 'status-pending';
+      let statusText = '⏳ PENDENTE';
+      if (item.active === true) {
+        statusClass = 'status-active';
+        statusText = '✅ ATIVO';
+      } else if (item.planName === 'Grátis' && item.expiresAt && new Date(item.expiresAt) < new Date()) {
+        statusClass = 'status-expired';
+        statusText = '⏰ EXPIRADO';
+      }
+
+      // Expiração
+      let expText = '—';
+      if (item.expiresAt) {
+        const expDate = new Date(item.expiresAt);
+        expText = expDate.toLocaleDateString() + ' ' + expDate.toLocaleTimeString().slice(0,5);
+      }
+
+      // Botões
+      let botoes = '';
+      if (!item.active && item.planName !== 'Grátis') {
+        botoes += `<button class="btn btn-approve" onclick="approve('${item.id}', '${item.planName}')">✅ APROVAR</button> `;
+      }
+      botoes += `<button class="btn btn-delete" onclick="del('${item.id}')">🗑️</button>`;
+
+      tr.innerHTML = `
+        <td class="user-cell">${item.userName || 'Anônimo'}</td>
+        <td class="domain-cell">${item.domain || '—'}</td>
+        <td><span class="plan-cell ${planClass}">${item.planName || '—'}</span></td>
+        <td>${item.price || '0'} MT</td>
+        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+        <td style="font-size:0.65rem; color:#94a3b8;">${expText}</td>
+        <td style="text-align: center; white-space: nowrap;">${botoes}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  // ==================== AÇÕES ====================
+  function approve(id, planName) {
+    let hours = 24;
+    if (planName.includes("Semanal")) hours = 168;
+    if (planName.includes("Mensal")) hours = 720;
+
+    const expiresAt = new Date(Date.now() + hours * 3600 * 1000).toISOString();
+    db.ref('licenses/' + id).update({ active: true, expiresAt: expiresAt });
+  }
+
+  function del(id) {
+    if (confirm("Tem certeza que deseja excluir esta licença?")) {
+      db.ref('licenses/' + id).remove();
+    }
+  }
+
+  function deleteAll() {
+    if (confirm("⚠️ Tem certeza que deseja EXCLUIR TODAS as licenças? Esta ação não pode ser desfeita!")) {
+      if (confirm("Última chance! Deseja realmente apagar tudo?")) {
+        db.ref('licenses').remove();
+      }
+    }
+  }
+
+  // ==================== CARREGAR INICIAL ====================
+  carregarDados();
+</script>
+
+</body>
+</html>
