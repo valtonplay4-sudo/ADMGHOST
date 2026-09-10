@@ -50,18 +50,14 @@
       gap: 12px;
     }
 
-    .header-left .logo {
-      font-size: 2rem;
-    }
+    .header-left .logo { font-size: 2rem; }
 
     .header-left h1 {
       font-size: 1.3rem;
       font-weight: 800;
     }
 
-    .header-left h1 span {
-      color: var(--cyan);
-    }
+    .header-left h1 span { color: var(--cyan); }
 
     .header-left .badge {
       background: var(--purple);
@@ -94,9 +90,7 @@
       border: 1px solid var(--border);
     }
 
-    .header-right .stats i {
-      margin-right: 4px;
-    }
+    .header-right .stats i { margin-right: 4px; }
 
     /* ========== FILTROS E BUSCA ========== */
     .filters {
@@ -119,9 +113,7 @@
       transition: 0.2s;
     }
 
-    .search-box:focus-within {
-      border-color: var(--purple);
-    }
+    .search-box:focus-within { border-color: var(--purple); }
 
     .search-box i {
       color: var(--text-muted);
@@ -138,9 +130,7 @@
       outline: none;
     }
 
-    .search-box input::placeholder {
-      color: var(--text-muted);
-    }
+    .search-box input::placeholder { color: var(--text-muted); }
 
     .filter-buttons {
       display: flex;
@@ -172,9 +162,7 @@
       color: #fff;
     }
 
-    .filter-btn i {
-      margin-right: 4px;
-    }
+    .filter-btn i { margin-right: 4px; }
 
     /* ========== TABELA ========== */
     .table-wrapper {
@@ -189,12 +177,10 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 0.78rem;
-      min-width: 700px;
+      min-width: 800px;
     }
 
-    thead {
-      background: rgba(99, 102, 241, 0.08);
-    }
+    thead { background: rgba(99, 102, 241, 0.08); }
 
     th {
       padding: 14px 16px;
@@ -214,9 +200,7 @@
       vertical-align: middle;
     }
 
-    tr:hover td {
-      background: rgba(99, 102, 241, 0.04);
-    }
+    tr:hover td { background: rgba(99, 102, 241, 0.04); }
 
     .user-cell {
       display: flex;
@@ -272,6 +256,17 @@
       font-weight: 700;
     }
 
+    .status-renewal {
+      color: var(--purple);
+      font-weight: 700;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
     .date-cell {
       font-size: 0.7rem;
       color: var(--text-muted);
@@ -283,9 +278,7 @@
       font-weight: 600;
     }
 
-    .date-cell .old {
-      color: var(--text-muted);
-    }
+    .date-cell .old { color: var(--text-muted); }
 
     .actions {
       display: flex;
@@ -315,17 +308,17 @@
     }
     .btn-approve:hover { background: var(--green-hover); }
 
+    .btn-renew {
+      background: var(--purple);
+      color: #fff;
+    }
+    .btn-renew:hover { background: var(--purple-hover); }
+
     .btn-danger {
       background: var(--red);
       color: #fff;
     }
     .btn-danger:hover { background: var(--red-hover); }
-
-    .btn-purple {
-      background: var(--purple);
-      color: #fff;
-    }
-    .btn-purple:hover { background: var(--purple-hover); }
 
     /* ========== EMPTY STATE ========== */
     .empty-state {
@@ -343,6 +336,18 @@
     .empty-state h3 {
       color: #fff;
       margin-bottom: 4px;
+    }
+
+    /* ========== NOTIFICAÇÃO ========== */
+    .notification-badge {
+      background: var(--red);
+      color: #fff;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 0.55rem;
+      font-weight: 700;
+      margin-left: 4px;
+      animation: pulse 1s infinite;
     }
 
     /* ========== RESPONSIVIDADE ========== */
@@ -371,9 +376,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    tbody tr {
-      animation: fadeIn 0.3s ease forwards;
-    }
+    tbody tr { animation: fadeIn 0.3s ease forwards; }
 
     tbody tr:nth-child(2) { animation-delay: 0.05s; }
     tbody tr:nth-child(3) { animation-delay: 0.1s; }
@@ -398,6 +401,7 @@
         <span id="totalLicenses"><i class="fas fa-hashtag"></i> 0</span>
         <span id="activeCount"><i class="fas fa-check-circle" style="color: var(--green);"></i> 0 ativos</span>
         <span id="pendingCount"><i class="fas fa-clock" style="color: var(--yellow);"></i> 0 pendentes</span>
+        <span id="renewalCount"><i class="fas fa-sync" style="color: var(--purple);"></i> 0 renovações</span>
       </div>
       <button class="btn-thin btn-danger" onclick="deleteAll()">
         <i class="fas fa-trash"></i> EXCLUIR TUDO
@@ -415,6 +419,7 @@
       <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)"><i class="fas fa-list"></i> Todos</button>
       <button class="filter-btn" data-filter="active" onclick="setFilter('active', this)"><i class="fas fa-check-circle" style="color: var(--green);"></i> Ativos</button>
       <button class="filter-btn" data-filter="pending" onclick="setFilter('pending', this)"><i class="fas fa-clock" style="color: var(--yellow);"></i> Pendentes</button>
+      <button class="filter-btn" data-filter="renewal" onclick="setFilter('renewal', this)"><i class="fas fa-sync" style="color: var(--purple);"></i> Renovações <span class="notification-badge" id="renewalBadge" style="display:none;">0</span></button>
       <button class="filter-btn" data-filter="expired" onclick="setFilter('expired', this)"><i class="fas fa-exclamation-circle" style="color: var(--red);"></i> Expirados</button>
       <button class="filter-btn" data-filter="today" onclick="setFilter('today', this)"><i class="fas fa-calendar-day" style="color: var(--cyan);"></i> Hoje</button>
     </div>
@@ -459,8 +464,12 @@
         allLicenses.push({ id: k, ...data[k] });
       });
 
-      // Ordenar por data (mais recente primeiro)
+      // Ordenar: renovações primeiro, depois por data
       allLicenses.sort((a, b) => {
+        // Renovações primeiro
+        if (a.renovacaoSolicitada && !b.renovacaoSolicitada) return -1;
+        if (!a.renovacaoSolicitada && b.renovacaoSolicitada) return 1;
+        
         const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
         const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
         return dateB - dateA;
@@ -475,11 +484,24 @@
   function updateStats() {
     const total = allLicenses.length;
     const active = allLicenses.filter(l => l.active === true).length;
-    const pending = allLicenses.filter(l => l.active !== true).length;
+    const pending = allLicenses.filter(l => l.active !== true && !l.renovacaoSolicitada).length;
+    const renewals = allLicenses.filter(l => l.renovacaoSolicitada === true).length;
 
     document.getElementById('totalLicenses').innerHTML = `<i class="fas fa-hashtag"></i> ${total}`;
     document.getElementById('activeCount').innerHTML = `<i class="fas fa-check-circle" style="color: var(--green);"></i> ${active} ativos`;
     document.getElementById('pendingCount').innerHTML = `<i class="fas fa-clock" style="color: var(--yellow);"></i> ${pending} pendentes`;
+    document.getElementById('renewalCount').innerHTML = `<i class="fas fa-sync" style="color: var(--purple);"></i> ${renewals} renovações`;
+
+    // Atualizar badge de renovações
+    const badge = document.getElementById('renewalBadge');
+    if (badge) {
+      if (renewals > 0) {
+        badge.textContent = renewals;
+        badge.style.display = 'inline-block';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
   }
 
   // ========== RENDER TABELA ==========
@@ -504,7 +526,9 @@
     if (currentFilter === 'active') {
       filtered = filtered.filter(item => item.active === true);
     } else if (currentFilter === 'pending') {
-      filtered = filtered.filter(item => item.active !== true);
+      filtered = filtered.filter(item => item.active !== true && !item.renovacaoSolicitada);
+    } else if (currentFilter === 'renewal') {
+      filtered = filtered.filter(item => item.renovacaoSolicitada === true);
     } else if (currentFilter === 'expired') {
       filtered = filtered.filter(item => {
         if (item.active !== true && item.expiresAt) {
@@ -540,10 +564,17 @@
     filtered.forEach(item => {
       const tr = document.createElement('tr');
       
+      // 🔥 VERIFICAR SE É RENOVAÇÃO
+      const isRenewal = item.renovacaoSolicitada === true;
+      
       // Status
       let statusHtml = '';
       let statusClass = '';
-      if (item.active === true) {
+      
+      if (isRenewal) {
+        statusHtml = '<span class="status-renewal"><i class="fas fa-sync fa-spin"></i> RENOVAÇÃO</span>';
+        statusClass = 'status-renewal';
+      } else if (item.active === true) {
         statusHtml = '<span class="status-active"><i class="fas fa-check-circle"></i> ATIVO</span>';
         statusClass = 'status-active';
       } else if (item.expiresAt && new Date(item.expiresAt).getTime() < Date.now()) {
@@ -593,6 +624,38 @@
         `;
       }
 
+      // 🔥 AÇÕES
+      let actionsHtml = '';
+      
+      if (isRenewal) {
+        // 🔥 BOTÃO DE APROVAR RENOVAÇÃO (MANTÉM O MESMO ID)
+        actionsHtml = `
+          <button class="btn-thin btn-renew" onclick="approveRenewal('${item.id}', '${item.planName}')">
+            <i class="fas fa-sync"></i> APROVAR RENOVAÇÃO
+          </button>
+          <button class="btn-thin btn-danger" onclick="rejectRenewal('${item.id}')">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+      } else if (!item.active) {
+        // 🔥 BOTÃO DE APROVAR NOVA LICENÇA
+        actionsHtml = `
+          <button class="btn-thin btn-approve" onclick="approve('${item.id}', '${item.planName}')">
+            <i class="fas fa-check"></i> APROVAR
+          </button>
+          <button class="btn-thin btn-danger" onclick="del('${item.id}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+      } else {
+        // 🔥 LICENÇA ATIVA - APENAS EXCLUIR
+        actionsHtml = `
+          <button class="btn-thin btn-danger" onclick="del('${item.id}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+      }
+
       tr.innerHTML = `
         <td>
           <div class="user-cell">
@@ -607,8 +670,7 @@
         <td>${expiresHtml}</td>
         <td>
           <div class="actions" style="justify-content: center;">
-            ${!item.active ? `<button class="btn-thin btn-approve" onclick="approve('${item.id}', '${item.planName}')"><i class="fas fa-check"></i> APROVAR</button>` : ''}
-            <button class="btn-thin btn-danger" onclick="del('${item.id}')"><i class="fas fa-trash"></i></button>
+            ${actionsHtml}
           </div>
         </td>
       `;
@@ -629,18 +691,72 @@
     renderTable();
   }
 
-  // ========== AÇÕES ==========
+  // ========== APROVAR NOVA LICENÇA ==========
   function approve(id, planName) {
     let hours = 24;
     if (planName.includes("Semanal")) hours = 168;
     if (planName.includes("Mensal")) hours = 720;
 
     const expiresAt = new Date(Date.now() + hours * 3600 * 1000).toISOString();
-    db.ref('licenses/' + id).update({ active: true, expiresAt: expiresAt })
-      .then(() => console.log(`✅ Licença ${id} aprovada`))
+    db.ref('licenses/' + id).update({ 
+      active: true, 
+      expiresAt: expiresAt,
+      spooferActivatedAt: new Date().toISOString()
+    })
+      .then(() => {
+        console.log(`✅ Licença ${id} aprovada`);
+        alert(`✅ Licença aprovada! Plano: ${planName}`);
+      })
       .catch(err => console.error('Erro ao aprovar:', err));
   }
 
+  // ========== 🔥 APROVAR RENOVAÇÃO (MANTÉM O MESMO ID) ==========
+  function approveRenewal(id, planName) {
+    // Calcular nova expiração
+    let hours = 24;
+    if (planName.includes("Semanal")) hours = 168;
+    if (planName.includes("Mensal")) hours = 720;
+
+    const expiresAt = new Date(Date.now() + hours * 3600 * 1000).toISOString();
+
+    // 🔥 ATUALIZA APENAS OS CAMPOS NECESSÁRIOS, MANTENDO O MESMO ID E DOMÍNIO
+    db.ref('licenses/' + id).update({
+      active: true,                          // Ativa a licença
+      expiresAt: expiresAt,                  // Nova data de expiração
+      spooferActivatedAt: new Date().toISOString(),
+      renovacaoSolicitada: false,            // Remove o pedido de renovação
+      renovacaoAprovadaEm: new Date().toISOString(), // Marca quando foi aprovada
+      ultimaRenovacao: new Date().toISOString()      // Última renovação
+    })
+      .then(() => {
+        console.log(`✅ Renovação aprovada para ${id}`);
+        alert(`✅ Renovação aprovada!\nPlano: ${planName}\nNovo vencimento: ${new Date(expiresAt).toLocaleString()}`);
+      })
+      .catch(err => {
+        console.error('Erro ao aprovar renovação:', err);
+        alert('❌ Erro ao aprovar renovação: ' + err.message);
+      });
+  }
+
+  // ========== 🔥 REJEITAR RENOVAÇÃO ==========
+  function rejectRenewal(id) {
+    if (!confirm("Rejeitar esta renovação? O cliente continuará com o plano atual.")) return;
+
+    db.ref('licenses/' + id).update({
+      renovacaoSolicitada: false,
+      renovacaoRejeitadaEm: new Date().toISOString()
+    })
+      .then(() => {
+        console.log(`❌ Renovação rejeitada para ${id}`);
+        alert('❌ Renovação rejeitada.');
+      })
+      .catch(err => {
+        console.error('Erro ao rejeitar renovação:', err);
+        alert('❌ Erro ao rejeitar renovação: ' + err.message);
+      });
+  }
+
+  // ========== EXCLUIR ==========
   function del(id) {
     if (confirm("Tem certeza que deseja excluir esta licença?")) {
       db.ref('licenses/' + id).remove()
@@ -667,6 +783,8 @@
           allLicenses.push({ id: k, ...data[k] });
         });
         allLicenses.sort((a, b) => {
+          if (a.renovacaoSolicitada && !b.renovacaoSolicitada) return -1;
+          if (!a.renovacaoSolicitada && b.renovacaoSolicitada) return 1;
           const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
           const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
           return dateB - dateA;
