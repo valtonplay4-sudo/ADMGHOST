@@ -32,7 +32,6 @@
       flex-wrap: wrap; gap: 16px; margin-bottom: 24px;
       padding-bottom: 16px; border-bottom: 1px solid var(--border);
     }
-
     .header-left { display: flex; align-items: center; gap: 12px; }
     .header-left .logo { font-size: 2rem; }
     .header-left h1 { font-size: 1.3rem; font-weight: 800; }
@@ -42,14 +41,11 @@
       border-radius: 12px; font-size: 0.6rem;
       font-weight: 700; text-transform: uppercase;
     }
-
     .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-
     .header-right .stats {
       display: flex; gap: 10px; font-size: 0.72rem;
       color: var(--text-muted); flex-wrap: wrap;
     }
-
     .header-right .stats span {
       background: var(--card-bg); padding: 5px 12px;
       border-radius: 8px; border: 1px solid var(--border);
@@ -63,13 +59,11 @@
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 12px;
     }
-
     .mass-btn {
       border: none; padding: 8px 16px; border-radius: 8px;
       font-weight: 700; font-size: 0.72rem; cursor: pointer;
       transition: 0.2s; display: inline-flex; align-items: center; gap: 6px;
     }
-
     .mass-btn-danger { background: var(--red); color: #fff; }
     .mass-btn-danger:hover { background: var(--red-hover); }
     .mass-btn-success { background: var(--green); color: #000; }
@@ -82,14 +76,12 @@
       display: flex; flex-wrap: wrap; gap: 12px;
       margin-bottom: 20px; align-items: center;
     }
-
     .search-box {
       flex: 1; min-width: 200px;
       display: flex; align-items: center;
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 10px; padding: 0 12px;
     }
-
     .search-box:focus-within { border-color: var(--purple); }
     .search-box i { color: var(--text-muted); font-size: 0.8rem; }
     .search-box input {
@@ -97,9 +89,7 @@
       color: #fff; font-size: 0.8rem; width: 100%; outline: none;
     }
     .search-box input::placeholder { color: var(--text-muted); }
-
     .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-
     .filter-btn {
       background: var(--card-bg); border: 1px solid var(--border);
       color: var(--text-muted); padding: 8px 14px;
@@ -107,7 +97,6 @@
       cursor: pointer; transition: 0.2s; white-space: nowrap;
       display: inline-flex; align-items: center; gap: 5px;
     }
-
     .filter-btn:hover { border-color: var(--purple); color: #fff; }
     .filter-btn.active { background: var(--purple); border-color: var(--purple); color: #fff; }
 
@@ -116,48 +105,38 @@
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 16px; overflow: hidden; overflow-x: auto;
     }
-
     table {
       width: 100%; border-collapse: collapse;
-      font-size: 0.78rem; min-width: 950px;
+      font-size: 0.78rem; min-width: 1000px;
     }
-
     thead { background: rgba(99, 102, 241, 0.08); }
-
     th {
       padding: 14px 12px; text-align: left;
       font-weight: 700; font-size: 0.68rem;
       text-transform: uppercase; color: var(--text-muted);
       border-bottom: 1px solid var(--border); white-space: nowrap;
     }
-
     td {
       padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       vertical-align: middle;
     }
-
     tr:hover td { background: rgba(99, 102, 241, 0.04); }
-
-    /* 🔥 LINHA CLICÁVEL */
     tr.clickable { cursor: pointer; }
     tr.clickable:hover td { background: rgba(99, 102, 241, 0.08); }
 
     .user-cell { display: flex; align-items: center; gap: 10px; }
-
     .user-avatar {
       width: 32px; height: 32px; border-radius: 50%;
       background: var(--purple); display: flex; align-items: center;
       justify-content: center; font-weight: 700; font-size: 0.7rem;
       color: #fff; flex-shrink: 0;
     }
-
     .domain-cell { color: var(--cyan); font-weight: 600; font-size: 0.8rem; }
 
     .plan-badge {
       display: inline-block; padding: 2px 10px;
       border-radius: 12px; font-size: 0.65rem; font-weight: 700;
     }
-
     .plan-free { background: rgba(245, 158, 11, 0.15); color: var(--yellow); }
     .plan-daily { background: rgba(56, 189, 248, 0.15); color: var(--cyan); }
     .plan-weekly { background: rgba(99, 102, 241, 0.15); color: var(--purple); }
@@ -167,7 +146,6 @@
     .status-pending { color: var(--yellow); font-weight: 700; font-size: 0.72rem; }
     .status-expired { color: var(--red); font-weight: 700; font-size: 0.72rem; }
     .status-revoked { color: var(--red); font-weight: 700; font-size: 0.72rem; text-decoration: line-through; }
-
     .status-renewal {
       color: var(--purple); font-weight: 700; font-size: 0.72rem;
       animation: pulse 1.5s infinite;
@@ -186,13 +164,11 @@
       color: var(--yellow); text-align: center;
       white-space: nowrap; display: inline-block; min-width: 90px;
     }
-
     .timer-cell.danger {
       background: rgba(239, 68, 68, 0.1);
       border-color: rgba(239, 68, 68, 0.3);
       color: var(--red); animation: pulse 1.2s infinite;
     }
-
     .timer-cell.expired {
       background: rgba(107, 114, 128, 0.1);
       border-color: rgba(107, 114, 128, 0.3);
@@ -200,16 +176,15 @@
     }
 
     .date-cell { font-size: 0.68rem; color: var(--text-muted); white-space: nowrap; }
+    .date-cell .label { color: var(--text-muted); font-weight: 600; font-size: 0.6rem; }
 
     .actions { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
-
     .btn-thin {
       border: none; padding: 6px 10px; border-radius: 6px;
       font-weight: 700; font-size: 0.62rem; cursor: pointer;
       transition: 0.2s; display: inline-flex; align-items: center;
       gap: 4px; white-space: nowrap;
     }
-
     .btn-approve { background: var(--green); color: #000; }
     .btn-approve:hover { background: var(--green-hover); }
     .btn-renew { background: var(--purple); color: #fff; }
@@ -232,7 +207,7 @@
       font-size: 0.55rem; font-weight: 700; animation: pulse 1s infinite;
     }
 
-    /* ========== 🔥 MODAL DETALHES ========== */
+    /* ========== MODAL ========== */
     .modal-overlay {
       display: none; position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -241,7 +216,6 @@
       backdrop-filter: blur(4px);
     }
     .modal-overlay.active { display: flex; }
-
     .modal-content {
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 20px; padding: 24px;
@@ -249,7 +223,6 @@
       overflow-y: auto;
       animation: modalIn 0.3s ease;
     }
-
     @keyframes modalIn {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
@@ -260,18 +233,15 @@
       margin-bottom: 20px; padding-bottom: 16px;
       border-bottom: 1px solid var(--border);
     }
-
     .modal-header h2 {
       font-size: 1.1rem; font-weight: 800;
       display: flex; align-items: center; gap: 10px;
     }
-
     .modal-header h2 .avatar-large {
       width: 42px; height: 42px; border-radius: 50%;
       background: var(--purple); display: flex; align-items: center;
       justify-content: center; font-weight: 700; font-size: 0.85rem;
     }
-
     .modal-close {
       background: rgba(239, 68, 68, 0.15); color: var(--red);
       border: 1px solid var(--red); width: 32px; height: 32px;
@@ -286,29 +256,24 @@
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
       gap: 12px; margin-bottom: 20px;
     }
-
     .stat-box {
       background: rgba(3, 7, 18, 0.6);
       border: 1px solid var(--border); border-radius: 12px;
       padding: 12px; text-align: center;
     }
-
     .stat-box .stat-value {
       font-size: 1.5rem; font-weight: 900;
       color: var(--cyan); line-height: 1;
     }
-
     .stat-box .stat-label {
       font-size: 0.65rem; color: var(--text-muted);
       font-weight: 700; text-transform: uppercase;
       margin-top: 4px;
     }
-
     .stat-box.warning .stat-value { color: var(--yellow); }
     .stat-box.danger .stat-value { color: var(--red); }
     .stat-box.success .stat-value { color: var(--green); }
 
-    /* 🔥 ALERTA DE LIMITE GRÁTIS */
     .limit-alert {
       background: rgba(239, 68, 68, 0.1);
       border: 1px solid rgba(239, 68, 68, 0.3);
@@ -318,41 +283,42 @@
       font-size: 0.8rem; color: var(--red); font-weight: 700;
     }
 
-    /* 🔥 LISTA DE DOMÍNIOS NO MODAL */
+    .limit-ok {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 10px; padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.8rem; color: var(--green); font-weight: 700;
+    }
+
     .domain-list {
       display: flex; flex-direction: column; gap: 10px;
     }
-
     .domain-item {
       background: rgba(3, 7, 18, 0.6);
       border: 1px solid var(--border); border-radius: 12px;
       padding: 14px;
       transition: 0.2s;
     }
-
     .domain-item:hover { border-color: rgba(99, 102, 241, 0.4); }
-
     .domain-item-header {
       display: flex; justify-content: space-between;
       align-items: center; margin-bottom: 8px;
       flex-wrap: wrap; gap: 8px;
     }
-
     .domain-item-name {
       color: var(--cyan); font-weight: 700;
       font-size: 0.88rem; display: flex;
       align-items: center; gap: 6px;
     }
-
     .domain-item-meta {
       display: flex; gap: 12px; flex-wrap: wrap;
       font-size: 0.7rem; color: var(--text-muted);
     }
-
     .domain-item-meta span {
       display: inline-flex; align-items: center; gap: 4px;
     }
-
     .domain-item-actions {
       display: flex; gap: 6px; margin-top: 10px;
       padding-top: 10px; border-top: 1px solid var(--border);
@@ -374,7 +340,6 @@
       .modal-content { padding: 16px; }
       .modal-stats { grid-template-columns: repeat(2, 1fr); }
     }
-
     @media (max-width: 480px) {
       .header { flex-direction: column; align-items: flex-start; }
       .header-right { width: 100%; justify-content: space-between; }
@@ -387,7 +352,6 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     tbody tr { animation: fadeIn 0.3s ease forwards; }
   </style>
 
@@ -453,7 +417,7 @@
           <th>Plano</th>
           <th>Status</th>
           <th>⏱️ Restante</th>
-          <th>Expira em</th>
+          <th>📅 Datas</th>
           <th style="text-align: center;">Ações</th>
         </tr>
       </thead>
@@ -461,7 +425,7 @@
     </table>
   </div>
 
-  <!-- 🔥 MODAL DE DETALHES DO USUÁRIO -->
+  <!-- MODAL DE DETALHES DO USUÁRIO -->
   <div class="modal-overlay" id="userModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -528,7 +492,6 @@
     'Mensal': 2592000
   };
 
-  // 🔥 LIMITE DE PLANOS GRÁTIS POR USUÁRIO
   const MAX_FREE_PLANS_PER_USER = 3;
 
   // ========== CARREGAR DADOS ==========
@@ -554,20 +517,45 @@
     renderTable();
     startTimerUpdates();
 
-    // Atualizar modal se estiver aberto
     if (currentModalUserId) {
       openUserModal(currentModalUserId, true);
     }
   });
 
-  // ========== TIMER ==========
+  // ========== TIMER (com auto-desativação) ==========
   function startTimerUpdates() {
     if (timerInterval) clearInterval(timerInterval);
+    
     timerInterval = setInterval(() => {
       document.querySelectorAll('.timer-cell[data-license-id]').forEach(el => {
         const licId = el.getAttribute('data-license-id');
         const lic = allLicenses.find(l => l.id === licId);
-        if (lic && lic.active === true) {
+        
+        if (!lic || lic.active !== true) return;
+        
+        const duration = PLAN_DURATIONS[lic.planName];
+        if (!duration) return;
+        
+        const startTime = lic.spooferActivatedAt 
+          ? new Date(lic.spooferActivatedAt).getTime() 
+          : new Date(lic.createdAt).getTime();
+        
+        const elapsed = (Date.now() - startTime) / 1000;
+        const remaining = Math.max(0, duration - elapsed);
+        
+        // 🔥 SE EXPIROU AGORA: DESATIVAR NO FIREBASE
+        if (remaining <= 0) {
+          el.className = 'timer-cell expired';
+          el.innerHTML = '⏰ EXPIROU';
+          
+          db.ref('licenses/' + lic.id).update({
+            active: false,
+            expiredAt: new Date().toISOString(),
+            expiredReason: 'Expiração automática'
+          }).catch(err => console.error('Erro:', err));
+          
+          console.log(`⏰ [TIMER] ${lic.id} (${lic.domain}) expirou!`);
+        } else {
           updateTimerCell(el, lic);
         }
       });
@@ -611,24 +599,34 @@
     return `${mins}m ${secs}s`;
   }
 
-  // 🔥 VERIFICAR SE ESTÁ EXPIRADO (não apenas active)
+  // 🔥 VERIFICAR EXPIRAÇÃO + AUTO-DESATIVAR
   function isExpired(lic) {
     if (lic.revogadaEm) return false;
-    if (lic.active === true) {
-      // Verificar se já passou do tempo
-      const duration = PLAN_DURATIONS[lic.planName];
-      if (!duration) return false;
-      const startTime = lic.spooferActivatedAt 
-        ? new Date(lic.spooferActivatedAt).getTime() 
-        : new Date(lic.createdAt).getTime();
-      const elapsed = (Date.now() - startTime) / 1000;
-      return elapsed >= duration;
+    if (lic.active !== true) {
+      if (lic.expiresAt) return new Date(lic.expiresAt).getTime() < Date.now();
+      return false;
     }
-    // Se não está ativo e tem expiresAt, verificar
-    if (lic.expiresAt) {
-      return new Date(lic.expiresAt).getTime() < Date.now();
+    
+    const duration = PLAN_DURATIONS[lic.planName];
+    if (!duration) return false;
+    
+    const startTime = lic.spooferActivatedAt 
+      ? new Date(lic.spooferActivatedAt).getTime() 
+      : new Date(lic.createdAt).getTime();
+    
+    const elapsed = (Date.now() - startTime) / 1000;
+    const expired = elapsed >= duration;
+    
+    // 🔥 AUTO-DESATIVAR NO FIREBASE
+    if (expired && lic.active === true) {
+      db.ref('licenses/' + lic.id).update({
+        active: false,
+        expiredAt: new Date().toISOString(),
+        expiredReason: 'Tempo esgotado'
+      }).catch(err => console.error('Erro:', err));
     }
-    return false;
+    
+    return expired;
   }
 
   // ========== STATS ==========
@@ -657,6 +655,46 @@
     }
   }
 
+  // ========== HELPER: MOSTRAR DATAS ==========
+  function getDatesHtml(lic) {
+    const createdAt = lic.createdAt ? new Date(lic.createdAt) : null;
+    const expiresAt = lic.expiresAt ? new Date(lic.expiresAt) : null;
+    const expiredAt = lic.expiredAt ? new Date(lic.expiredAt) : null;
+    const revogadaEm = lic.revogadaEm ? new Date(lic.revogadaEm) : null;
+    const agora = new Date();
+
+    let html = '';
+
+    // 🔥 SEMPRE MOSTRAR DATA DE CRIAÇÃO
+    if (createdAt) {
+      html += `<div class="date-cell"><span class="label">📅 Criado:</span> ${createdAt.toLocaleDateString('pt-BR')} ${createdAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</div>`;
+    }
+
+    // 🔥 MOSTRAR EXPIRAÇÃO (mesmo para expirados)
+    if (expiresAt) {
+      const isExp = expiresAt.getTime() < agora.getTime();
+      const color = isExp ? 'var(--red)' : 'var(--green)';
+      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label">⏰ Expira:</span> <span style="color: ${color};">${expiresAt.toLocaleDateString('pt-BR')} ${expiresAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
+    }
+
+    // 🔥 MOSTRAR QUANDO EXPIROU
+    if (expiredAt) {
+      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--red);">⏰ Expirou:</span> <span style="color: var(--red);">${expiredAt.toLocaleDateString('pt-BR')} ${expiredAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
+    }
+
+    // 🔥 MOSTRAR QUANDO REVOGOU
+    if (revogadaEm) {
+      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--red);">🚫 Revogado:</span> <span style="color: var(--red);">${revogadaEm.toLocaleDateString('pt-BR')} ${revogadaEm.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
+    }
+
+    // 🔥 SE NÃO TEM NADA, MOSTRAR AVISO CLARO
+    if (!html) {
+      html = `<div class="date-cell" style="color: var(--yellow);"><i class="fas fa-exclamation-triangle"></i> Sem data registrada</div>`;
+    }
+
+    return html;
+  }
+
   // ========== RENDER ==========
   function renderTable() {
     const tbody = document.getElementById('admTable');
@@ -674,7 +712,6 @@
       });
     }
 
-    // 🔥 FILTRAR
     if (currentFilter === 'active') {
       filtered = filtered.filter(item => item.active === true && !isExpired(item));
     } else if (currentFilter === 'pending') {
@@ -682,7 +719,6 @@
     } else if (currentFilter === 'renewal') {
       filtered = filtered.filter(item => item.renovacaoSolicitada === true);
     } else if (currentFilter === 'expired') {
-      // 🔥 EXPIRADOS: inclui os que expiraram por tempo
       filtered = filtered.filter(item => isExpired(item));
     } else if (currentFilter === 'revoked') {
       filtered = filtered.filter(item => item.revogadaEm);
@@ -711,11 +747,9 @@
       const isRevoked = !!item.revogadaEm;
       const expired = isExpired(item);
 
-      // 🔥 CLICAR NA LINHA ABRE MODAL
       tr.onclick = (e) => {
-        // Não abrir se clicou em botão
-        if (e.target.closest('button')) return;
-        openUserModal(item.userId);
+        if (e.target.closest('button') || e.target.closest('a')) return;
+        if (item.userId) openUserModal(item.userId);
       };
 
       let statusHtml = '';
@@ -724,10 +758,10 @@
         statusHtml = '<span class="status-renewal"><i class="fas fa-sync fa-spin"></i> RENOVAÇÃO</span>';
       } else if (isRevoked) {
         statusHtml = '<span class="status-revoked"><i class="fas fa-ban"></i> REVOGADO</span>';
-      } else if (item.active === true && !expired) {
-        statusHtml = '<span class="status-active"><i class="fas fa-check-circle"></i> ATIVO</span>';
       } else if (expired) {
         statusHtml = '<span class="status-expired"><i class="fas fa-exclamation-circle"></i> EXPIRADO</span>';
+      } else if (item.active === true) {
+        statusHtml = '<span class="status-active"><i class="fas fa-check-circle"></i> ATIVO</span>';
       } else {
         statusHtml = '<span class="status-pending"><i class="fas fa-clock"></i> PENDENTE</span>';
       }
@@ -738,20 +772,6 @@
       else if (item.planName === 'Mensal') planClass = 'plan-monthly';
 
       const initials = item.userName ? item.userName.substring(0, 2).toUpperCase() : '??';
-      const expiresAt = item.expiresAt ? new Date(item.expiresAt) : null;
-
-      let expiresHtml = '<span class="date-cell old">--</span>';
-      if (expiresAt) {
-        const isExp = expiresAt.getTime() < Date.now();
-        expiresHtml = `
-          <span class="date-cell">
-            <span style="color: ${isExp ? 'var(--red)' : 'var(--green)'}; font-weight: 700;">
-              ${expiresAt.toLocaleDateString()}
-            </span>
-            <br><span style="font-size:0.6rem;">${expiresAt.toLocaleTimeString()}</span>
-          </span>
-        `;
-      }
 
       let timerHtml = '<span class="timer-cell expired">--</span>';
       if (item.active === true && !expired) {
@@ -760,7 +780,8 @@
         timerHtml = '<span class="timer-cell expired">EXPIRADO</span>';
       }
 
-      // AÇÕES
+      const datesHtml = getDatesHtml(item);
+
       let actionsHtml = '';
       
       if (isRenewal) {
@@ -817,7 +838,7 @@
         <td><span class="plan-badge ${planClass}">${item.planName}</span></td>
         <td>${statusHtml}</td>
         <td>${timerHtml}</td>
-        <td>${expiresHtml}</td>
+        <td>${datesHtml}</td>
         <td>
           <div class="actions">
             ${actionsHtml}
@@ -834,7 +855,6 @@
     });
   }
 
-  // ========== FILTROS ==========
   function setFilter(filter, btn) {
     currentFilter = filter;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -847,13 +867,11 @@
     renderTable();
   }
 
-  // ========== 🔥 MODAL DO USUÁRIO ==========
+  // ========== MODAL DO USUÁRIO ==========
   function openUserModal(userId, keepOpen = false) {
     if (!userId) return;
-
     currentModalUserId = userId;
 
-    // Filtrar licenças do usuário
     const userLicenses = allLicenses.filter(l => l.userId === userId);
 
     if (userLicenses.length === 0) {
@@ -861,7 +879,6 @@
       return;
     }
 
-    // Informações do usuário
     const userName = userLicenses[0].userName || 'Cliente';
     const initials = userName.substring(0, 2).toUpperCase();
 
@@ -869,7 +886,6 @@
     document.getElementById('modalUserName').textContent = userName;
     document.getElementById('modalUserId').textContent = 'ID: ' + userId.substring(0, 12) + '...';
 
-    // Estatísticas
     const totalDomains = userLicenses.length;
     const activeDomains = userLicenses.filter(l => l.active === true && !isExpired(l)).length;
     const freeUsed = userLicenses.filter(l => l.planName === 'Grátis').length;
@@ -880,22 +896,25 @@
     document.getElementById('modalFreeUsed').textContent = freeUsed;
     document.getElementById('modalFreeRemaining').textContent = freeRemaining;
 
-    // 🔥 ALERTA SE ESGOTOU O LIMITE
+    // 🔥 ALERTA DE LIMITE
     const limitBox = document.getElementById('limitAlertBox');
     if (freeUsed >= MAX_FREE_PLANS_PER_USER) {
       limitBox.innerHTML = `
         <div class="limit-alert">
           <i class="fas fa-exclamation-triangle" style="font-size: 1.2rem;"></i>
           <div>
-            <strong>Limite de planos grátis atingido!</strong><br>
-            <span style="font-size: 0.72rem;">Este usuário já usou ${freeUsed}/${MAX_FREE_PLANS_PER_USER} planos grátis.</span>
+            <strong>⚠️ LIMITE DE PLANOS GRÁTIS ATINGIDO!</strong><br>
+            <span style="font-size: 0.72rem;">Este usuário já usou ${freeUsed}/${MAX_FREE_PLANS_PER_USER} planos grátis. Novos planos grátis serão bloqueados.</span>
           </div>
         </div>
       `;
     } else {
       limitBox.innerHTML = `
-        <div style="background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; font-size: 0.75rem; color: var(--green);">
-          ✅ Este usuário ainda pode usar <strong>${freeRemaining}</strong> plano(s) grátis.
+        <div class="limit-ok">
+          <i class="fas fa-check-circle" style="font-size: 1.1rem;"></i>
+          <div>
+            ✅ Este usuário ainda pode usar <strong>${freeRemaining}</strong> plano(s) grátis.
+          </div>
         </div>
       `;
     }
@@ -918,12 +937,12 @@
       } else if (isRevoked) {
         statusText = '🚫 Revogado';
         statusColor = 'var(--red)';
-      } else if (lic.active === true && !expired) {
-        statusText = '✅ Ativo';
-        statusColor = 'var(--green)';
       } else if (expired) {
         statusText = '⏰ Expirado';
         statusColor = 'var(--red)';
+      } else if (lic.active === true) {
+        statusText = '✅ Ativo';
+        statusColor = 'var(--green)';
       } else {
         statusText = '⏳ Pendente';
         statusColor = 'var(--yellow)';
@@ -933,6 +952,11 @@
         : lic.planName === 'Diário' ? 'plan-daily'
         : lic.planName === 'Semanal' ? 'plan-weekly'
         : 'plan-monthly';
+
+      const createdAt = lic.createdAt ? new Date(lic.createdAt) : null;
+      const expiresAt = lic.expiresAt ? new Date(lic.expiresAt) : null;
+      const expiredAt = lic.expiredAt ? new Date(lic.expiredAt) : null;
+      const revogadaEm = lic.revogadaEm ? new Date(lic.revogadaEm) : null;
 
       const item = document.createElement('div');
       item.className = 'domain-item';
@@ -949,9 +973,10 @@
           </div>
         </div>
         <div class="domain-item-meta">
-          <span><i class="fas fa-calendar-plus"></i> Criado: ${lic.createdAt ? new Date(lic.createdAt).toLocaleDateString() : '--'}</span>
-          ${lic.expiresAt ? `<span><i class="fas fa-calendar-times"></i> Expira: ${new Date(lic.expiresAt).toLocaleDateString()}</span>` : ''}
-          ${lic.revogadaEm ? `<span style="color: var(--red);"><i class="fas fa-ban"></i> Revogado em: ${new Date(lic.revogadaEm).toLocaleDateString()}</span>` : ''}
+          ${createdAt ? `<span><i class="fas fa-calendar-plus"></i> Criado: ${createdAt.toLocaleDateString('pt-BR')}</span>` : '<span style="color: var(--yellow);">📅 Sem data de criação</span>'}
+          ${expiresAt ? `<span><i class="fas fa-calendar-times"></i> Expira: ${expiresAt.toLocaleDateString('pt-BR')}</span>` : ''}
+          ${expiredAt ? `<span style="color: var(--red);"><i class="fas fa-hourglass-end"></i> Expirou em: ${expiredAt.toLocaleDateString('pt-BR')}</span>` : ''}
+          ${revogadaEm ? `<span style="color: var(--red);"><i class="fas fa-ban"></i> Revogado: ${revogadaEm.toLocaleDateString('pt-BR')}</span>` : ''}
         </div>
         <div class="domain-item-actions">
           ${isRevoked ? `
@@ -975,7 +1000,6 @@
       domainList.appendChild(item);
     });
 
-    // Abrir modal
     document.getElementById('userModal').classList.add('active');
   }
 
@@ -984,7 +1008,6 @@
     currentModalUserId = null;
   }
 
-  // Fechar ao clicar fora
   document.getElementById('userModal').addEventListener('click', function(e) {
     if (e.target === this) closeUserModal();
   });
@@ -1054,8 +1077,7 @@
     db.ref('licenses/' + id).update({
       active: false,
       revogadaEm: new Date().toISOString(),
-      revogadaMotivo: 'Revogada pelo Administrador',
-      expiredAt: new Date().toISOString()
+      revogadaMotivo: 'Revogada pelo Administrador'
     })
     .then(() => {
       if (!currentModalUserId) alert(`✅ Licença REVOGADA!`);
