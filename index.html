@@ -196,7 +196,6 @@
     .btn-danger { background: var(--red); color: #fff; }
     .btn-danger:hover { background: var(--red-hover); }
 
-    /* ========== EMPTY STATE ========== */
     .empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); }
     .empty-state i { font-size: 3rem; margin-bottom: 12px; opacity: 0.3; }
     .empty-state h3 { color: #fff; margin-bottom: 4px; }
@@ -466,9 +465,7 @@
         📋 Domínios deste usuário:
       </h3>
 
-      <div class="domain-list" id="modalDomainList">
-        <!-- Preenchido via JS -->
-      </div>
+      <div class="domain-list" id="modalDomainList"></div>
     </div>
   </div>
 
@@ -522,7 +519,7 @@
     }
   });
 
-  // ========== TIMER (com auto-desativação) ==========
+  // ========== TIMER ==========
   function startTimerUpdates() {
     if (timerInterval) clearInterval(timerInterval);
     
@@ -543,7 +540,6 @@
         const elapsed = (Date.now() - startTime) / 1000;
         const remaining = Math.max(0, duration - elapsed);
         
-        // 🔥 SE EXPIROU AGORA: DESATIVAR NO FIREBASE
         if (remaining <= 0) {
           el.className = 'timer-cell expired';
           el.innerHTML = '⏰ EXPIROU';
@@ -553,8 +549,6 @@
             expiredAt: new Date().toISOString(),
             expiredReason: 'Expiração automática'
           }).catch(err => console.error('Erro:', err));
-          
-          console.log(`⏰ [TIMER] ${lic.id} (${lic.domain}) expirou!`);
         } else {
           updateTimerCell(el, lic);
         }
@@ -599,14 +593,21 @@
     return `${mins}m ${secs}s`;
   }
 
-  // 🔥 VERIFICAR EXPIRAÇÃO + AUTO-DESATIVAR
+  // 🔥 VERIFICAR SE ESTÁ EXPIRADO (CORRIGIDO!)
   function isExpired(lic) {
+    // Se foi revogada, não é expiração
     if (lic.revogadaEm) return false;
+    
+    // 🔥 SE TEM expiredAt DEFINIDO, É EXPIRADO (para qualquer plano!)
+    if (lic.expiredAt) return true;
+    
+    // Se não está ativa, verifica expiresAt
     if (lic.active !== true) {
       if (lic.expiresAt) return new Date(lic.expiresAt).getTime() < Date.now();
       return false;
     }
     
+    // 🔥 SE ESTÁ ATIVA, VERIFICA O TEMPO REAL
     const duration = PLAN_DURATIONS[lic.planName];
     if (!duration) return false;
     
@@ -617,7 +618,6 @@
     const elapsed = (Date.now() - startTime) / 1000;
     const expired = elapsed >= duration;
     
-    // 🔥 AUTO-DESATIVAR NO FIREBASE
     if (expired && lic.active === true) {
       db.ref('licenses/' + lic.id).update({
         active: false,
@@ -655,7 +655,7 @@
     }
   }
 
-  // ========== HELPER: MOSTRAR DATAS ==========
+  // ========== DATAS ==========
   function getDatesHtml(lic) {
     const createdAt = lic.createdAt ? new Date(lic.createdAt) : null;
     const expiresAt = lic.expiresAt ? new Date(lic.expiresAt) : null;
@@ -665,29 +665,24 @@
 
     let html = '';
 
-    // 🔥 SEMPRE MOSTRAR DATA DE CRIAÇÃO
     if (createdAt) {
       html += `<div class="date-cell"><span class="label">📅 Criado:</span> ${createdAt.toLocaleDateString('pt-BR')} ${createdAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</div>`;
     }
 
-    // 🔥 MOSTRAR EXPIRAÇÃO (mesmo para expirados)
     if (expiresAt) {
       const isExp = expiresAt.getTime() < agora.getTime();
       const color = isExp ? 'var(--red)' : 'var(--green)';
       html += `<div class="date-cell" style="margin-top: 2px;"><span class="label">⏰ Expira:</span> <span style="color: ${color};">${expiresAt.toLocaleDateString('pt-BR')} ${expiresAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
     }
 
-    // 🔥 MOSTRAR QUANDO EXPIROU
     if (expiredAt) {
       html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--red);">⏰ Expirou:</span> <span style="color: var(--red);">${expiredAt.toLocaleDateString('pt-BR')} ${expiredAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
     }
 
-    // 🔥 MOSTRAR QUANDO REVOGOU
     if (revogadaEm) {
       html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--red);">🚫 Revogado:</span> <span style="color: var(--red);">${revogadaEm.toLocaleDateString('pt-BR')} ${revogadaEm.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
     }
 
-    // 🔥 SE NÃO TEM NADA, MOSTRAR AVISO CLARO
     if (!html) {
       html = `<div class="date-cell" style="color: var(--yellow);"><i class="fas fa-exclamation-triangle"></i> Sem data registrada</div>`;
     }
@@ -754,6 +749,7 @@
 
       let statusHtml = '';
       
+      // 🔥 ORDEM CORRETA: RENOVAÇÃO → REVOGADO → EXPIRADO → ATIVO → PENDENTE
       if (isRenewal) {
         statusHtml = '<span class="status-renewal"><i class="fas fa-sync fa-spin"></i> RENOVAÇÃO</span>';
       } else if (isRevoked) {
@@ -802,7 +798,16 @@
             <i class="fas fa-trash"></i>
           </button>
         `;
-      } else if (!item.active || expired) {
+      } else if (expired) {
+        actionsHtml = `
+          <button class="btn-thin btn-reactivate" onclick="reactivate('${item.id}')">
+            <i class="fas fa-redo"></i> REATIVAR
+          </button>
+          <button class="btn-thin btn-danger" onclick="del('${item.id}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+      } else if (!item.active) {
         actionsHtml = `
           <button class="btn-thin btn-approve" onclick="approve('${item.id}', '${item.planName}')">
             <i class="fas fa-check"></i> APROVAR
@@ -896,7 +901,6 @@
     document.getElementById('modalFreeUsed').textContent = freeUsed;
     document.getElementById('modalFreeRemaining').textContent = freeRemaining;
 
-    // 🔥 ALERTA DE LIMITE
     const limitBox = document.getElementById('limitAlertBox');
     if (freeUsed >= MAX_FREE_PLANS_PER_USER) {
       limitBox.innerHTML = `
@@ -919,7 +923,6 @@
       `;
     }
 
-    // 🔥 LISTA DE DOMÍNIOS
     const domainList = document.getElementById('modalDomainList');
     domainList.innerHTML = '';
 
@@ -983,7 +986,11 @@
             <button class="btn-thin btn-reactivate" onclick="reactivate('${lic.id}'); openUserModal('${userId}', true);">
               <i class="fas fa-sync"></i> REATIVAR
             </button>
-          ` : !lic.active || expired ? `
+          ` : expired ? `
+            <button class="btn-thin btn-reactivate" onclick="reactivate('${lic.id}'); openUserModal('${userId}', true);">
+              <i class="fas fa-redo"></i> REATIVAR
+            </button>
+          ` : !lic.active ? `
             <button class="btn-thin btn-approve" onclick="approve('${lic.id}', '${lic.planName}'); openUserModal('${userId}', true);">
               <i class="fas fa-check"></i> APROVAR
             </button>
