@@ -44,21 +44,10 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .header-left { display: flex; align-items: center; gap: 12px; }
     .header-left .logo { font-size: 2rem; }
-
-    .header-left h1 {
-      font-size: 1.3rem;
-      font-weight: 800;
-    }
-
+    .header-left h1 { font-size: 1.3rem; font-weight: 800; }
     .header-left h1 span { color: var(--cyan); }
-
     .header-left .badge {
       background: var(--purple);
       padding: 2px 10px;
@@ -78,21 +67,55 @@
 
     .header-right .stats {
       display: flex;
-      gap: 16px;
-      font-size: 0.75rem;
+      gap: 10px;
+      font-size: 0.72rem;
       color: var(--text-muted);
+      flex-wrap: wrap;
     }
 
     .header-right .stats span {
       background: var(--card-bg);
-      padding: 4px 12px;
+      padding: 5px 12px;
       border-radius: 8px;
       border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
-    .header-right .stats i { margin-right: 4px; }
+    /* ========== AÇÕES EM MASSA ========== */
+    .mass-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      padding: 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
 
-    /* ========== FILTROS E BUSCA ========== */
+    .mass-btn {
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mass-btn-danger { background: var(--red); color: #fff; }
+    .mass-btn-danger:hover { background: var(--red-hover); }
+    .mass-btn-success { background: var(--green); color: #000; }
+    .mass-btn-success:hover { background: var(--green-hover); }
+    .mass-btn-warning { background: var(--yellow); color: #000; }
+    .mass-btn-warning:hover { background: #d97706; }
+
+    /* ========== FILTROS ========== */
     .filters {
       display: flex;
       flex-wrap: wrap;
@@ -114,12 +137,7 @@
     }
 
     .search-box:focus-within { border-color: var(--purple); }
-
-    .search-box i {
-      color: var(--text-muted);
-      font-size: 0.8rem;
-    }
-
+    .search-box i { color: var(--text-muted); font-size: 0.8rem; }
     .search-box input {
       background: transparent;
       border: none;
@@ -129,14 +147,9 @@
       width: 100%;
       outline: none;
     }
-
     .search-box input::placeholder { color: var(--text-muted); }
 
-    .filter-buttons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
+    .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
 
     .filter-btn {
       background: var(--card-bg);
@@ -149,20 +162,13 @@
       cursor: pointer;
       transition: 0.2s;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
 
-    .filter-btn:hover {
-      border-color: var(--purple);
-      color: #fff;
-    }
-
-    .filter-btn.active {
-      background: var(--purple);
-      border-color: var(--purple);
-      color: #fff;
-    }
-
-    .filter-btn i { margin-right: 4px; }
+    .filter-btn:hover { border-color: var(--purple); color: #fff; }
+    .filter-btn.active { background: var(--purple); border-color: var(--purple); color: #fff; }
 
     /* ========== TABELA ========== */
     .table-wrapper {
@@ -177,16 +183,16 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 0.78rem;
-      min-width: 800px;
+      min-width: 950px;
     }
 
     thead { background: rgba(99, 102, 241, 0.08); }
 
     th {
-      padding: 14px 16px;
+      padding: 14px 12px;
       text-align: left;
       font-weight: 700;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--text-muted);
@@ -195,18 +201,14 @@
     }
 
     td {
-      padding: 14px 16px;
+      padding: 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       vertical-align: middle;
     }
 
     tr:hover td { background: rgba(99, 102, 241, 0.04); }
 
-    .user-cell {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .user-cell { display: flex; align-items: center; gap: 10px; }
 
     .user-avatar {
       width: 32px;
@@ -222,11 +224,7 @@
       flex-shrink: 0;
     }
 
-    .domain-cell {
-      color: var(--cyan);
-      font-weight: 600;
-      font-size: 0.8rem;
-    }
+    .domain-cell { color: var(--cyan); font-weight: 600; font-size: 0.8rem; }
 
     .plan-badge {
       display: inline-block;
@@ -241,24 +239,15 @@
     .plan-weekly { background: rgba(99, 102, 241, 0.15); color: var(--purple); }
     .plan-monthly { background: rgba(16, 185, 129, 0.15); color: var(--green); }
 
-    .status-active {
-      color: var(--green);
-      font-weight: 700;
-    }
-
-    .status-pending {
-      color: var(--yellow);
-      font-weight: 700;
-    }
-
-    .status-expired {
-      color: var(--red);
-      font-weight: 700;
-    }
+    .status-active { color: var(--green); font-weight: 700; font-size: 0.72rem; }
+    .status-pending { color: var(--yellow); font-weight: 700; font-size: 0.72rem; }
+    .status-expired { color: var(--red); font-weight: 700; font-size: 0.72rem; }
+    .status-revoked { color: var(--red); font-weight: 700; font-size: 0.72rem; text-decoration: line-through; }
 
     .status-renewal {
       color: var(--purple);
       font-weight: 700;
+      font-size: 0.72rem;
       animation: pulse 1.5s infinite;
     }
 
@@ -267,31 +256,57 @@
       50% { opacity: 0.5; }
     }
 
+    /* 🔥 TIMER */
+    .timer-cell {
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      font-size: 0.72rem;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--yellow);
+      text-align: center;
+      white-space: nowrap;
+      display: inline-block;
+      min-width: 90px;
+    }
+
+    .timer-cell.danger {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: var(--red);
+      animation: pulse 1.2s infinite;
+    }
+
+    .timer-cell.expired {
+      background: rgba(107, 114, 128, 0.1);
+      border-color: rgba(107, 114, 128, 0.3);
+      color: #6b7280;
+    }
+
     .date-cell {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: var(--text-muted);
       white-space: nowrap;
     }
 
-    .date-cell .today {
-      color: var(--green);
-      font-weight: 600;
-    }
-
+    .date-cell .today { color: var(--green); font-weight: 600; }
     .date-cell .old { color: var(--text-muted); }
 
     .actions {
       display: flex;
-      gap: 6px;
+      gap: 4px;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     .btn-thin {
       border: none;
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 6px;
       font-weight: 700;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       cursor: pointer;
       transition: 0.2s;
       display: inline-flex;
@@ -300,24 +315,19 @@
       white-space: nowrap;
     }
 
-    .btn-thin i { font-size: 0.6rem; }
-
-    .btn-approve {
-      background: var(--green);
-      color: #000;
-    }
+    .btn-approve { background: var(--green); color: #000; }
     .btn-approve:hover { background: var(--green-hover); }
 
-    .btn-renew {
-      background: var(--purple);
-      color: #fff;
-    }
+    .btn-renew { background: var(--purple); color: #fff; }
     .btn-renew:hover { background: var(--purple-hover); }
 
-    .btn-danger {
-      background: var(--red);
-      color: #fff;
-    }
+    .btn-revoke { background: var(--yellow); color: #000; }
+    .btn-revoke:hover { background: #d97706; }
+
+    .btn-reactivate { background: var(--cyan); color: #000; }
+    .btn-reactivate:hover { background: #0ea5e9; }
+
+    .btn-danger { background: var(--red); color: #fff; }
     .btn-danger:hover { background: var(--red-hover); }
 
     /* ========== EMPTY STATE ========== */
@@ -326,19 +336,9 @@
       padding: 48px 20px;
       color: var(--text-muted);
     }
+    .empty-state i { font-size: 3rem; margin-bottom: 12px; opacity: 0.3; }
+    .empty-state h3 { color: #fff; margin-bottom: 4px; }
 
-    .empty-state i {
-      font-size: 3rem;
-      margin-bottom: 12px;
-      opacity: 0.3;
-    }
-
-    .empty-state h3 {
-      color: #fff;
-      margin-bottom: 4px;
-    }
-
-    /* ========== NOTIFICAÇÃO ========== */
     .notification-badge {
       background: var(--red);
       color: #fff;
@@ -346,7 +346,6 @@
       border-radius: 10px;
       font-size: 0.55rem;
       font-weight: 700;
-      margin-left: 4px;
       animation: pulse 1s infinite;
     }
 
@@ -354,13 +353,14 @@
     @media (max-width: 768px) {
       body { padding: 12px; }
       .header-left h1 { font-size: 1rem; }
-      .header-right .stats { font-size: 0.65rem; gap: 8px; }
-      .header-right .stats span { padding: 2px 8px; }
+      .header-right .stats { font-size: 0.65rem; gap: 6px; }
+      .header-right .stats span { padding: 4px 8px; }
       .filter-btn { font-size: 0.6rem; padding: 6px 10px; }
-      .search-box input { font-size: 0.7rem; padding: 8px 8px; }
-      td, th { padding: 10px 12px; font-size: 0.7rem; }
+      td, th { padding: 8px; font-size: 0.68rem; }
       .user-avatar { width: 26px; height: 26px; font-size: 0.6rem; }
-      .btn-thin { font-size: 0.6rem; padding: 4px 8px; }
+      .btn-thin { font-size: 0.58rem; padding: 4px 8px; }
+      .timer-cell { font-size: 0.65rem; padding: 3px 6px; min-width: 70px; }
+      .mass-btn { font-size: 0.65rem; padding: 6px 12px; }
     }
 
     @media (max-width: 480px) {
@@ -368,20 +368,15 @@
       .header-right { width: 100%; justify-content: space-between; }
       .filters { flex-direction: column; }
       .search-box { width: 100%; }
+      .mass-actions { flex-direction: column; }
     }
 
-    /* ========== ANIMAÇÃO ========== */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     tbody tr { animation: fadeIn 0.3s ease forwards; }
-
-    tbody tr:nth-child(2) { animation-delay: 0.05s; }
-    tbody tr:nth-child(3) { animation-delay: 0.1s; }
-    tbody tr:nth-child(4) { animation-delay: 0.15s; }
-    tbody tr:nth-child(5) { animation-delay: 0.2s; }
   </style>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -389,7 +384,7 @@
 </head>
 <body>
 
-  <!-- ========== HEADER ========== -->
+  <!-- HEADER -->
   <div class="header">
     <div class="header-left">
       <span class="logo">👻</span>
@@ -399,17 +394,28 @@
     <div class="header-right">
       <div class="stats">
         <span id="totalLicenses"><i class="fas fa-hashtag"></i> 0</span>
-        <span id="activeCount"><i class="fas fa-check-circle" style="color: var(--green);"></i> 0 ativos</span>
-        <span id="pendingCount"><i class="fas fa-clock" style="color: var(--yellow);"></i> 0 pendentes</span>
-        <span id="renewalCount"><i class="fas fa-sync" style="color: var(--purple);"></i> 0 renovações</span>
+        <span id="activeCount"><i class="fas fa-check-circle" style="color: var(--green);"></i> 0</span>
+        <span id="pendingCount"><i class="fas fa-clock" style="color: var(--yellow);"></i> 0</span>
+        <span id="renewalCount"><i class="fas fa-sync" style="color: var(--purple);"></i> 0</span>
+        <span id="revokedCount"><i class="fas fa-ban" style="color: var(--red);"></i> 0</span>
       </div>
-      <button class="btn-thin btn-danger" onclick="deleteAll()">
-        <i class="fas fa-trash"></i> EXCLUIR TUDO
-      </button>
     </div>
   </div>
 
-  <!-- ========== FILTROS ========== -->
+  <!-- AÇÕES EM MASSA -->
+  <div class="mass-actions">
+    <button class="mass-btn mass-btn-danger" onclick="revokeAll()">
+      <i class="fas fa-ban"></i> REVOGAR TODAS
+    </button>
+    <button class="mass-btn mass-btn-success" onclick="reactivateAll()">
+      <i class="fas fa-sync"></i> REATIVAR TODAS (TEMPO ZERADO)
+    </button>
+    <button class="mass-btn mass-btn-warning" onclick="deleteAll()">
+      <i class="fas fa-trash"></i> EXCLUIR TUDO
+    </button>
+  </div>
+
+  <!-- FILTROS -->
   <div class="filters">
     <div class="search-box">
       <i class="fas fa-search"></i>
@@ -420,12 +426,12 @@
       <button class="filter-btn" data-filter="active" onclick="setFilter('active', this)"><i class="fas fa-check-circle" style="color: var(--green);"></i> Ativos</button>
       <button class="filter-btn" data-filter="pending" onclick="setFilter('pending', this)"><i class="fas fa-clock" style="color: var(--yellow);"></i> Pendentes</button>
       <button class="filter-btn" data-filter="renewal" onclick="setFilter('renewal', this)"><i class="fas fa-sync" style="color: var(--purple);"></i> Renovações <span class="notification-badge" id="renewalBadge" style="display:none;">0</span></button>
+      <button class="filter-btn" data-filter="revoked" onclick="setFilter('revoked', this)"><i class="fas fa-ban" style="color: var(--red);"></i> Revogados</button>
       <button class="filter-btn" data-filter="expired" onclick="setFilter('expired', this)"><i class="fas fa-exclamation-circle" style="color: var(--red);"></i> Expirados</button>
-      <button class="filter-btn" data-filter="today" onclick="setFilter('today', this)"><i class="fas fa-calendar-day" style="color: var(--cyan);"></i> Hoje</button>
     </div>
   </div>
 
-  <!-- ========== TABELA ========== -->
+  <!-- TABELA -->
   <div class="table-wrapper">
     <table>
       <thead>
@@ -434,8 +440,8 @@
           <th>Domínio</th>
           <th>Plano</th>
           <th>Status</th>
-          <th>Criado em</th>
-          <th>Expira</th>
+          <th>⏱️ Restante</th>
+          <th>Expira em</th>
           <th style="text-align: center;">Ações</th>
         </tr>
       </thead>
@@ -453,6 +459,14 @@
   let allLicenses = [];
   let currentFilter = 'all';
   let searchTerm = '';
+  let timerInterval = null;
+
+  const PLAN_DURATIONS = {
+    'Grátis': 600,
+    'Diário': 86400,
+    'Semanal': 604800,
+    'Mensal': 2592000
+  };
 
   // ========== CARREGAR DADOS ==========
   db.ref('licenses').on('value', snapshot => {
@@ -464,12 +478,9 @@
         allLicenses.push({ id: k, ...data[k] });
       });
 
-      // Ordenar: renovações primeiro, depois por data
       allLicenses.sort((a, b) => {
-        // Renovações primeiro
         if (a.renovacaoSolicitada && !b.renovacaoSolicitada) return -1;
         if (!a.renovacaoSolicitada && b.renovacaoSolicitada) return 1;
-        
         const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
         const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
         return dateB - dateA;
@@ -478,21 +489,74 @@
 
     updateStats();
     renderTable();
+    startTimerUpdates();
   });
 
-  // ========== UPDATE STATS ==========
+  // ========== TIMER EM TEMPO REAL ==========
+  function startTimerUpdates() {
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      document.querySelectorAll('.timer-cell[data-license-id]').forEach(el => {
+        const licId = el.getAttribute('data-license-id');
+        const lic = allLicenses.find(l => l.id === licId);
+        if (lic && lic.active === true) {
+          updateTimerCell(el, lic);
+        }
+      });
+    }, 1000);
+  }
+
+  function updateTimerCell(el, lic) {
+    const duration = PLAN_DURATIONS[lic.planName];
+    if (!duration) return;
+
+    const startTime = lic.spooferActivatedAt 
+      ? new Date(lic.spooferActivatedAt).getTime() 
+      : new Date(lic.createdAt).getTime();
+    
+    const elapsed = (Date.now() - startTime) / 1000;
+    const remaining = Math.max(0, duration - elapsed);
+
+    if (remaining <= 0) {
+      el.className = 'timer-cell expired';
+      el.innerHTML = '⏰ EXPIROU';
+      return;
+    }
+
+    el.innerHTML = formatTime(remaining);
+
+    if (remaining < 3600) {
+      el.className = 'timer-cell danger';
+    } else {
+      el.className = 'timer-cell';
+    }
+  }
+
+  function formatTime(seconds) {
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+
+    if (days > 0) return `${days}d ${hours}h ${mins}m`;
+    if (hours > 0) return `${hours}h ${mins}m ${secs}s`;
+    return `${mins}m ${secs}s`;
+  }
+
+  // ========== STATS ==========
   function updateStats() {
     const total = allLicenses.length;
     const active = allLicenses.filter(l => l.active === true).length;
-    const pending = allLicenses.filter(l => l.active !== true && !l.renovacaoSolicitada).length;
+    const pending = allLicenses.filter(l => l.active !== true && !l.renovacaoSolicitada && !l.revogadaEm).length;
     const renewals = allLicenses.filter(l => l.renovacaoSolicitada === true).length;
+    const revoked = allLicenses.filter(l => l.revogadaEm).length;
 
     document.getElementById('totalLicenses').innerHTML = `<i class="fas fa-hashtag"></i> ${total}`;
-    document.getElementById('activeCount').innerHTML = `<i class="fas fa-check-circle" style="color: var(--green);"></i> ${active} ativos`;
-    document.getElementById('pendingCount').innerHTML = `<i class="fas fa-clock" style="color: var(--yellow);"></i> ${pending} pendentes`;
-    document.getElementById('renewalCount').innerHTML = `<i class="fas fa-sync" style="color: var(--purple);"></i> ${renewals} renovações`;
+    document.getElementById('activeCount').innerHTML = `<i class="fas fa-check-circle" style="color: var(--green);"></i> ${active}`;
+    document.getElementById('pendingCount').innerHTML = `<i class="fas fa-clock" style="color: var(--yellow);"></i> ${pending}`;
+    document.getElementById('renewalCount').innerHTML = `<i class="fas fa-sync" style="color: var(--purple);"></i> ${renewals}`;
+    document.getElementById('revokedCount').innerHTML = `<i class="fas fa-ban" style="color: var(--red);"></i> ${revoked}`;
 
-    // Atualizar badge de renovações
     const badge = document.getElementById('renewalBadge');
     if (badge) {
       if (renewals > 0) {
@@ -504,14 +568,13 @@
     }
   }
 
-  // ========== RENDER TABELA ==========
+  // ========== RENDER ==========
   function renderTable() {
     const tbody = document.getElementById('admTable');
     tbody.innerHTML = '';
 
     let filtered = [...allLicenses];
 
-    // Filtrar por busca
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase().trim();
       filtered = filtered.filter(item => {
@@ -522,25 +585,18 @@
       });
     }
 
-    // Filtrar por status
     if (currentFilter === 'active') {
       filtered = filtered.filter(item => item.active === true);
     } else if (currentFilter === 'pending') {
-      filtered = filtered.filter(item => item.active !== true && !item.renovacaoSolicitada);
+      filtered = filtered.filter(item => item.active !== true && !item.renovacaoSolicitada && !item.revogadaEm);
     } else if (currentFilter === 'renewal') {
       filtered = filtered.filter(item => item.renovacaoSolicitada === true);
+    } else if (currentFilter === 'revoked') {
+      filtered = filtered.filter(item => item.revogadaEm);
     } else if (currentFilter === 'expired') {
       filtered = filtered.filter(item => {
-        if (item.active !== true && item.expiresAt) {
+        if (item.active !== true && item.expiresAt && !item.revogadaEm) {
           return new Date(item.expiresAt).getTime() < Date.now();
-        }
-        return false;
-      });
-    } else if (currentFilter === 'today') {
-      const today = new Date().toDateString();
-      filtered = filtered.filter(item => {
-        if (item.createdAt) {
-          return new Date(item.createdAt).toDateString() === today;
         }
         return false;
       });
@@ -553,7 +609,7 @@
             <div class="empty-state">
               <i class="fas fa-inbox"></i>
               <h3>Nenhuma licença encontrada</h3>
-              <p>${allLicenses.length === 0 ? 'Ainda não há licenças cadastradas.' : 'Tente ajustar os filtros de busca.'}</p>
+              <p>${allLicenses.length === 0 ? 'Ainda não há licenças cadastradas.' : 'Tente ajustar os filtros.'}</p>
             </div>
           </td>
         </tr>
@@ -563,82 +619,72 @@
 
     filtered.forEach(item => {
       const tr = document.createElement('tr');
-      
-      // 🔥 VERIFICAR SE É RENOVAÇÃO
       const isRenewal = item.renovacaoSolicitada === true;
-      
-      // Status
+      const isRevoked = !!item.revogadaEm;
+      const isExpired = item.active !== true && item.expiresAt && new Date(item.expiresAt).getTime() < Date.now() && !isRevoked;
+
       let statusHtml = '';
-      let statusClass = '';
       
       if (isRenewal) {
         statusHtml = '<span class="status-renewal"><i class="fas fa-sync fa-spin"></i> RENOVAÇÃO</span>';
-        statusClass = 'status-renewal';
+      } else if (isRevoked) {
+        statusHtml = '<span class="status-revoked"><i class="fas fa-ban"></i> REVOGADO</span>';
       } else if (item.active === true) {
         statusHtml = '<span class="status-active"><i class="fas fa-check-circle"></i> ATIVO</span>';
-        statusClass = 'status-active';
-      } else if (item.expiresAt && new Date(item.expiresAt).getTime() < Date.now()) {
+      } else if (isExpired) {
         statusHtml = '<span class="status-expired"><i class="fas fa-exclamation-circle"></i> EXPIRADO</span>';
-        statusClass = 'status-expired';
       } else {
         statusHtml = '<span class="status-pending"><i class="fas fa-clock"></i> PENDENTE</span>';
-        statusClass = 'status-pending';
       }
 
-      // Plano badge
       let planClass = 'plan-free';
       if (item.planName === 'Diário') planClass = 'plan-daily';
       else if (item.planName === 'Semanal') planClass = 'plan-weekly';
       else if (item.planName === 'Mensal') planClass = 'plan-monthly';
 
-      // Avatar
       const initials = item.userName ? item.userName.substring(0, 2).toUpperCase() : '??';
-
-      // Datas
-      const createdAt = item.createdAt ? new Date(item.createdAt) : null;
       const expiresAt = item.expiresAt ? new Date(item.expiresAt) : null;
-      const today = new Date();
-
-      let createdHtml = '<span class="date-cell old">--</span>';
-      if (createdAt) {
-        const isToday = createdAt.toDateString() === today.toDateString();
-        createdHtml = `
-          <span class="date-cell">
-            ${isToday ? '<span class="today"><i class="fas fa-star"></i> HOJE</span>' : ''}
-            <span class="${isToday ? 'today' : 'old'}">${createdAt.toLocaleDateString()}</span>
-            <br><span style="font-size:0.6rem; color: var(--text-muted);">${createdAt.toLocaleTimeString()}</span>
-          </span>
-        `;
-      }
 
       let expiresHtml = '<span class="date-cell old">--</span>';
       if (expiresAt) {
-        const isExpired = expiresAt.getTime() < today.getTime();
+        const isExp = expiresAt.getTime() < Date.now();
         expiresHtml = `
           <span class="date-cell">
-            <span style="color: ${isExpired ? 'var(--red)' : 'var(--green)'};">
-              ${isExpired ? '⚠️' : '✅'} ${expiresAt.toLocaleDateString()}
+            <span style="color: ${isExp ? 'var(--red)' : 'var(--green)'}; font-weight: 700;">
+              ${expiresAt.toLocaleDateString()}
             </span>
-            <br><span style="font-size:0.6rem; color: var(--text-muted);">${expiresAt.toLocaleTimeString()}</span>
+            <br><span style="font-size:0.6rem;">${expiresAt.toLocaleTimeString()}</span>
           </span>
         `;
       }
 
-      // 🔥 AÇÕES
+      let timerHtml = '<span class="timer-cell expired">--</span>';
+      if (item.active === true) {
+        timerHtml = `<span class="timer-cell" data-license-id="${item.id}">...</span>`;
+      }
+
+      // AÇÕES
       let actionsHtml = '';
       
       if (isRenewal) {
-        // 🔥 BOTÃO DE APROVAR RENOVAÇÃO (MANTÉM O MESMO ID)
         actionsHtml = `
-          <button class="btn-thin btn-renew" onclick="approveRenewal('${item.id}', '${item.planName}')">
-            <i class="fas fa-sync"></i> APROVAR RENOVAÇÃO
+          <button class="btn-thin btn-renew" onclick="approveRenewal('${item.id}')">
+            <i class="fas fa-check"></i> APROVAR
           </button>
           <button class="btn-thin btn-danger" onclick="rejectRenewal('${item.id}')">
             <i class="fas fa-times"></i>
           </button>
         `;
+      } else if (isRevoked) {
+        actionsHtml = `
+          <button class="btn-thin btn-reactivate" onclick="reactivate('${item.id}')">
+            <i class="fas fa-sync"></i> REATIVAR
+          </button>
+          <button class="btn-thin btn-danger" onclick="del('${item.id}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
       } else if (!item.active) {
-        // 🔥 BOTÃO DE APROVAR NOVA LICENÇA
         actionsHtml = `
           <button class="btn-thin btn-approve" onclick="approve('${item.id}', '${item.planName}')">
             <i class="fas fa-check"></i> APROVAR
@@ -648,8 +694,10 @@
           </button>
         `;
       } else {
-        // 🔥 LICENÇA ATIVA - APENAS EXCLUIR
         actionsHtml = `
+          <button class="btn-thin btn-revoke" onclick="revoke('${item.id}')">
+            <i class="fas fa-ban"></i> REVOGAR
+          </button>
           <button class="btn-thin btn-danger" onclick="del('${item.id}')">
             <i class="fas fa-trash"></i>
           </button>
@@ -664,17 +712,24 @@
           </div>
         </td>
         <td class="domain-cell">${item.domain || '--'}</td>
-        <td><span class="plan-badge ${planClass}">${item.planName} (${item.price} MT)</span></td>
-        <td class="${statusClass}">${statusHtml}</td>
-        <td>${createdHtml}</td>
+        <td><span class="plan-badge ${planClass}">${item.planName}</span></td>
+        <td>${statusHtml}</td>
+        <td>${timerHtml}</td>
         <td>${expiresHtml}</td>
         <td>
-          <div class="actions" style="justify-content: center;">
+          <div class="actions">
             ${actionsHtml}
           </div>
         </td>
       `;
       tbody.appendChild(tr);
+    });
+
+    // Atualizar timers
+    document.querySelectorAll('.timer-cell[data-license-id]').forEach(el => {
+      const licId = el.getAttribute('data-license-id');
+      const lic = allLicenses.find(l => l.id === licId);
+      if (lic) updateTimerCell(el, lic);
     });
   }
 
@@ -691,109 +746,158 @@
     renderTable();
   }
 
-  // ========== APROVAR NOVA LICENÇA ==========
+  // ========== APROVAR ==========
   function approve(id, planName) {
-    let hours = 24;
-    if (planName.includes("Semanal")) hours = 168;
-    if (planName.includes("Mensal")) hours = 720;
-
-    const expiresAt = new Date(Date.now() + hours * 3600 * 1000).toISOString();
+    const seconds = PLAN_DURATIONS[planName] || 86400;
+    const expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
+    
     db.ref('licenses/' + id).update({ 
       active: true, 
       expiresAt: expiresAt,
-      spooferActivatedAt: new Date().toISOString()
+      spooferActivatedAt: null,
+      expiredAt: null,
+      revogadaEm: null,
+      approvedAt: new Date().toISOString()
     })
-      .then(() => {
-        console.log(`✅ Licença ${id} aprovada`);
-        alert(`✅ Licença aprovada! Plano: ${planName}`);
-      })
-      .catch(err => console.error('Erro ao aprovar:', err));
+    .then(() => alert(`✅ Licença aprovada! Plano: ${planName}`))
+    .catch(err => alert('❌ Erro: ' + err.message));
   }
 
-  // ========== 🔥 APROVAR RENOVAÇÃO (MANTÉM O MESMO ID) ==========
-  function approveRenewal(id, planName) {
-    // Calcular nova expiração
-    let hours = 24;
-    if (planName.includes("Semanal")) hours = 168;
-    if (planName.includes("Mensal")) hours = 720;
+  // ========== APROVAR RENOVAÇÃO ==========
+  function approveRenewal(id) {
+    const lic = allLicenses.find(l => l.id === id);
+    if (!lic) return;
 
-    const expiresAt = new Date(Date.now() + hours * 3600 * 1000).toISOString();
+    const seconds = PLAN_DURATIONS[lic.planName] || 86400;
+    const expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
 
-    // 🔥 ATUALIZA APENAS OS CAMPOS NECESSÁRIOS, MANTENDO O MESMO ID E DOMÍNIO
     db.ref('licenses/' + id).update({
-      active: true,                          // Ativa a licença
-      expiresAt: expiresAt,                  // Nova data de expiração
-      spooferActivatedAt: new Date().toISOString(),
-      renovacaoSolicitada: false,            // Remove o pedido de renovação
-      renovacaoAprovadaEm: new Date().toISOString(), // Marca quando foi aprovada
-      ultimaRenovacao: new Date().toISOString()      // Última renovação
+      active: true,
+      expiresAt: expiresAt,
+      spooferActivatedAt: null,
+      createdAt: new Date().toISOString(),
+      renovacaoSolicitada: false,
+      renovacaoAprovadaEm: new Date().toISOString(),
+      expiredAt: null
     })
-      .then(() => {
-        console.log(`✅ Renovação aprovada para ${id}`);
-        alert(`✅ Renovação aprovada!\nPlano: ${planName}\nNovo vencimento: ${new Date(expiresAt).toLocaleString()}`);
-      })
-      .catch(err => {
-        console.error('Erro ao aprovar renovação:', err);
-        alert('❌ Erro ao aprovar renovação: ' + err.message);
-      });
+    .then(() => alert(`✅ Renovação aprovada! Plano: ${lic.planName}`))
+    .catch(err => alert('❌ Erro: ' + err.message));
   }
 
-  // ========== 🔥 REJEITAR RENOVAÇÃO ==========
+  // ========== REJEITAR RENOVAÇÃO ==========
   function rejectRenewal(id) {
-    if (!confirm("Rejeitar esta renovação? O cliente continuará com o plano atual.")) return;
+    if (!confirm("Rejeitar esta renovação?")) return;
 
     db.ref('licenses/' + id).update({
       renovacaoSolicitada: false,
       renovacaoRejeitadaEm: new Date().toISOString()
     })
-      .then(() => {
-        console.log(`❌ Renovação rejeitada para ${id}`);
-        alert('❌ Renovação rejeitada.');
-      })
-      .catch(err => {
-        console.error('Erro ao rejeitar renovação:', err);
-        alert('❌ Erro ao rejeitar renovação: ' + err.message);
-      });
+    .then(() => alert('❌ Renovação rejeitada.'))
+    .catch(err => alert('❌ Erro: ' + err.message));
+  }
+
+  // ========== 🔥 REVOGAR INDIVIDUAL ==========
+  function revoke(id) {
+    const lic = allLicenses.find(l => l.id === id);
+    if (!lic) return;
+
+    if (!confirm(`REVOGAR a licença de ${lic.domain}?\n\nO usuário perderá o acesso imediatamente.`)) return;
+
+    db.ref('licenses/' + id).update({
+      active: false,
+      revogadaEm: new Date().toISOString(),
+      revogadaMotivo: 'Revogada pelo Administrador',
+      expiredAt: new Date().toISOString()
+    })
+    .then(() => alert(`✅ Licença de ${lic.domain} REVOGADA!`))
+    .catch(err => alert('❌ Erro: ' + err.message));
+  }
+
+  // ========== 🔥 REATIVAR INDIVIDUAL ==========
+  function reactivate(id) {
+    const lic = allLicenses.find(l => l.id === id);
+    if (!lic) return;
+
+    const seconds = PLAN_DURATIONS[lic.planName] || 86400;
+    const expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
+    const agora = new Date().toISOString();
+
+    if (!confirm(`REATIVAR a licença de ${lic.domain}?\n\nO tempo será zerado.`)) return;
+
+    db.ref('licenses/' + id).update({
+      active: true,
+      expiresAt: expiresAt,
+      createdAt: agora,
+      spooferActivatedAt: null,
+      expiredAt: null,
+      revogadaEm: null,
+      reativadaEm: agora
+    })
+    .then(() => alert(`✅ Licença de ${lic.domain} REATIVADA!`))
+    .catch(err => alert('❌ Erro: ' + err.message));
+  }
+
+  // ========== 🔥 REVOGAR TODAS ==========
+  function revokeAll() {
+    if (!confirm(`🚨 REVOGAR TODAS AS LICENÇAS?\n\nTodos perderão acesso imediatamente.`)) return;
+    if (!confirm(`⚠️ TEM CERTEZA? Ação irreversível!`)) return;
+
+    const updates = {};
+    const agora = new Date().toISOString();
+    
+    allLicenses.forEach(lic => {
+      updates[`${lic.id}/active`] = false;
+      updates[`${lic.id}/revogadaEm`] = agora;
+      updates[`${lic.id}/revogadaMotivo`] = 'Revogação em massa';
+    });
+
+    db.ref('licenses').update(updates)
+    .then(() => alert(`✅ ${allLicenses.length} licenças REVOGADAS!`))
+    .catch(err => alert('❌ Erro: ' + err.message));
+  }
+
+  // ========== 🔥 REATIVAR TODAS ==========
+  function reactivateAll() {
+    if (!confirm(`♻️ REATIVAR TODAS?\n\nO tempo de cada plano será ZERADO.`)) return;
+
+    const updates = {};
+    const agora = new Date().toISOString();
+    
+    allLicenses.forEach(lic => {
+      const seconds = PLAN_DURATIONS[lic.planName] || 86400;
+      const expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
+      
+      updates[`${lic.id}/active`] = true;
+      updates[`${lic.id}/expiresAt`] = expiresAt;
+      updates[`${lic.id}/createdAt`] = agora;
+      updates[`${lic.id}/spooferActivatedAt`] = null;
+      updates[`${lic.id}/expiredAt`] = null;
+      updates[`${lic.id}/revogadaEm`] = null;
+      updates[`${lic.id}/reativadaEm`] = agora;
+    });
+
+    db.ref('licenses').update(updates)
+    .then(() => alert(`✅ ${allLicenses.length} licenças REATIVADAS!`))
+    .catch(err => alert('❌ Erro: ' + err.message));
   }
 
   // ========== EXCLUIR ==========
   function del(id) {
-    if (confirm("Tem certeza que deseja excluir esta licença?")) {
+    if (confirm("Excluir esta licença permanentemente?")) {
       db.ref('licenses/' + id).remove()
-        .then(() => console.log(`🗑️ Licença ${id} removida`))
-        .catch(err => console.error('Erro ao excluir:', err));
+        .then(() => console.log(`🗑️ ${id} removida`))
+        .catch(err => console.error('Erro:', err));
     }
   }
 
   function deleteAll() {
-    if (confirm("🚨 ATENÇÃO! Isso vai APAGAR TODAS as licenças. Tem certeza?")) {
-      db.ref('licenses').remove()
-        .then(() => console.log('🗑️ Todas as licenças removidas'))
-        .catch(err => console.error('Erro ao excluir tudo:', err));
-    }
-  }
+    if (!confirm("🚨 APAGAR TODAS as licenças?")) return;
+    if (!confirm("⚠️ ÚLTIMA CHANCE! IRREVERSÍVEL!")) return;
 
-  // Atualizar a cada 30 segundos
-  setInterval(() => {
-    db.ref('licenses').once('value', snapshot => {
-      const data = snapshot.val();
-      allLicenses = [];
-      if (data) {
-        Object.keys(data).forEach(k => {
-          allLicenses.push({ id: k, ...data[k] });
-        });
-        allLicenses.sort((a, b) => {
-          if (a.renovacaoSolicitada && !b.renovacaoSolicitada) return -1;
-          if (!a.renovacaoSolicitada && b.renovacaoSolicitada) return 1;
-          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-          return dateB - dateA;
-        });
-      }
-      updateStats();
-      renderTable();
-    });
-  }, 30000);
+    db.ref('licenses').remove()
+      .then(() => alert('🗑️ Todas as licenças removidas'))
+      .catch(err => console.error('Erro:', err));
+  }
 </script>
 </body>
 </html>
