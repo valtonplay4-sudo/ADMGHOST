@@ -3,304 +3,240 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anúncio Fantasma | Portal do Cliente</title>
-  
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👻</text></svg>">
+  <title>ADM | Anúncio Fantasma</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     :root {
       --bg: #030712;
       --card-bg: rgba(15, 23, 42, 0.85);
-      --border: rgba(255, 255, 255, 0.1);
+      --border: rgba(255, 255, 255, 0.08);
       --purple: #6366f1;
       --purple-hover: #4f46e5;
       --cyan: #38bdf8;
       --green: #10b981;
+      --green-hover: #059669;
       --yellow: #f59e0b;
       --red: #ef4444;
+      --red-hover: #dc2626;
       --gold: #fbbf24;
       --text-muted: #94a3b8;
+      --text-white: #f8fafc;
     }
 
     * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; }
-    body { background: var(--bg); color: #f8fafc; min-height: 100vh; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--text-white); min-height: 100vh; padding: 24px; }
 
-    /* ========== AUTH ========== */
-    #authOverlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at center, #1e1b4b 0%, #030712 100%);
-      display: none; justify-content: center; align-items: center; z-index: 9999; padding: 16px;
+    /* ========== HEADER ========== */
+    .header {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px; margin-bottom: 24px;
+      padding-bottom: 16px; border-bottom: 1px solid var(--border);
     }
-    #authOverlay.active { display: flex; }
-
-    .auth-card {
-      background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
-      padding: 24px; width: 100%; max-width: 400px; backdrop-filter: blur(16px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-left .logo { font-size: 2rem; }
+    .header-left h1 { font-size: 1.3rem; font-weight: 800; }
+    .header-left h1 span { color: var(--cyan); }
+    .header-left .badge {
+      background: var(--purple); padding: 2px 10px;
+      border-radius: 12px; font-size: 0.6rem;
+      font-weight: 700; text-transform: uppercase;
     }
-    .auth-logo { text-align: center; font-size: 2.5rem; margin-bottom: 4px; }
-    .auth-title { text-align: center; font-size: 1.3rem; font-weight: 800; margin-bottom: 2px; }
-    .auth-subtitle { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 20px; }
-
-    .auth-tabs {
-      display: flex; gap: 8px; margin-bottom: 20px;
-      background: rgba(3, 7, 18, 0.5); border-radius: 12px; padding: 4px;
-      border: 1px solid var(--border);
+    .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .header-right .stats {
+      display: flex; gap: 10px; font-size: 0.72rem;
+      color: var(--text-muted); flex-wrap: wrap;
     }
-    .auth-tab {
-      flex: 1; padding: 10px; border: none; border-radius: 8px;
-      background: transparent; color: var(--text-muted);
-      font-weight: 700; font-size: 0.75rem; cursor: pointer; transition: 0.2s;
+    .header-right .stats span {
+      background: var(--card-bg); padding: 5px 12px;
+      border-radius: 8px; border: 1px solid var(--border);
+      display: inline-flex; align-items: center; gap: 5px;
     }
-    .auth-tab.active { background: var(--purple); color: #fff; }
 
-    .input-group { margin-bottom: 14px; text-align: left; }
-    .input-group label { display: block; font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
-    .input-field {
-      width: 100%; background: rgba(3, 7, 18, 0.8); border: 1px solid var(--border);
-      padding: 10px 14px; border-radius: 10px; color: #fff; font-size: 0.85rem; outline: none;
-    }
-    .input-field:focus { border-color: var(--purple); }
-
-    .btn-action {
-      border: none; padding: 10px 16px; border-radius: 10px; font-weight: 700;
-      font-size: 0.82rem; cursor: pointer; display: flex; justify-content: center;
-      align-items: center; gap: 8px; width: 100%; transition: 0.2s; margin-top: 6px;
-    }
-    .btn-purple { background: var(--purple); color: #fff; }
-    .btn-purple:hover { background: var(--purple-hover); }
-    .btn-google { background: #ffffff; color: #0f172a; font-weight: 800; margin-top: 10px; }
-
-    .auth-link { text-align: center; margin-top: 14px; font-size: 0.72rem; }
-    .auth-link a { color: var(--cyan); text-decoration: none; font-weight: 600; cursor: pointer; }
-    .auth-link a:hover { text-decoration: underline; }
-
-    #recoverArea {
-      display: none; margin-top: 10px; padding: 14px;
-      background: rgba(99, 102, 241, 0.08); border: 1px solid rgba(99, 102, 241, 0.2);
+    /* ========== AÇÕES EM MASSA ========== */
+    .mass-actions {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-bottom: 20px; padding: 14px;
+      background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 12px;
     }
-    #recoverArea.active { display: block; }
-
-    /* ========== LAYOUT ========== */
-    .app-layout { display: flex; min-height: 100vh; }
-    .sidebar {
-      width: 260px; background: rgba(15, 23, 42, 0.95); border-right: 1px solid var(--border);
-      padding: 20px 14px; display: flex; flex-direction: column; justify-content: space-between;
-      position: fixed; top: 0; bottom: 0; left: 0; z-index: 100; transition: transform 0.3s ease;
+    .mass-btn {
+      border: none; padding: 8px 16px; border-radius: 8px;
+      font-weight: 700; font-size: 0.72rem; cursor: pointer;
+      transition: 0.2s; display: inline-flex; align-items: center; gap: 6px;
     }
+    .mass-btn-danger { background: var(--red); color: #fff; }
+    .mass-btn-danger:hover { background: var(--red-hover); }
+    .mass-btn-success { background: var(--green); color: #000; }
+    .mass-btn-success:hover { background: var(--green-hover); }
+    .mass-btn-warning { background: var(--yellow); color: #000; }
+    .mass-btn-warning:hover { background: #d97706; }
 
-    .brand-box { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; padding: 0 4px; margin-top: 4px; }
-    .nav-menu { display: flex; flex-direction: column; gap: 6px; }
-    .nav-btn {
-      background: transparent; border: 1px solid transparent; color: var(--text-muted);
-      padding: 10px 12px; border-radius: 10px; font-weight: 700; font-size: 0.82rem;
-      text-align: left; cursor: pointer; display: flex; align-items: center; gap: 8px; width: 100%;
+    /* ========== FILTROS ========== */
+    .filters {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      margin-bottom: 20px; align-items: center;
     }
-    .nav-btn:hover, .nav-btn.active {
-      background: rgba(99, 102, 241, 0.15); color: var(--cyan); border-color: rgba(99, 102, 241, 0.3);
+    .search-box {
+      flex: 1; min-width: 200px;
+      display: flex; align-items: center;
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0 12px;
     }
-
-    .main-content { flex: 1; padding: 24px; margin-left: 260px; }
-    .tab-page { display: none; }
-    .tab-page.active { display: block; }
-
-    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
-    .domain-card { 
-      background: rgba(3, 7, 18, 0.6); 
-      border: 1px solid var(--border); 
-      border-radius: 12px; 
-      padding: 16px; 
-      margin-bottom: 12px; 
+    .search-box:focus-within { border-color: var(--purple); }
+    .search-box i { color: var(--text-muted); font-size: 0.8rem; }
+    .search-box input {
+      background: transparent; border: none; padding: 10px;
+      color: #fff; font-size: 0.8rem; width: 100%; outline: none;
     }
-    .domain-card.permanent-card {
-      border: 1px solid rgba(251, 191, 36, 0.4);
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(3, 7, 18, 0.6) 100%);
+    .search-box input::placeholder { color: var(--text-muted); }
+    .filter-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-btn {
+      background: var(--card-bg); border: 1px solid var(--border);
+      color: var(--text-muted); padding: 8px 14px;
+      border-radius: 8px; font-size: 0.7rem; font-weight: 600;
+      cursor: pointer; transition: 0.2s; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px;
     }
-
-    .mobile-header { display: none; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--card-bg); }
-    
-    .mobile-overlay {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7); z-index: 99;
-    }
-    .mobile-overlay.active { display: block; }
-
-    .countdown-timer {
-      font-size: 1.2rem; font-weight: 800; color: var(--yellow);
-      font-family: monospace; padding: 4px 12px; background: rgba(245,158,11,0.1);
-      border-radius: 8px; border: 1px solid rgba(245,158,11,0.3);
-      display: inline-block;
+    .filter-btn:hover { border-color: var(--purple); color: #fff; }
+    .filter-btn.active { background: var(--purple); border-color: var(--purple); color: #fff; }
+    .filter-btn.active[data-filter="permanent"] {
+      background: var(--gold); border-color: var(--gold); color: #030712;
     }
 
-    .permanent-timer {
-      font-size: 1rem; font-weight: 800; color: var(--gold);
-      padding: 6px 14px; background: rgba(251, 191, 36, 0.1);
-      border-radius: 8px; border: 1px solid rgba(251, 191, 36, 0.4);
-      display: inline-flex; align-items: center; gap: 6px;
+    /* ========== TABELA ========== */
+    .table-wrapper {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; overflow-x: auto;
+    }
+    table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.78rem; min-width: 1000px;
+    }
+    thead { background: rgba(99, 102, 241, 0.08); }
+    th {
+      padding: 14px 12px; text-align: left;
+      font-weight: 700; font-size: 0.68rem;
+      text-transform: uppercase; color: var(--text-muted);
+      border-bottom: 1px solid var(--border); white-space: nowrap;
+    }
+    td {
+      padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      vertical-align: middle;
+    }
+    tr:hover td { background: rgba(99, 102, 241, 0.04); }
+    tr.clickable { cursor: pointer; }
+    tr.clickable:hover td { background: rgba(99, 102, 241, 0.08); }
+    tr.permanent-row td { background: rgba(251, 191, 36, 0.03); }
+
+    .user-cell { display: flex; align-items: center; gap: 10px; }
+    .user-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--purple); display: flex; align-items: center;
+      justify-content: center; font-weight: 700; font-size: 0.7rem;
+      color: #fff; flex-shrink: 0;
+    }
+    .domain-cell { color: var(--cyan); font-weight: 600; font-size: 0.8rem; }
+    .domain-cell.permanent { color: var(--gold); }
+
+    .plan-badge {
+      display: inline-block; padding: 2px 10px;
+      border-radius: 12px; font-size: 0.65rem; font-weight: 700;
+    }
+    .plan-free { background: rgba(245, 158, 11, 0.15); color: var(--yellow); }
+    .plan-daily { background: rgba(56, 189, 248, 0.15); color: var(--cyan); }
+    .plan-weekly { background: rgba(99, 102, 241, 0.15); color: var(--purple); }
+    .plan-monthly { background: rgba(16, 185, 129, 0.15); color: var(--green); }
+    .plan-permanent {
+      background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
+      color: #030712;
+      font-weight: 900;
     }
 
-    .expiry-warning {
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      border-radius: 10px;
-      padding: 10px 14px;
-      margin: 10px 0;
-      font-size: 0.78rem;
-      color: var(--red);
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      animation: pulse 2s infinite;
-    }
-    .expiry-warning.warning-yellow {
-      background: rgba(245, 158, 11, 0.1);
-      border-color: rgba(245, 158, 11, 0.3);
-      color: var(--yellow);
+    .status-active { color: var(--green); font-weight: 700; font-size: 0.72rem; }
+    .status-pending { color: var(--yellow); font-weight: 700; font-size: 0.72rem; }
+    .status-expired { color: var(--red); font-weight: 700; font-size: 0.72rem; }
+    .status-revoked { color: var(--red); font-weight: 700; font-size: 0.72rem; text-decoration: line-through; }
+    .status-renewal {
+      color: var(--purple); font-weight: 700; font-size: 0.72rem;
+      animation: pulse 1.5s infinite;
     }
 
     @keyframes pulse {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
+      50% { opacity: 0.5; }
     }
 
-    .free-limit-info {
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 16px;
-      font-size: 0.82rem;
-      color: var(--cyan);
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .timer-cell {
+      font-family: 'Courier New', monospace; font-weight: 700;
+      font-size: 0.72rem; padding: 4px 8px; border-radius: 6px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--yellow); text-align: center;
+      white-space: nowrap; display: inline-block; min-width: 90px;
     }
-    .free-limit-info.danger {
+    .timer-cell.danger {
       background: rgba(239, 68, 68, 0.1);
-      border-color: rgba(239, 68, 68, 0.35);
-      color: var(--red);
-      animation: pulse 2s infinite;
+      border-color: rgba(239, 68, 68, 0.3);
+      color: var(--red); animation: pulse 1.2s infinite;
     }
-    .free-limit-info i { font-size: 1.2rem; }
-    .free-limit-info .count {
-      background: rgba(56, 189, 248, 0.2);
-      padding: 2px 10px;
-      border-radius: 20px;
-      font-weight: 900;
+    .timer-cell.expired {
+      background: rgba(107, 114, 128, 0.1);
+      border-color: rgba(107, 114, 128, 0.3);
+      color: #6b7280;
     }
-    .free-limit-info.danger .count {
-      background: rgba(239, 68, 68, 0.25);
-    }
-
-    .payment-info {
-      background: rgba(16,185,129,0.05); border: 1px solid rgba(16,185,129,0.2);
-      border-radius: 12px; padding: 16px; margin: 12px 0;
-    }
-    .payment-header {
-      display: flex; align-items: center; gap: 8px;
-      margin-bottom: 12px; font-weight: 800; font-size: 0.85rem; color: var(--green);
-    }
-    .payment-row {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 8px 0; border-bottom: 1px solid rgba(16, 185, 129, 0.1);
-    }
-    .payment-row:last-child { border-bottom: none; }
-    .payment-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 600; }
-    .payment-value { font-size: 0.9rem; font-weight: 800; color: var(--green); }
-    .payment-number { font-size: 1.1rem; font-weight: 800; color: var(--green); letter-spacing: 1px; }
-
-    .free-badge {
-      background: rgba(245,158,11,0.2); color: var(--yellow);
-      padding: 2px 10px; border-radius: 12px; font-size: 0.6rem;
-      font-weight: 800; text-transform: uppercase;
-    }
-    .permanent-badge {
-      background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
-      color: #030712;
-      padding: 3px 10px; border-radius: 12px; font-size: 0.6rem;
-      font-weight: 900; text-transform: uppercase;
-      display: inline-flex; align-items: center; gap: 4px;
+    .timer-cell.permanent {
+      background: rgba(251, 191, 36, 0.1);
+      border-color: rgba(251, 191, 36, 0.4);
+      color: var(--gold);
+      min-width: 130px;
     }
 
-    .script-box {
-      background: #0a0a0a; padding: 10px; border-radius: 6px;
-      font-family: 'Courier New', monospace; font-size: 0.8rem;
-      color: #00ff88; word-break: break-all;
-      border: 1px solid rgba(0,255,136,0.2);
-      margin: 8px 0; overflow-x: auto; white-space: nowrap;
-    }
+    .date-cell { font-size: 0.68rem; color: var(--text-muted); white-space: nowrap; }
+    .date-cell .label { color: var(--text-muted); font-weight: 600; font-size: 0.6rem; }
 
-    .copy-btn {
-      background: var(--purple); color: #fff; border: none;
-      padding: 6px 14px; border-radius: 6px; font-weight: 700;
-      font-size: 0.7rem; cursor: pointer; transition: 0.2s;
-      display: inline-flex; align-items: center; gap: 6px;
+    .actions { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+    .btn-thin {
+      border: none; padding: 6px 10px; border-radius: 6px;
+      font-weight: 700; font-size: 0.62rem; cursor: pointer;
+      transition: 0.2s; display: inline-flex; align-items: center;
+      gap: 4px; white-space: nowrap;
     }
-    .copy-btn:hover { background: var(--purple-hover); }
-    .copy-btn.copied { background: var(--green); }
+    .btn-approve { background: var(--green); color: #000; }
+    .btn-approve:hover { background: var(--green-hover); }
+    .btn-renew { background: var(--purple); color: #fff; }
+    .btn-renew:hover { background: var(--purple-hover); }
+    .btn-revoke { background: var(--yellow); color: #000; }
+    .btn-revoke:hover { background: #d97706; }
+    .btn-reactivate { background: var(--cyan); color: #000; }
+    .btn-reactivate:hover { background: #0ea5e9; }
+    .btn-danger { background: var(--red); color: #fff; }
+    .btn-danger:hover { background: var(--red-hover); }
 
-    .renew-btn {
-      background: linear-gradient(135deg, var(--purple) 0%, var(--purple-hover) 100%);
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-weight: 800;
-      font-size: 0.72rem;
-      cursor: pointer;
-      transition: 0.3s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-    }
-    .renew-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
-      background: linear-gradient(135deg, var(--purple-hover) 0%, var(--purple) 100%);
-    }
-    .renew-btn.permanent-renew {
-      background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
-      color: #030712;
-      box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
-    }
-    .renew-btn.permanent-renew:hover {
-      box-shadow: 0 6px 20px rgba(251, 191, 36, 0.5);
-    }
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+    .empty-state i { font-size: 3rem; margin-bottom: 12px; opacity: 0.3; }
+    .empty-state h3 { color: #fff; margin-bottom: 4px; }
 
-    .domain-clickable { cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: 0.2s; }
-
-    .step-card {
-      display: flex; gap: 16px; align-items: flex-start;
-      padding: 12px 16px; background: rgba(3, 7, 18, 0.4);
-      border-radius: 10px; margin-bottom: 10px; border-left: 3px solid var(--purple);
+    .notification-badge {
+      background: var(--red); color: #fff;
+      padding: 1px 6px; border-radius: 10px;
+      font-size: 0.55rem; font-weight: 700; animation: pulse 1s infinite;
     }
-    .step-number {
-      background: var(--purple); color: #fff;
-      width: 28px; height: 28px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 0.75rem; flex-shrink: 0;
-    }
-    .step-content { color: var(--text-muted); font-size: 0.82rem; line-height: 1.6; }
-    .step-content strong { color: #fff; }
 
     /* ========== MODAL ========== */
     .modal-overlay {
-      display: none; position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%; background: rgba(0,0,0,0.8);
-      z-index: 999; justify-content: center; align-items: center; padding: 16px;
-      backdrop-filter: blur(6px);
+      display: none; position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85); z-index: 999;
+      justify-content: center; align-items: center; padding: 16px;
+      backdrop-filter: blur(4px);
     }
     .modal-overlay.active { display: flex; }
-    .modal-card {
+    .modal-content {
       background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 16px; padding: 24px; max-width: 520px; width: 100%;
-      max-height: 90vh; overflow-y: auto;
+      border-radius: 20px; padding: 24px;
+      max-width: 700px; width: 100%; max-height: 90vh;
+      overflow-y: auto;
       animation: modalIn 0.3s ease;
     }
     @keyframes modalIn {
@@ -308,651 +244,284 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    .modal-card h3 {
-      font-size: 1.1rem; font-weight: 800; margin-bottom: 6px;
-      display: flex; align-items: center; gap: 8px;
-    }
-
-    .renew-plan-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin: 14px 0;
-    }
-    .renew-plan-option {
-      background: rgba(3, 7, 18, 0.6);
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-      cursor: pointer;
-      transition: 0.2s;
-      text-align: center;
-      position: relative;
-    }
-    .renew-plan-option:hover {
-      border-color: var(--purple);
-    }
-    .renew-plan-option.selected {
-      border-color: var(--purple);
-      background: rgba(99, 102, 241, 0.1);
-    }
-    .renew-plan-option.permanent {
-      border-color: rgba(251, 191, 36, 0.3);
-    }
-    .renew-plan-option.permanent.selected {
-      border-color: var(--gold);
-      background: rgba(251, 191, 36, 0.08);
-    }
-    .renew-plan-option-icon { font-size: 1.4rem; margin-bottom: 4px; }
-    .renew-plan-option-name { font-size: 0.75rem; font-weight: 800; }
-    .renew-plan-option-price { font-size: 0.65rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
-    .renew-plan-option.permanent .renew-plan-option-price { color: var(--gold); font-weight: 800; }
-
-    .renew-domains-panel {
-      display: none;
-      margin-top: 12px;
-      padding: 14px;
-      background: rgba(251, 191, 36, 0.05);
-      border: 1px solid rgba(251, 191, 36, 0.25);
-      border-radius: 10px;
-    }
-    .renew-domains-panel.active { display: block; }
-
-    .domain-input-row {
-      display: flex; gap: 6px; align-items: center; margin-bottom: 8px;
-    }
-    .domain-input-row input {
-      flex: 1;
-      background: rgba(3, 7, 18, 0.8);
-      border: 1px solid var(--border);
-      padding: 10px 14px;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 0.82rem;
-      outline: none;
-    }
-    .domain-input-row input:focus { border-color: var(--gold); }
-    .domain-input-row .remove-domain {
-      background: rgba(239, 68, 68, 0.15);
-      color: var(--red);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      width: 38px; height: 38px; border-radius: 10px;
-      cursor: pointer; font-size: 0.85rem;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .domain-input-row .remove-domain:hover { background: rgba(239, 68, 68, 0.3); }
-
-    .add-domain-btn {
-      background: rgba(251, 191, 36, 0.15);
-      color: var(--gold);
-      border: 1px dashed rgba(251, 191, 36, 0.5);
-      padding: 10px;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      width: 100%;
-    }
-    .add-domain-btn:hover {
-      background: rgba(251, 191, 36, 0.25);
-      border-style: solid;
-    }
-    .add-domain-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    .mode-toggle {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
-      background: rgba(3, 7, 18, 0.6);
-      padding: 4px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-    }
-    .mode-btn {
-      flex: 1;
-      padding: 8px;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.7rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-    .mode-btn.active {
-      background: var(--gold);
-      color: #030712;
-    }
-
-    .domain-counter {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      text-align: center;
-      margin-top: 8px;
-      font-weight: 700;
-    }
-    .domain-counter.warning { color: var(--red); }
-
-    .all-domains-info {
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      border-radius: 10px;
-      padding: 12px 14px;
-      font-size: 0.78rem;
-      color: var(--cyan);
-      line-height: 1.6;
-    }
-
-    /* ========== FORM SECTION ========== */
-    .form-section {
-      background: rgba(3, 7, 18, 0.5);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 16px;
-    }
-    .form-section-header {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 14px;
-      padding-bottom: 12px;
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; padding-bottom: 16px;
       border-bottom: 1px solid var(--border);
     }
-    .form-section-number {
-      background: var(--purple); color: #fff;
-      width: 28px; height: 28px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 0.8rem;
-      flex-shrink: 0;
+    .modal-header h2 {
+      font-size: 1.1rem; font-weight: 800;
+      display: flex; align-items: center; gap: 10px;
     }
-    .form-section-title { font-size: 0.9rem; font-weight: 800; }
-    .form-section-subtitle { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+    .modal-header h2 .avatar-large {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--purple); display: flex; align-items: center;
+      justify-content: center; font-weight: 700; font-size: 0.85rem;
+    }
+    .modal-close {
+      background: rgba(239, 68, 68, 0.15); color: var(--red);
+      border: 1px solid var(--red); width: 32px; height: 32px;
+      border-radius: 8px; cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 0.85rem; transition: 0.2s;
+    }
+    .modal-close:hover { background: rgba(239, 68, 68, 0.3); }
 
-    .plan-grid {
+    .modal-stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 12px; margin-bottom: 20px;
     }
-    .plan-option {
+    .stat-box {
       background: rgba(3, 7, 18, 0.6);
-      border: 2px solid var(--border);
-      border-radius: 12px;
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px; text-align: center;
+    }
+    .stat-box .stat-value {
+      font-size: 1.5rem; font-weight: 900;
+      color: var(--cyan); line-height: 1;
+    }
+    .stat-box .stat-label {
+      font-size: 0.65rem; color: var(--text-muted);
+      font-weight: 700; text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .stat-box.warning .stat-value { color: var(--yellow); }
+    .stat-box.danger .stat-value { color: var(--red); }
+    .stat-box.success .stat-value { color: var(--green); }
+    .stat-box.gold .stat-value { color: var(--gold); }
+
+    .limit-alert {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 10px; padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.8rem; color: var(--red); font-weight: 700;
+    }
+
+    .limit-ok {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 10px; padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.8rem; color: var(--green); font-weight: 700;
+    }
+
+    .domain-list {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .domain-item {
+      background: rgba(3, 7, 18, 0.6);
+      border: 1px solid var(--border); border-radius: 12px;
       padding: 14px;
-      cursor: pointer;
       transition: 0.2s;
-      position: relative;
-      text-align: center;
     }
-    .plan-option:hover { border-color: var(--purple); transform: translateY(-2px); }
-    .plan-option.selected { border-color: var(--purple); background: rgba(99, 102, 241, 0.1); }
-    .plan-option.permanent { border-color: rgba(251, 191, 36, 0.3); }
-    .plan-option.permanent.selected { border-color: var(--gold); background: rgba(251, 191, 36, 0.08); }
-    .plan-option-icon { font-size: 1.5rem; margin-bottom: 6px; }
-    .plan-option-name { font-size: 0.8rem; font-weight: 800; margin-bottom: 4px; }
-    .plan-option-price { font-size: 0.7rem; color: var(--text-muted); font-weight: 600; }
-    .plan-option.permanent .plan-option-price { color: var(--gold); font-weight: 800; }
-    .plan-option-tag {
-      position: absolute; top: -8px; right: 8px;
-      background: var(--gold); color: #030712;
-      font-size: 0.55rem; font-weight: 900;
-      padding: 2px 8px; border-radius: 8px;
-      text-transform: uppercase;
+    .domain-item:hover { border-color: rgba(99, 102, 241, 0.4); }
+    .domain-item.permanent-item {
+      border-color: rgba(251, 191, 36, 0.35);
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(3, 7, 18, 0.6) 100%);
+    }
+    .domain-item-header {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 8px;
+      flex-wrap: wrap; gap: 8px;
+    }
+    .domain-item-name {
+      color: var(--cyan); font-weight: 700;
+      font-size: 0.88rem; display: flex;
+      align-items: center; gap: 6px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .domain-item-name.permanent-name { color: var(--gold); }
+    .domain-list-inside {
+      display: flex; flex-direction: column; gap: 4px;
+      font-size: 0.75rem;
+      margin-top: 4px;
+    }
+    .domain-list-inside span {
+      color: var(--text-muted);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .domain-item-meta {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      font-size: 0.7rem; color: var(--text-muted);
+      margin-top: 8px;
+    }
+    .domain-item-meta span {
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .domain-item-actions {
+      display: flex; gap: 6px; margin-top: 10px;
+      padding-top: 10px; border-top: 1px solid var(--border);
+      flex-wrap: wrap;
     }
 
-    .toast {
-      position: fixed; bottom: 30px; left: 50%;
-      transform: translateX(-50%);
-      background: var(--green); color: #fff;
-      padding: 12px 24px; border-radius: 10px;
-      font-weight: 700; font-size: 0.85rem;
-      z-index: 9999; display: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      max-width: 90%; text-align: center;
-    }
-    .toast.show { display: block; animation: fadeInUp 0.3s ease; }
-    .toast.error { background: var(--red); }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-      to { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
-
+    /* ========== RESPONSIVIDADE ========== */
     @media (max-width: 768px) {
-      .sidebar { transform: translateX(-100%); width: 260px; padding: 16px 12px; }
-      .sidebar.open { transform: translateX(0); }
-      .main-content { margin-left: 0; padding: 14px; }
-      .mobile-header { display: flex; }
-      .btn-hamburger { background: var(--purple); color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 0.75rem; }
-      .step-card { flex-direction: column; gap: 8px; }
-      .script-box { font-size: 0.6rem; white-space: normal; }
-      .plan-grid { grid-template-columns: repeat(2, 1fr); }
-      .renew-plan-grid { grid-template-columns: repeat(2, 1fr); }
+      body { padding: 12px; }
+      .header-left h1 { font-size: 1rem; }
+      .header-right .stats { font-size: 0.65rem; gap: 6px; }
+      .header-right .stats span { padding: 4px 8px; }
+      .filter-btn { font-size: 0.6rem; padding: 6px 10px; }
+      td, th { padding: 8px; font-size: 0.68rem; }
+      .user-avatar { width: 26px; height: 26px; font-size: 0.6rem; }
+      .btn-thin { font-size: 0.58rem; padding: 4px 8px; }
+      .timer-cell { font-size: 0.65rem; padding: 3px 6px; min-width: 70px; }
+      .mass-btn { font-size: 0.65rem; padding: 6px 12px; }
+      .modal-content { padding: 16px; }
+      .modal-stats { grid-template-columns: repeat(2, 1fr); }
     }
+    @media (max-width: 480px) {
+      .header { flex-direction: column; align-items: flex-start; }
+      .header-right { width: 100%; justify-content: space-between; }
+      .filters { flex-direction: column; }
+      .search-box { width: 100%; }
+      .mass-actions { flex-direction: column; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    tbody tr { animation: fadeIn 0.3s ease forwards; }
   </style>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
-<div class="toast" id="toast"></div>
-
-<!-- ========== AUTH OVERLAY ========== -->
-<div id="authOverlay">
-  <div class="auth-card">
-    <div class="auth-logo">👻</div>
-    <div class="auth-title">Anúncio Fantasma</div>
-    <div class="auth-subtitle">Portal do Cliente</div>
-
-    <div class="auth-tabs">
-      <button class="auth-tab active" id="tabLoginBtn" onclick="switchAuthMode('login')">Entrar</button>
-      <button class="auth-tab" id="tabRegisterBtn" onclick="switchAuthMode('register')">Criar Conta</button>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <span class="logo">👻</span>
+      <h1>Anúncio <span>Fantasma</span></h1>
+      <span class="badge">ADMIN</span>
     </div>
-
-    <div class="input-group">
-      <label>E-mail</label>
-      <input type="email" id="authEmail" class="input-field" placeholder="seuemail@exemplo.com">
-    </div>
-
-    <div class="input-group">
-      <label>Senha</label>
-      <input type="password" id="authPass" class="input-field" placeholder="••••••••">
-    </div>
-
-    <div class="input-group" id="confirmPassGroup" style="display: none;">
-      <label>Confirmar Senha</label>
-      <input type="password" id="authConfirmPass" class="input-field" placeholder="••••••••">
-    </div>
-
-    <button class="btn-action btn-purple" id="btnSubmitAuth" onclick="submitAuth()">ENTRAR NA CONTA</button>
-    <button class="btn-action btn-google" onclick="loginGoogle()">🌐 Entrar com Google</button>
-
-    <div class="auth-link" id="recoverLinkBox">
-      <a onclick="toggleRecover()">Esqueceu a senha? Recuperar</a>
-    </div>
-
-    <div id="recoverArea">
-      <div class="input-group" style="margin-bottom: 10px;">
-        <label>E-mail para recuperação</label>
-        <input type="email" id="recoverEmail" class="input-field" placeholder="seuemail@exemplo.com">
+    <div class="header-right">
+      <div class="stats">
+        <span id="totalLicenses"><i class="fas fa-hashtag"></i> 0</span>
+        <span id="activeCount"><i class="fas fa-check-circle" style="color: var(--green);"></i> 0</span>
+        <span id="permanentCount"><i class="fas fa-infinity" style="color: var(--gold);"></i> 0</span>
+        <span id="pendingCount"><i class="fas fa-clock" style="color: var(--yellow);"></i> 0</span>
+        <span id="expiredCount"><i class="fas fa-exclamation-circle" style="color: var(--red);"></i> 0</span>
+        <span id="revokedCount"><i class="fas fa-ban" style="color: var(--red);"></i> 0</span>
       </div>
-      <button class="btn-action btn-purple" onclick="recoverPassword()" style="font-size: 0.75rem;">📧 Enviar link de recuperação</button>
-      <button class="btn-action" onclick="toggleRecover()" style="background: transparent; color: var(--text-muted); font-size: 0.7rem; margin-top: 4px;">Cancelar</button>
     </div>
   </div>
-</div>
 
-<!-- ========== MODAL DE RENOVAÇÃO ========== -->
-<div class="modal-overlay" id="renewModal">
-  <div class="modal-card">
-    <h3>🔄 Renovar Plano</h3>
-    <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 4px;" id="modalDomainInfo">Domínio: --</p>
-    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px;" id="modalCurrentPlan">Plano atual: --</p>
-    
-    <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 6px;">
-      Escolha o novo plano:
-    </div>
-
-    <div class="renew-plan-grid" id="renewPlanGrid">
-      <div class="renew-plan-option" data-plan="Diário|20|paid" onclick="selectRenewPlan(this)">
-        <div class="renew-plan-option-icon">📅</div>
-        <div class="renew-plan-option-name">Diário</div>
-        <div class="renew-plan-option-price">20 MT · 24h</div>
-      </div>
-      <div class="renew-plan-option" data-plan="Semanal|100|paid" onclick="selectRenewPlan(this)">
-        <div class="renew-plan-option-icon">📆</div>
-        <div class="renew-plan-option-name">Semanal</div>
-        <div class="renew-plan-option-price">100 MT · 7 dias</div>
-      </div>
-      <div class="renew-plan-option" data-plan="Mensal|350|paid" onclick="selectRenewPlan(this)">
-        <div class="renew-plan-option-icon">📊</div>
-        <div class="renew-plan-option-name">Mensal</div>
-        <div class="renew-plan-option-price">350 MT · 30 dias</div>
-      </div>
-      <div class="renew-plan-option permanent" data-plan="Permanente|1500|paid" onclick="selectRenewPlan(this)">
-        <div class="renew-plan-option-icon">♾️</div>
-        <div class="renew-plan-option-name">Permanente</div>
-        <div class="renew-plan-option-price">1500 MT · Sempre</div>
-      </div>
-    </div>
-
-    <input type="hidden" id="renewPlanSelect" value="Diário|20|paid">
-
-    <!-- Painel de domínios (só aparece se selecionar Permanente) -->
-    <div class="renew-domains-panel" id="renewDomainsPanel">
-      <div style="font-size: 0.78rem; font-weight: 800; color: var(--gold); margin-bottom: 10px;">
-        ♾️ Configuração do Plano Permanente
-      </div>
-      <div class="mode-toggle">
-        <button class="mode-btn active" id="renewModeSpecificBtn" onclick="setRenewDomainMode('specific')">
-          🎯 Domínios específicos
-        </button>
-        <button class="mode-btn" id="renewModeAllBtn" onclick="setRenewDomainMode('all')">
-          🌍 Todos os domínios
-        </button>
-      </div>
-      <div id="renewSpecificDomainsArea">
-        <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 700;">
-          Até 6 domínios:
-        </div>
-        <div id="renewDomainInputs">
-          <div class="domain-input-row">
-            <input type="text" placeholder="meublog1.blogspot.com" class="renew-perm-domain-input">
-            <button class="remove-domain" onclick="removeRenewDomainInput(this)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </div>
-        </div>
-        <button class="add-domain-btn" id="renewAddDomainBtn" onclick="addRenewDomainInput()">
-          <i class="fas fa-plus"></i> Adicionar domínio
-        </button>
-        <div class="domain-counter" id="renewDomainCounter">1 / 6 domínios</div>
-      </div>
-      <div id="renewAllDomainsArea" style="display: none;">
-        <div class="all-domains-info">
-          <strong>🌍 Modo "Todos os domínios"</strong><br>
-          O script funcionará em <strong>qualquer blog</strong>. O Admin irá revisar.
-        </div>
-      </div>
-    </div>
-
-    <button class="btn-action btn-purple" style="margin-top: 16px;" onclick="confirmRenew()">
-      💳 ENVIAR SOLICITAÇÃO
+  <!-- AÇÕES EM MASSA -->
+  <div class="mass-actions">
+    <button class="mass-btn mass-btn-danger" onclick="revokeAll()">
+      <i class="fas fa-ban"></i> REVOGAR TODAS
     </button>
-    <button class="btn-action" style="background: transparent; color: var(--text-muted); margin-top: 8px;" onclick="closeRenewModal()">Cancelar</button>
+    <button class="mass-btn mass-btn-success" onclick="reactivateAll()">
+      <i class="fas fa-sync"></i> REATIVAR TODAS (TEMPO ZERADO)
+    </button>
+    <button class="mass-btn mass-btn-warning" onclick="deleteAll()">
+      <i class="fas fa-trash"></i> EXCLUIR TUDO
+    </button>
   </div>
-</div>
 
-<!-- ========== APP LAYOUT ========== -->
-<div class="app-layout">
-  <div class="mobile-overlay" id="mobileOverlay" onclick="closeSidebar()"></div>
+  <!-- FILTROS -->
+  <div class="filters">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Buscar por domínio, usuário ou plano..." oninput="filterTable()">
+    </div>
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)"><i class="fas fa-list"></i> Todos</button>
+      <button class="filter-btn" data-filter="active" onclick="setFilter('active', this)"><i class="fas fa-check-circle" style="color: var(--green);"></i> Ativos</button>
+      <button class="filter-btn" data-filter="permanent" onclick="setFilter('permanent', this)"><i class="fas fa-infinity" style="color: var(--gold);"></i> Permanentes</button>
+      <button class="filter-btn" data-filter="pending" onclick="setFilter('pending', this)"><i class="fas fa-clock" style="color: var(--yellow);"></i> Pendentes</button>
+      <button class="filter-btn" data-filter="renewal" onclick="setFilter('renewal', this)"><i class="fas fa-sync" style="color: var(--purple);"></i> Renovações <span class="notification-badge" id="renewalBadge" style="display:none;">0</span></button>
+      <button class="filter-btn" data-filter="expired" onclick="setFilter('expired', this)"><i class="fas fa-exclamation-circle" style="color: var(--red);"></i> Expirados</button>
+      <button class="filter-btn" data-filter="revoked" onclick="setFilter('revoked', this)"><i class="fas fa-ban" style="color: var(--red);"></i> Revogados</button>
+    </div>
+  </div>
 
-  <aside class="sidebar" id="sidebar">
-    <div>
-      <div class="brand-box">
-        <span style="font-size: 1.5rem;">👻</span>
-        <div>
-          <div style="font-weight: 800; font-size: 0.85rem;">Anúncio Fantasma</div>
-          <div style="font-size: 0.6rem; color: var(--text-muted); font-weight: 700;">PORTAL DO CLIENTE</div>
+  <!-- TABELA -->
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Usuário</th>
+          <th>Domínio(s)</th>
+          <th>Plano</th>
+          <th>Status</th>
+          <th>⏱️ Restante</th>
+          <th>📅 Datas</th>
+          <th style="text-align: center;">Ações</th>
+        </tr>
+      </thead>
+      <tbody id="admTable"></tbody>
+    </table>
+  </div>
+
+  <!-- MODAL DE DETALHES DO USUÁRIO -->
+  <div class="modal-overlay" id="userModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>
+          <div class="avatar-large" id="modalAvatar">??</div>
+          <div>
+            <div id="modalUserName">Usuário</div>
+            <div style="font-size: 0.68rem; color: var(--text-muted); font-weight: 500;" id="modalUserId">ID: --</div>
+          </div>
+        </h2>
+        <button class="modal-close" onclick="closeUserModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-stats">
+        <div class="stat-box">
+          <div class="stat-value" id="modalTotalDomains">0</div>
+          <div class="stat-label">Total Licenças</div>
+        </div>
+        <div class="stat-box success">
+          <div class="stat-value" id="modalActiveDomains">0</div>
+          <div class="stat-label">Ativos</div>
+        </div>
+        <div class="stat-box gold">
+          <div class="stat-value" id="modalPermanentCount">0</div>
+          <div class="stat-label">Permanentes</div>
+        </div>
+        <div class="stat-box warning">
+          <div class="stat-value" id="modalFreeUsed">0</div>
+          <div class="stat-label">Grátis Usados</div>
+        </div>
+        <div class="stat-box danger">
+          <div class="stat-value" id="modalFreeRemaining">3</div>
+          <div class="stat-label">Grátis Restantes</div>
         </div>
       </div>
 
-      <nav class="nav-menu">
-        <button class="nav-btn active" id="btnTabDash" onclick="switchTab('dash')">📊 Análises & Status</button>
-        <button class="nav-btn" id="btnTabDomains" onclick="switchTab('domains')">🌐 Meus Domínios & Script</button>
-        <button class="nav-btn" id="btnTabBuy" onclick="switchTab('buy')">💳 Novo Plano / Renovar</button>
-        <button class="nav-btn" id="btnTabTutorial" onclick="switchTab('tutorial')">📖 Tutorial</button>
-      </nav>
+      <div id="limitAlertBox"></div>
+
+      <h3 style="font-size: 0.85rem; font-weight: 800; margin-bottom: 12px; color: var(--cyan);">
+        📋 Licenças deste usuário:
+      </h3>
+
+      <div class="domain-list" id="modalDomainList"></div>
     </div>
-
-    <div style="border-top: 1px solid var(--border); padding-top: 12px;">
-      <div style="font-size: 0.68rem; color: var(--text-muted); margin-bottom: 6px; word-break: break-all;" id="userDisplay">--</div>
-      <button onclick="logout()" class="btn-action" style="background: rgba(239, 68, 68, 0.15); color: var(--red); border: 1px solid var(--red); padding: 6px; font-size: 0.75rem;">Sair da Conta</button>
-    </div>
-  </aside>
-
-  <main class="main-content">
-    <div class="mobile-header">
-      <button onclick="toggleSidebar()" class="btn-hamburger">☰ Menu</button>
-      <span style="font-weight: 800; font-size: 0.9rem;">👻 Anúncio Fantasma</span>
-    </div>
-
-    <!-- ABA DASH -->
-    <div class="tab-page active" id="tab-dash">
-      <h2 style="font-weight: 800; margin-bottom: 16px; font-size: 1.2rem;">📊 Visão Geral da Conta</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px;">
-        <div class="card">
-          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">DOMÍNIOS</div>
-          <div style="font-size: 1.8rem; font-weight: 900; color: var(--cyan); margin-top: 6px;" id="statDomainsCount">0</div>
-        </div>
-        <div class="card">
-          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">ATIVOS</div>
-          <div style="font-size: 1.8rem; font-weight: 900; color: var(--green); margin-top: 6px;" id="statActivePlans">0</div>
-        </div>
-        <div class="card">
-          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700;">GRÁTIS RESTANTES</div>
-          <div style="font-size: 1.8rem; font-weight: 900; color: var(--yellow); margin-top: 6px;" id="statFreeRemaining">3</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABA DOMÍNIOS -->
-    <div class="tab-page" id="tab-domains">
-      <h2 style="font-weight: 800; margin-bottom: 6px; font-size: 1.2rem;">🌐 Meus Domínios Registrados</h2>
-      <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 16px;">Copie o script e cole no Blogger. Clique em <strong style="color: var(--purple);">RENOVAR</strong> para atualizar o plano.</p>
-      <div id="domainsList"></div>
-    </div>
-
-    <!-- ABA COMPRA -->
-    <div class="tab-page" id="tab-buy">
-      <h2 style="font-weight: 800; margin-bottom: 6px; font-size: 1.2rem;">💳 Registrar Novo Domínio</h2>
-      <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 16px;">Escolha o plano ideal. Planos pagos precisam de aprovação do Admin.</p>
-      
-      <div id="freeLimitAlert"></div>
-      
-      <div style="max-width: 720px;">
-
-        <!-- SEÇÃO 1 -->
-        <div class="form-section">
-          <div class="form-section-header">
-            <div class="form-section-number">1</div>
-            <div>
-              <div class="form-section-title">Escolha o Plano</div>
-              <div class="form-section-subtitle">Clique em um plano para selecioná-lo</div>
-            </div>
-          </div>
-
-          <div class="plan-grid" id="planGrid">
-            <div class="plan-option" data-plan="Grátis|0|free" onclick="selectPlan(this)">
-              <div class="plan-option-icon">🎁</div>
-              <div class="plan-option-name">Grátis</div>
-              <div class="plan-option-price">10 min (Teste)</div>
-            </div>
-            <div class="plan-option" data-plan="Diário|20|paid" onclick="selectPlan(this)">
-              <div class="plan-option-icon">📅</div>
-              <div class="plan-option-name">Diário</div>
-              <div class="plan-option-price">20 MT · 24h</div>
-            </div>
-            <div class="plan-option" data-plan="Semanal|100|paid" onclick="selectPlan(this)">
-              <div class="plan-option-icon">📆</div>
-              <div class="plan-option-name">Semanal</div>
-              <div class="plan-option-price">100 MT · 7 dias</div>
-            </div>
-            <div class="plan-option" data-plan="Mensal|350|paid" onclick="selectPlan(this)">
-              <div class="plan-option-icon">📊</div>
-              <div class="plan-option-name">Mensal</div>
-              <div class="plan-option-price">350 MT · 30 dias</div>
-            </div>
-            <div class="plan-option permanent" data-plan="Permanente|1500|paid" onclick="selectPlan(this)">
-              <div class="plan-option-tag">⭐ Premium</div>
-              <div class="plan-option-icon">♾️</div>
-              <div class="plan-option-name">Permanente</div>
-              <div class="plan-option-price">1500 MT · Nunca expira</div>
-            </div>
-          </div>
-
-          <input type="hidden" id="newPlanSelect" value="Grátis|0|free">
-        </div>
-
-        <!-- SEÇÃO 2 -->
-        <div class="form-section">
-          <div class="form-section-header">
-            <div class="form-section-number">2</div>
-            <div>
-              <div class="form-section-title">Domínio do Blog</div>
-              <div class="form-section-subtitle" id="domainSectionSubtitle">Digite o endereço do seu blog</div>
-            </div>
-          </div>
-
-          <!-- Input único (planos normais) -->
-          <div id="singleDomainArea">
-            <div class="input-group">
-              <label>Endereço do Domínio (Blog)</label>
-              <input type="text" id="newDomainInput" class="input-field" placeholder="exemplo.blogspot.com">
-            </div>
-          </div>
-
-          <!-- Painel de múltiplos (Permanente) -->
-          <div class="renew-domains-panel" id="domainsPanel">
-            <div style="font-size: 0.78rem; font-weight: 800; color: var(--gold); margin-bottom: 10px;">
-              ♾️ Configuração do Plano Permanente
-            </div>
-            <div class="mode-toggle">
-              <button class="mode-btn active" id="modeSpecificBtn" onclick="setDomainMode('specific')">
-                🎯 Domínios específicos
-              </button>
-              <button class="mode-btn" id="modeAllBtn" onclick="setDomainMode('all')">
-                🌍 Todos os domínios
-              </button>
-            </div>
-            <div id="specificDomainsArea">
-              <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 700;">
-                Adicione até 6 domínios:
-              </div>
-              <div id="domainInputs">
-                <div class="domain-input-row">
-                  <input type="text" placeholder="meublog1.blogspot.com" class="perm-domain-input">
-                  <button class="remove-domain" onclick="removeDomainInput(this)">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </div>
-              <button class="add-domain-btn" id="addDomainBtn" onclick="addDomainInput()">
-                <i class="fas fa-plus"></i> Adicionar domínio
-              </button>
-              <div class="domain-counter" id="domainCounter">1 / 6 domínios</div>
-            </div>
-            <div id="allDomainsArea" style="display: none;">
-              <div class="all-domains-info">
-                <strong>🌍 Modo "Todos os domínios"</strong><br>
-                O script funcionará em <strong>qualquer blog</strong>. Use se confiar.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SEÇÃO 3 -->
-        <div class="form-section">
-          <div class="form-section-header">
-            <div class="form-section-number">3</div>
-            <div>
-              <div class="form-section-title">Pagamento</div>
-              <div class="form-section-subtitle">Envie o comprovante após pagar</div>
-            </div>
-          </div>
-          <div class="payment-info" style="margin: 0;">
-            <div class="payment-header">📲 M-Pesa / E-mola</div>
-            <div class="payment-row">
-              <span class="payment-label">Número:</span>
-              <span class="payment-number">864 418 475</span>
-            </div>
-            <div class="payment-row">
-              <span class="payment-label">Titular:</span>
-              <span class="payment-value">Kelven Rafael Moreno</span>
-            </div>
-            <div id="priceDisplay" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(16, 185, 129, 0.1);">
-              Valor: <strong style="color: var(--green);">Grátis - 0 MT</strong>
-            </div>
-          </div>
-        </div>
-
-        <!-- CONFIRMAR -->
-        <div class="form-section">
-          <button class="btn-action btn-purple" onclick="registerDomain()" style="font-size: 0.9rem; padding: 14px;">
-            ⚡ CONFIRMAR E SOLICITAR
-          </button>
-          <a href="https://wa.me/258864418475?text=Olá!%20Gostaria%20de%20ativar%20meu%20domínio%20no%20Anúncio%20Fantasma" 
-             target="_blank" 
-             style="display: block; margin-top: 12px; text-align: center; color: var(--green); text-decoration: none; font-weight: 700; font-size: 0.8rem;">
-            📤 Enviar comprovante via WhatsApp
-          </a>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ABA TUTORIAL -->
-    <div class="tab-page" id="tab-tutorial">
-      <h2 style="font-weight: 800; margin-bottom: 16px; font-size: 1.2rem;">📖 Tutorial</h2>
-      
-      <div class="card">
-        <h3 style="color: var(--gold); font-size: 1rem; margin-bottom: 12px;">♾️ Plano Permanente (1500 MT)</h3>
-        <div style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.8;">
-          <p>🔹 <strong>Nunca expira</strong> — pague uma vez, use para sempre</p>
-          <p>🔹 <strong>Até 6 domínios específicos</strong> — escolha onde funciona</p>
-          <p>🔹 <strong>OU "Todos os domínios"</strong> — funciona em qualquer blog</p>
-          <p>🔹 <strong>Aprovação do Admin</strong> — garante segurança</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3 style="color: var(--cyan); font-size: 1rem; margin-bottom: 12px;">🚀 Como instalar no Blogger</h3>
-        
-        <div class="step-card">
-          <div class="step-number">1</div>
-          <div class="step-content"><strong>Copie o script</strong><br>Na aba "Meus Domínios", copie o script HTML</div>
-        </div>
-        <div class="step-card">
-          <div class="step-number">2</div>
-          <div class="step-content"><strong>Blogger → Tema → Editar HTML</strong></div>
-        </div>
-        <div class="step-card">
-          <div class="step-number">3</div>
-          <div class="step-content"><strong>Cole antes de &lt;/body&gt;</strong></div>
-        </div>
-        <div class="step-card">
-          <div class="step-number">4</div>
-          <div class="step-content"><strong>Salve o tema</strong></div>
-        </div>
-        <div class="step-card">
-          <div class="step-number">5</div>
-          <div class="step-content"><strong>Ative:</strong> acesse <code>seublog.blogspot.com/?spoofer=on</code></div>
-        </div>
-        <div class="step-card">
-          <div class="step-number">6</div>
-          <div class="step-content"><strong>Pronto!</strong> Use <code>?spoofer=off</code> para desativar</div>
-        </div>
-      </div>
-    </div>
-  </main>
-</div>
+  </div>
 
 <script>
   const firebaseConfig = {
-    apiKey: "AIzaSyB5W1oXrk8eaNAD29ZThewE0FtdhiXJKkA",
-    authDomain: "maestro-server-pro.firebaseapp.com",
-    databaseURL: "https://maestro-server-pro-default-rtdb.firebaseio.com",
-    projectId: "maestro-server-pro",
-    storageBucket: "maestro-server-pro.firebasestorage.app",
-    messagingSenderId: "759342502042",
-    appId: "1:759342502042:web:098b678fe6972ddcfe8f23"
+    databaseURL: "https://maestro-server-pro-default-rtdb.firebaseio.com"
   };
-
   firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
   const db = firebase.database();
-  const SERVER_HOST = "noti-ias-api00.onrender.com";
 
-  let currentUser = null;
-  let userLicenses = [];
-  let countdownIntervals = {};
-  let selectedRenewLicense = null;
-  let updateCheckInterval = null;
-  let currentAuthMode = 'login';
-  let expiryWarnings = {};
-
-  let currentDomainMode = 'specific';
-  let currentRenewMode = 'specific';
-  const MAX_PERMANENT_DOMAINS = 6;
+  let allLicenses = [];
+  let currentFilter = 'all';
+  let searchTerm = '';
+  let timerInterval = null;
+  let currentModalUserId = null;
 
   const PLAN_DURATIONS = {
     'Grátis': 600,
@@ -964,1012 +533,788 @@
 
   const MAX_FREE_PLANS_PER_USER = 3;
 
-  // ==================== HELPERS ====================
+  // ========== HELPERS ==========
   function isPermanent(lic) {
     return lic.planName === 'Permanente';
   }
 
-  function normalizeDomain(d) {
-    if (!d) return '';
-    return d.toLowerCase().trim()
-      .replace(/^https?:\/\//, '')
-      .replace(/^www\./, '')
-      .replace(/\/+$/, '')
-      .replace(/\/+/g, '/');
-  }
+  // ========== CARREGAR DADOS ==========
+  db.ref('licenses').on('value', snapshot => {
+    const data = snapshot.val();
+    allLicenses = [];
 
-  function getDomainsDisplay(lic) {
-    if (isPermanent(lic)) {
-      if (lic.allDomains === true) return '🌍 Todos os domínios';
-      if (Array.isArray(lic.domains) && lic.domains.length > 0) {
-        return lic.domains.map(d => '🌐 ' + d).join(' · ');
-      }
-      if (lic.domain) return '🌐 ' + lic.domain;
-      return '--';
+    if (data) {
+      Object.keys(data).forEach(k => {
+        allLicenses.push({ id: k, ...data[k] });
+      });
+
+      allLicenses.sort((a, b) => {
+        if (a.renovacaoSolicitada && !b.renovacaoSolicitada) return -1;
+        if (!a.renovacaoSolicitada && b.renovacaoSolicitada) return 1;
+        const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return dateB - dateA;
+      });
     }
-    return '🌐 ' + (lic.domain || '--');
-  }
 
-  function showToast(message, isError = false) {
-    const toast = document.getElementById('toast');
-    toast.textContent = message;
-    toast.className = 'toast show' + (isError ? ' error' : '');
-    setTimeout(() => toast.classList.remove('show'), 4000);
-  }
+    updateStats();
+    renderTable();
+    startTimerUpdates();
 
-  // ==================== AUTH ====================
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      currentUser = user;
-      document.getElementById('authOverlay').classList.remove('active');
-      document.getElementById('authOverlay').style.display = 'none';
-      document.getElementById('userDisplay').innerText = user.email || user.displayName;
-      fetchUserData();
-    } else {
-      currentUser = null;
-      document.getElementById('authOverlay').classList.add('active');
-      document.getElementById('authOverlay').style.display = 'flex';
+    if (currentModalUserId) {
+      openUserModal(currentModalUserId, true);
     }
   });
 
-  function switchAuthMode(mode) {
-    currentAuthMode = mode;
-    const isLogin = mode === 'login';
-    document.getElementById('tabLoginBtn').classList.toggle('active', isLogin);
-    document.getElementById('tabRegisterBtn').classList.toggle('active', !isLogin);
-    document.getElementById('btnSubmitAuth').innerText = isLogin ? 'ENTRAR NA CONTA' : 'CRIAR MINHA CONTA';
-    document.getElementById('confirmPassGroup').style.display = isLogin ? 'none' : 'block';
-    document.getElementById('recoverLinkBox').style.display = isLogin ? 'block' : 'none';
-    document.getElementById('recoverArea').classList.remove('active');
-  }
-
-  function submitAuth() {
-    const email = document.getElementById('authEmail').value.trim();
-    const pass = document.getElementById('authPass').value.trim();
-    if (!email || !pass) return showToast("Preencha e-mail e senha!", true);
-
-    if (currentAuthMode === 'login') {
-      auth.signInWithEmailAndPassword(email, pass)
-        .then(() => showToast("✅ Login realizado!"))
-        .catch(err => showToast("❌ " + err.message, true));
-    } else {
-      const confirmPass = document.getElementById('authConfirmPass').value.trim();
-      if (pass !== confirmPass) return showToast("❌ Senhas não coincidem!", true);
-      if (pass.length < 6) return showToast("❌ Senha muito curta!", true);
-
-      auth.createUserWithEmailAndPassword(email, pass)
-        .then(() => showToast("✅ Conta criada!"))
-        .catch(err => showToast("❌ " + err.message, true));
-    }
-  }
-
-  function loginGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider)
-      .then(() => showToast("✅ Login com Google!"))
-      .catch(err => showToast("❌ " + err.message, true));
-  }
-
-  function toggleRecover() {
-    document.getElementById('recoverArea').classList.toggle('active');
-  }
-
-  function recoverPassword() {
-    const email = document.getElementById('recoverEmail').value.trim();
-    if (!email) return showToast("❌ Digite seu e-mail!", true);
-    auth.sendPasswordResetEmail(email)
-      .then(() => showToast("📧 Instruções enviadas!"))
-      .catch(err => showToast("❌ " + err.message, true));
-  }
-
-  function logout() {
-    Object.keys(countdownIntervals).forEach(k => clearInterval(countdownIntervals[k]));
-    countdownIntervals = {};
-    if (updateCheckInterval) clearInterval(updateCheckInterval);
-    expiryWarnings = {};
-    auth.signOut();
-    showToast("👋 Até logo!");
-  }
-
-  // ==================== UI ====================
-  function switchTab(tabId) {
-    document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + tabId).classList.add('active');
-    const map = { dash: 'btnTabDash', domains: 'btnTabDomains', buy: 'btnTabBuy', tutorial: 'btnTabTutorial' };
-    if (map[tabId]) document.getElementById(map[tabId]).classList.add('active');
-    if (tabId === 'buy') {
-      updateFreeLimitAlert();
-      updateFreePlanUI();
-    }
-    closeSidebar();
-  }
-
-  function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('open');
-    document.getElementById('mobileOverlay').classList.toggle('active');
-  }
-  function closeSidebar() {
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('mobileOverlay').classList.remove('active');
-  }
-
-  // ==================== SELEÇÃO DE PLANO ====================
-  function selectPlan(el) {
-    const planValue = el.getAttribute('data-plan');
-    const [planName] = planValue.split('|');
-
-    if (planName === 'Grátis') {
-      const used = countFreePlansUsed();
-      if (used >= MAX_FREE_PLANS_PER_USER) {
-        showToast(`❌ Você já usou todos os ${MAX_FREE_PLANS_PER_USER} grátis!`, true);
-        return;
-      }
-    }
-
-    document.querySelectorAll('.plan-option').forEach(p => p.classList.remove('selected'));
-    el.classList.add('selected');
-    document.getElementById('newPlanSelect').value = planValue;
-
-    const [name, price] = planValue.split('|');
-    const priceText = price === '0' ? 'Grátis - 0 MT' : `${name} - ${price} MT`;
-    document.getElementById('priceDisplay').innerHTML = 
-      `Valor: <strong style="color: var(--green);">${priceText}</strong>`;
-
-    // Alternar entre input único e painel Permanente
-    const singleArea = document.getElementById('singleDomainArea');
-    const panel = document.getElementById('domainsPanel');
-    const subtitle = document.getElementById('domainSectionSubtitle');
-
-    if (planName === 'Permanente') {
-      singleArea.style.display = 'none';
-      panel.classList.add('active');
-      subtitle.textContent = 'Configure até 6 domínios OU marque "Todos os domínios"';
-    } else {
-      singleArea.style.display = 'block';
-      panel.classList.remove('active');
-      subtitle.textContent = 'Digite o endereço do seu blog';
-    }
-  }
-
-  function updateFreePlanUI() {
-    const used = countFreePlansUsed();
-    const freeOption = document.querySelector('.plan-option[data-plan^="Grátis"]');
-    if (freeOption) {
-      if (used >= MAX_FREE_PLANS_PER_USER) {
-        freeOption.style.opacity = '0.4';
-        freeOption.style.pointerEvents = 'none';
-      } else {
-        freeOption.style.opacity = '1';
-        freeOption.style.pointerEvents = 'auto';
-      }
-    }
-  }
-
-  // ==================== MODO DOMÍNIOS (compra) ====================
-  function setDomainMode(mode) {
-    currentDomainMode = mode;
-    document.getElementById('modeSpecificBtn').classList.toggle('active', mode === 'specific');
-    document.getElementById('modeAllBtn').classList.toggle('active', mode === 'all');
-    document.getElementById('specificDomainsArea').style.display = mode === 'specific' ? 'block' : 'none';
-    document.getElementById('allDomainsArea').style.display = mode === 'all' ? 'block' : 'none';
-  }
-
-  function addDomainInput() {
-    const container = document.getElementById('domainInputs');
-    const count = container.querySelectorAll('.domain-input-row').length;
-    if (count >= MAX_PERMANENT_DOMAINS) {
-      showToast(`❌ Máximo de ${MAX_PERMANENT_DOMAINS} domínios!`, true);
-      return;
-    }
-    const row = document.createElement('div');
-    row.className = 'domain-input-row';
-    row.innerHTML = `
-      <input type="text" placeholder="meublog${count + 1}.blogspot.com" class="perm-domain-input">
-      <button class="remove-domain" onclick="removeDomainInput(this)">
-        <i class="fas fa-trash"></i>
-      </button>
-    `;
-    container.appendChild(row);
-    updateDomainCounter();
-  }
-
-  function removeDomainInput(btn) {
-    const container = document.getElementById('domainInputs');
-    if (container.querySelectorAll('.domain-input-row').length <= 1) {
-      showToast("⚠️ Precisa ter pelo menos 1 domínio", true);
-      return;
-    }
-    btn.closest('.domain-input-row').remove();
-    updateDomainCounter();
-  }
-
-  function updateDomainCounter() {
-    const container = document.getElementById('domainInputs');
-    const count = container.querySelectorAll('.domain-input-row').length;
-    const counter = document.getElementById('domainCounter');
-    const addBtn = document.getElementById('addDomainBtn');
-    counter.textContent = `${count} / ${MAX_PERMANENT_DOMAINS} domínios`;
-    counter.classList.toggle('warning', count >= MAX_PERMANENT_DOMAINS);
-    if (addBtn) addBtn.disabled = count >= MAX_PERMANENT_DOMAINS;
-  }
-
-  // ==================== MODO DOMÍNIOS (renovação) ====================
-  function setRenewDomainMode(mode) {
-    currentRenewMode = mode;
-    document.getElementById('renewModeSpecificBtn').classList.toggle('active', mode === 'specific');
-    document.getElementById('renewModeAllBtn').classList.toggle('active', mode === 'all');
-    document.getElementById('renewSpecificDomainsArea').style.display = mode === 'specific' ? 'block' : 'none';
-    document.getElementById('renewAllDomainsArea').style.display = mode === 'all' ? 'block' : 'none';
-  }
-
-  function addRenewDomainInput() {
-    const container = document.getElementById('renewDomainInputs');
-    const count = container.querySelectorAll('.domain-input-row').length;
-    if (count >= MAX_PERMANENT_DOMAINS) {
-      showToast(`❌ Máximo de ${MAX_PERMANENT_DOMAINS} domínios!`, true);
-      return;
-    }
-    const row = document.createElement('div');
-    row.className = 'domain-input-row';
-    row.innerHTML = `
-      <input type="text" placeholder="meublog${count + 1}.blogspot.com" class="renew-perm-domain-input">
-      <button class="remove-domain" onclick="removeRenewDomainInput(this)">
-        <i class="fas fa-trash"></i>
-      </button>
-    `;
-    container.appendChild(row);
-    updateRenewDomainCounter();
-  }
-
-  function removeRenewDomainInput(btn) {
-    const container = document.getElementById('renewDomainInputs');
-    if (container.querySelectorAll('.domain-input-row').length <= 1) {
-      showToast("⚠️ Precisa ter pelo menos 1 domínio", true);
-      return;
-    }
-    btn.closest('.domain-input-row').remove();
-    updateRenewDomainCounter();
-  }
-
-  function updateRenewDomainCounter() {
-    const container = document.getElementById('renewDomainInputs');
-    const count = container.querySelectorAll('.domain-input-row').length;
-    const counter = document.getElementById('renewDomainCounter');
-    const addBtn = document.getElementById('renewAddDomainBtn');
-    counter.textContent = `${count} / ${MAX_PERMANENT_DOMAINS} domínios`;
-    counter.classList.toggle('warning', count >= MAX_PERMANENT_DOMAINS);
-    if (addBtn) addBtn.disabled = count >= MAX_PERMANENT_DOMAINS;
-  }
-
-  // ==================== DADOS ====================
-  function fetchUserData() {
-    if (!currentUser) return;
+  // ========== TIMER ==========
+  function startTimerUpdates() {
+    if (timerInterval) clearInterval(timerInterval);
     
-    db.ref('licenses').orderByChild('userId').equalTo(currentUser.uid).on('value', snapshot => {
-      const data = snapshot.val();
-      const previous = [...userLicenses];
-      userLicenses = [];
-      if (data) {
-        Object.keys(data).forEach(k => userLicenses.push({ id: k, ...data[k] }));
-      }
-
-      if (previous.length > 0) {
-        userLicenses.forEach(newLic => {
-          const oldLic = previous.find(l => l.id === newLic.id);
-          if (oldLic) {
-            if (oldLic.active !== true && newLic.active === true) {
-              showToast(`✅ Plano ${newLic.planName} ATIVADO!`);
-            }
-            if (oldLic.renovacaoSolicitada === true && newLic.renovacaoSolicitada !== true && newLic.active === true) {
-              showToast(`✅ Renovação APROVADA!`);
-            }
-          }
-        });
-      }
-
-      renderDomainsList();
-      updateStats();
-      checkExpirations();
-      checkExpiryWarnings();
-      updateFreeLimitAlert();
-      updateFreePlanUI();
-    });
-
-    if (updateCheckInterval) clearInterval(updateCheckInterval);
-    updateCheckInterval = setInterval(() => {
-      if (!currentUser) return;
-      db.ref('licenses').orderByChild('userId').equalTo(currentUser.uid).once('value', snap => {
-        const data = snap.val();
-        const arr = [];
-        if (data) Object.keys(data).forEach(k => arr.push({ id: k, ...data[k] }));
-        let mudou = arr.length !== userLicenses.length;
-        if (!mudou) {
-          arr.forEach(n => {
-            const o = userLicenses.find(l => l.id === n.id);
-            if (o && (o.active !== n.active || o.renovacaoSolicitada !== n.renovacaoSolicitada || o.expiresAt !== n.expiresAt || o.planName !== n.planName)) {
-              mudou = true;
-            }
-          });
-        }
-        if (mudou) {
-          userLicenses = arr;
-          renderDomainsList();
-          updateStats();
-          checkExpirations();
-          checkExpiryWarnings();
-          updateFreeLimitAlert();
-          updateFreePlanUI();
+    timerInterval = setInterval(() => {
+      document.querySelectorAll('.timer-cell[data-license-id]').forEach(el => {
+        const licId = el.getAttribute('data-license-id');
+        const lic = allLicenses.find(l => l.id === licId);
+        
+        if (!lic || lic.active !== true) return;
+        if (isPermanent(lic)) return;
+        
+        const duration = PLAN_DURATIONS[lic.planName];
+        if (!duration || duration === Infinity) return;
+        
+        const startTime = lic.spooferActivatedAt 
+          ? new Date(lic.spooferActivatedAt).getTime() 
+          : new Date(lic.createdAt).getTime();
+        
+        const elapsed = (Date.now() - startTime) / 1000;
+        const remaining = Math.max(0, duration - elapsed);
+        
+        if (remaining <= 0) {
+          el.className = 'timer-cell expired';
+          el.innerHTML = '⏰ EXPIROU';
+          
+          db.ref('licenses/' + lic.id).update({
+            active: false,
+            expiredAt: new Date().toISOString(),
+            expiredReason: 'Expiração automática'
+          }).catch(err => console.error('Erro:', err));
+        } else {
+          updateTimerCell(el, lic);
         }
       });
-    }, 5000);
-  }
-
-  function countFreePlansUsed() {
-    return userLicenses.filter(l => l.planName === 'Grátis').length;
-  }
-
-  function updateFreeLimitAlert() {
-    const box = document.getElementById('freeLimitAlert');
-    if (!box) return;
-    const used = countFreePlansUsed();
-    const remaining = Math.max(0, MAX_FREE_PLANS_PER_USER - used);
-
-    if (used >= MAX_FREE_PLANS_PER_USER) {
-      box.innerHTML = `
-        <div class="free-limit-info danger">
-          <i class="fas fa-exclamation-triangle"></i>
-          <div style="flex:1;">
-            <strong>⛔ LIMITE DE GRÁTIS ATINGIDO!</strong><br>
-            <span style="font-size:0.72rem;">Você usou ${used}/${MAX_FREE_PLANS_PER_USER}. Escolha um plano pago.</span>
-          </div>
-        </div>`;
-    } else if (remaining === 1) {
-      box.innerHTML = `
-        <div class="free-limit-info danger">
-          <i class="fas fa-exclamation-circle"></i>
-          <div style="flex:1;">
-            <strong>⚠️ ÚLTIMO GRÁTIS!</strong><br>
-            <span style="font-size:0.72rem;">Só resta <span class="count">${remaining}</span> plano grátis.</span>
-          </div>
-        </div>`;
-    } else {
-      box.innerHTML = `
-        <div class="free-limit-info">
-          <i class="fas fa-info-circle"></i>
-          <div style="flex:1;">
-            <strong>ℹ️ Grátis disponíveis</strong><br>
-            <span style="font-size:0.72rem;">Você pode usar <span class="count">${remaining}</span> planos grátis.</span>
-          </div>
-        </div>`;
-    }
-  }
-
-  function updateStats() {
-    document.getElementById('statDomainsCount').innerText = userLicenses.length;
-    const active = userLicenses.filter(l => l.active === true).length;
-    document.getElementById('statActivePlans').innerText = active;
-    const used = countFreePlansUsed();
-    const remaining = Math.max(0, MAX_FREE_PLANS_PER_USER - used);
-    const el = document.getElementById('statFreeRemaining');
-    el.innerText = remaining;
-    el.style.color = remaining === 0 ? 'var(--red)' : 'var(--yellow)';
-  }
-
-  function checkExpiryWarnings() {
-    userLicenses.forEach(lic => {
-      if (lic.active !== true) return;
-      if (lic.planName === 'Grátis') return;
-      if (isPermanent(lic)) return;
-
-      const duration = PLAN_DURATIONS[lic.planName];
-      if (!duration || duration === Infinity) return;
-
-      const startTime = lic.spooferActivatedAt ? new Date(lic.spooferActivatedAt).getTime() : new Date(lic.createdAt).getTime();
-      const elapsed = (Date.now() - startTime) / 1000;
-      const remaining = duration - elapsed;
-
-      if (remaining <= 432000 && remaining > 0) {
-        const days = Math.floor(remaining / 86400);
-        const hours = Math.floor((remaining % 86400) / 3600);
-        if (!expiryWarnings[lic.id + '_5d']) {
-          expiryWarnings[lic.id + '_5d'] = true;
-          showToast(`⚠️ ${lic.planName} expira em ${days}d ${hours}h!`, true);
-        }
-      }
-      if (remaining <= 1200 && remaining > 0) {
-        const mins = Math.floor(remaining / 60);
-        if (!expiryWarnings[lic.id + '_20m']) {
-          expiryWarnings[lic.id + '_20m'] = true;
-          showToast(`🚨 URGENTE! Expira em ${mins} min!`, true);
-        }
-      }
-    });
-  }
-
-  function checkExpirations() {
-    userLicenses.forEach(lic => {
-      if (lic.active !== true) return;
-      if (isPermanent(lic)) return;
-
-      const duration = PLAN_DURATIONS[lic.planName];
-      if (!duration || duration === Infinity) return;
-
-      const startTime = lic.spooferActivatedAt ? new Date(lic.spooferActivatedAt).getTime() : new Date(lic.createdAt).getTime();
-      const elapsed = (Date.now() - startTime) / 1000;
-
-      if (elapsed >= duration) {
-        db.ref('licenses/' + lic.id).update({
-          active: false,
-          expiredAt: new Date().toISOString()
-        });
-        if (countdownIntervals[lic.id]) {
-          clearInterval(countdownIntervals[lic.id]);
-          delete countdownIntervals[lic.id];
-        }
-        renderDomainsList();
-        updateStats();
-        if (lic.planName !== 'Grátis') showToast(`⏰ ${lic.planName} expirou!`, true);
-      } else {
-        if (!countdownIntervals[lic.id]) startCountdown(lic.id);
-      }
-    });
-  }
-
-  function startCountdown(licenseId) {
-    if (countdownIntervals[licenseId]) clearInterval(countdownIntervals[licenseId]);
-
-    const interval = setInterval(() => {
-      const lic = userLicenses.find(l => l.id === licenseId);
-      if (!lic || lic.active !== true || isPermanent(lic)) {
-        clearInterval(interval);
-        delete countdownIntervals[licenseId];
-        return;
-      }
-
-      const duration = PLAN_DURATIONS[lic.planName];
-      if (!duration || duration === Infinity) {
-        clearInterval(interval);
-        delete countdownIntervals[licenseId];
-        return;
-      }
-
-      const startTime = lic.spooferActivatedAt ? new Date(lic.spooferActivatedAt).getTime() : new Date(lic.createdAt).getTime();
-      const elapsed = (Date.now() - startTime) / 1000;
-      const remaining = Math.max(0, duration - elapsed);
-
-      if (remaining <= 0) {
-        clearInterval(interval);
-        delete countdownIntervals[licenseId];
-        db.ref('licenses/' + licenseId).update({
-          active: false,
-          expiredAt: new Date().toISOString()
-        });
-        renderDomainsList();
-        updateStats();
-        if (lic.planName !== 'Grátis') showToast(`⏰ ${lic.planName} expirou!`, true);
-      } else {
-        updateCountdownDisplay(licenseId, remaining);
-      }
     }, 1000);
-
-    countdownIntervals[licenseId] = interval;
   }
 
-  function updateCountdownDisplay(licenseId, remainingSeconds) {
-    document.querySelectorAll('.domain-card').forEach(card => {
-      const licId = card.getAttribute('data-license-id');
-      if (licId !== licenseId) return;
-      const timerEl = card.querySelector('.countdown-timer');
-      if (!timerEl) return;
-
-      const mins = Math.floor(remainingSeconds / 60);
-      const secs = Math.floor(remainingSeconds % 60);
-      const hours = Math.floor(remainingSeconds / 3600);
-      const days = Math.floor(remainingSeconds / 86400);
-
-      let display = '';
-      if (remainingSeconds > 86400) {
-        display = `⏱️ ${days}d ${(hours % 24).toString().padStart(2, '0')}h`;
-      } else if (remainingSeconds > 3600) {
-        display = `⏱️ ${hours}h ${mins.toString().padStart(2, '0')}m`;
-      } else {
-        display = `⏱️ ${mins}:${secs.toString().padStart(2, '0')}`;
-      }
-      timerEl.innerHTML = display;
-    });
-  }
-
-  // ==================== REGISTRAR DOMÍNIO ====================
-  async function registerDomain() {
-    const selectedOption = document.getElementById('newPlanSelect').value;
-    const [planName, price, planType] = selectedOption.split('|');
-
-    const isFree = planName === 'Grátis';
-    const isPermanent = planName === 'Permanente';
-
-    // Validação de grátis
-    if (isFree) {
-      const used = countFreePlansUsed();
-      if (used >= MAX_FREE_PLANS_PER_USER) {
-        showToast(`❌ Já usou todos os ${MAX_FREE_PLANS_PER_USER} grátis!`, true);
-        return;
-      }
-      const remaining = MAX_FREE_PLANS_PER_USER - used;
-      if (remaining === 1) {
-        if (!confirm(`⚠️ Este é seu ÚLTIMO grátis (${used + 1}/${MAX_FREE_PLANS_PER_USER}). Continuar?`)) return;
-      }
-    }
-
-    let domainsArray = [];
-    let allDomains = false;
-
-    if (isPermanent) {
-      if (currentDomainMode === 'all') {
-        allDomains = true;
-      } else {
-        const inputs = document.querySelectorAll('.perm-domain-input');
-        const seen = new Set();
-        for (const inp of inputs) {
-          const val = normalizeDomain(inp.value);
-          if (!val) continue;
-          if (seen.has(val)) {
-            showToast(`❌ Domínio duplicado: ${val}`, true);
-            return;
-          }
-          seen.add(val);
-          domainsArray.push(val);
-        }
-        if (domainsArray.length === 0) {
-          showToast("❌ Adicione pelo menos 1 domínio", true);
-          return;
-        }
-      }
-    } else {
-      const val = normalizeDomain(document.getElementById('newDomainInput').value);
-      if (!val) return showToast("❌ Digite um domínio válido!", true);
-      domainsArray = [val];
-    }
-
-    // Verificar duplicados no Firebase
-    const snap = await db.ref('licenses').once('value');
-    const all = snap.val() || {};
-
-    for (const lic of Object.values(all)) {
-      if (lic.domain) {
-        const existing = normalizeDomain(lic.domain);
-        if (domainsArray.includes(existing)) {
-          return showToast(`❌ Domínio já cadastrado (por ${lic.userName || 'outro'})!`, true);
-        }
-      }
-      if (Array.isArray(lic.domains)) {
-        for (const d of lic.domains) {
-          const existing = normalizeDomain(d);
-          if (domainsArray.includes(existing)) {
-            return showToast(`❌ Domínio já cadastrado!`, true);
-          }
-        }
-      }
-    }
-
-    const licenseId = 'af_' + Math.random().toString(36).substring(2, 9);
-    const isActive = isFree ? true : false;
-
-    let expiresAt = null;
-    if (!isFree && !isPermanent) {
-      const duration = PLAN_DURATIONS[planName];
-      expiresAt = new Date(Date.now() + duration * 1000).toISOString();
-    }
-
-    const licenseData = {
-      id: licenseId,
-      userId: currentUser.uid,
-      userName: currentUser.displayName || currentUser.email,
-      planName: planName,
-      price: price,
-      planType: planType || 'paid',
-      active: isActive,
-      createdAt: new Date().toISOString(),
-      spooferActivatedAt: null,
-      expiresAt: expiresAt
-    };
-
-    if (isPermanent) {
-      if (allDomains) {
-        licenseData.allDomains = true;
-        licenseData.domain = '[TODOS OS DOMÍNIOS]';
-        licenseData.domains = [];
-      } else {
-        licenseData.allDomains = false;
-        licenseData.domains = domainsArray;
-        licenseData.domain = domainsArray[0];
-      }
-    } else {
-      licenseData.domain = domainsArray[0];
-    }
-
-    try {
-      await db.ref('licenses/' + licenseId).set(licenseData);
-      
-      if (isFree) {
-        const newUsed = countFreePlansUsed() + 1;
-        showToast(`🎁 Grátis ATIVADO! (${newUsed}/${MAX_FREE_PLANS_PER_USER})`);
-      } else if (isPermanent) {
-        showToast(`♾️ Permanente solicitado! Aguarde aprovação.`);
-      } else {
-        showToast(`📤 Solicitação enviada! Aguarde aprovação.`);
-      }
-
-      // Reset form
-      document.getElementById('newDomainInput').value = '';
-      document.getElementById('domainInputs').innerHTML = `
-        <div class="domain-input-row">
-          <input type="text" placeholder="meublog1.blogspot.com" class="perm-domain-input">
-          <button class="remove-domain" onclick="removeDomainInput(this)">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>`;
-      updateDomainCounter();
-      setDomainMode('specific');
-
-      document.querySelectorAll('.plan-option').forEach(p => p.classList.remove('selected'));
-      document.querySelector('.plan-option[data-plan^="Grátis"]').classList.add('selected');
-      document.getElementById('newPlanSelect').value = 'Grátis|0|free';
-      document.getElementById('singleDomainArea').style.display = 'block';
-      document.getElementById('domainsPanel').classList.remove('active');
-      document.getElementById('priceDisplay').innerHTML = `Valor: <strong style="color: var(--green);">Grátis - 0 MT</strong>`;
-
-      switchTab('domains');
-      setTimeout(() => fetchUserData(), 500);
-    } catch (err) {
-      showToast("❌ " + err.message, true);
-    }
-  }
-
-  // ==================== RENDER DOMÍNIOS ====================
-  function renderDomainsList() {
-    const container = document.getElementById('domainsList');
-    container.innerHTML = '';
-
-    if (userLicenses.length === 0) {
-      container.innerHTML = `<div class="card" style="text-align:center; color: var(--text-muted);">Nenhum domínio cadastrado.</div>`;
+  function updateTimerCell(el, lic) {
+    if (isPermanent(lic)) {
+      el.className = 'timer-cell permanent';
+      el.innerHTML = '♾️ PERMANENTE';
       return;
     }
 
-    const sorted = [...userLicenses].sort((a, b) => {
-      if (a.active === b.active) return 0;
-      return a.active ? -1 : 1;
+    const duration = PLAN_DURATIONS[lic.planName];
+    if (!duration || duration === Infinity) return;
+
+    const startTime = lic.spooferActivatedAt 
+      ? new Date(lic.spooferActivatedAt).getTime() 
+      : new Date(lic.createdAt).getTime();
+    
+    const elapsed = (Date.now() - startTime) / 1000;
+    const remaining = Math.max(0, duration - elapsed);
+
+    if (remaining <= 0) {
+      el.className = 'timer-cell expired';
+      el.innerHTML = '⏰ EXPIROU';
+      return;
+    }
+
+    el.innerHTML = formatTime(remaining);
+
+    if (remaining < 3600) {
+      el.className = 'timer-cell danger';
+    } else {
+      el.className = 'timer-cell';
+    }
+  }
+
+  function formatTime(seconds) {
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+
+    if (days > 0) return `${days}d ${hours}h ${mins}m`;
+    if (hours > 0) return `${hours}h ${mins}m ${secs}s`;
+    return `${mins}m ${secs}s`;
+  }
+
+  function isExpired(lic) {
+    if (isPermanent(lic)) return false;
+    if (lic.revogadaEm) return false;
+    if (lic.expiredAt) return true;
+    
+    if (lic.active !== true) {
+      if (lic.expiresAt) return new Date(lic.expiresAt).getTime() < Date.now();
+      return false;
+    }
+    
+    const duration = PLAN_DURATIONS[lic.planName];
+    if (!duration || duration === Infinity) return false;
+    
+    const startTime = lic.spooferActivatedAt 
+      ? new Date(lic.spooferActivatedAt).getTime() 
+      : new Date(lic.createdAt).getTime();
+    
+    const elapsed = (Date.now() - startTime) / 1000;
+    const expired = elapsed >= duration;
+    
+    if (expired && lic.active === true) {
+      db.ref('licenses/' + lic.id).update({
+        active: false,
+        expiredAt: new Date().toISOString(),
+        expiredReason: 'Tempo esgotado'
+      }).catch(err => console.error('Erro:', err));
+    }
+    
+    return expired;
+  }
+
+  // ========== STATS ==========
+  function updateStats() {
+    const total = allLicenses.length;
+    const active = allLicenses.filter(l => l.active === true && !isExpired(l)).length;
+    const permanent = allLicenses.filter(l => isPermanent(l) && l.active === true).length;
+    const pending = allLicenses.filter(l => l.active !== true && !l.renovacaoSolicitada && !l.revogadaEm && !isExpired(l)).length;
+    const renewals = allLicenses.filter(l => l.renovacaoSolicitada === true).length;
+    const expired = allLicenses.filter(l => isExpired(l)).length;
+    const revoked = allLicenses.filter(l => l.revogadaEm).length;
+
+    document.getElementById('totalLicenses').innerHTML = `<i class="fas fa-hashtag"></i> ${total}`;
+    document.getElementById('activeCount').innerHTML = `<i class="fas fa-check-circle" style="color: var(--green);"></i> ${active}`;
+    document.getElementById('permanentCount').innerHTML = `<i class="fas fa-infinity" style="color: var(--gold);"></i> ${permanent}`;
+    document.getElementById('pendingCount').innerHTML = `<i class="fas fa-clock" style="color: var(--yellow);"></i> ${pending}`;
+    document.getElementById('expiredCount').innerHTML = `<i class="fas fa-exclamation-circle" style="color: var(--red);"></i> ${expired}`;
+    document.getElementById('revokedCount').innerHTML = `<i class="fas fa-ban" style="color: var(--red);"></i> ${revoked}`;
+
+    const badge = document.getElementById('renewalBadge');
+    if (badge) {
+      if (renewals > 0) {
+        badge.textContent = renewals;
+        badge.style.display = 'inline-block';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+  }
+
+  // ========== DATAS ==========
+  function getDatesHtml(lic) {
+    const createdAt = lic.createdAt ? new Date(lic.createdAt) : null;
+    const expiresAt = lic.expiresAt ? new Date(lic.expiresAt) : null;
+    const expiredAt = lic.expiredAt ? new Date(lic.expiredAt) : null;
+    const revogadaEm = lic.revogadaEm ? new Date(lic.revogadaEm) : null;
+    const agora = new Date();
+
+    let html = '';
+
+    if (createdAt) {
+      html += `<div class="date-cell"><span class="label">📅 Criado:</span> ${createdAt.toLocaleDateString('pt-BR')} ${createdAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</div>`;
+    }
+
+    if (isPermanent(lic) && lic.active === true) {
+      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--gold);">♾️ Sem expiração</span></div>`;
+    } else if (expiresAt) {
+      const isExp = expiresAt.getTime() < agora.getTime();
+      const color = isExp ? 'var(--red)' : 'var(--green)';
+      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label">⏰ Expira:</span> <span style="color: ${color};">${expiresAt.toLocaleDateString('pt-BR')} ${expiresAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
+    }
+
+    if (expiredAt) {
+      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--red);">⏰ Expirou:</span> <span style="color: var(--red);">${expiredAt.toLocaleDateString('pt-BR')} ${expiredAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
+    }
+
+    if (revogadaEm) {
+      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--red);">🚫 Revogado:</span> <span style="color: var(--red);">${revogadaEm.toLocaleDateString('pt-BR')} ${revogadaEm.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
+    }
+
+    if (!html) {
+      html = `<div class="date-cell" style="color: var(--yellow);"><i class="fas fa-exclamation-triangle"></i> Sem data registrada</div>`;
+    }
+
+    return html;
+  }
+
+  // ========== RENDER ==========
+  function renderTable() {
+    const tbody = document.getElementById('admTable');
+    tbody.innerHTML = '';
+
+    let filtered = [...allLicenses];
+
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase().trim();
+      filtered = filtered.filter(item => {
+        const domainsStr = Array.isArray(item.domains) ? item.domains.join(' ') : '';
+        return (item.domain && item.domain.toLowerCase().includes(term)) ||
+               (domainsStr && domainsStr.toLowerCase().includes(term)) ||
+               (item.userName && item.userName.toLowerCase().includes(term)) ||
+               (item.planName && item.planName.toLowerCase().includes(term)) ||
+               (item.id && item.id.toLowerCase().includes(term));
+      });
+    }
+
+    if (currentFilter === 'active') {
+      filtered = filtered.filter(item => item.active === true && !isExpired(item));
+    } else if (currentFilter === 'permanent') {
+      filtered = filtered.filter(item => isPermanent(item) && item.active === true);
+    } else if (currentFilter === 'pending') {
+      filtered = filtered.filter(item => item.active !== true && !item.renovacaoSolicitada && !item.revogadaEm && !isExpired(item));
+    } else if (currentFilter === 'renewal') {
+      filtered = filtered.filter(item => item.renovacaoSolicitada === true);
+    } else if (currentFilter === 'expired') {
+      filtered = filtered.filter(item => isExpired(item));
+    } else if (currentFilter === 'revoked') {
+      filtered = filtered.filter(item => item.revogadaEm);
+    }
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="7">
+            <div class="empty-state">
+              <i class="fas fa-inbox"></i>
+              <h3>Nenhuma licença encontrada</h3>
+              <p>${allLicenses.length === 0 ? 'Ainda não há licenças cadastradas.' : 'Tente ajustar os filtros.'}</p>
+            </div>
+          </td>
+        </tr>
+      `;
+      return;
+    }
+
+    filtered.forEach(item => {
+      const tr = document.createElement('tr');
+      tr.className = 'clickable';
+      if (isPermanent(item)) tr.classList.add('permanent-row');
+      
+      const isRenewal = item.renovacaoSolicitada === true;
+      const isRevoked = !!item.revogadaEm;
+      const expired = isExpired(item);
+      const permanent = isPermanent(item);
+
+      tr.onclick = (e) => {
+        if (e.target.closest('button') || e.target.closest('a')) return;
+        if (item.userId) openUserModal(item.userId);
+      };
+
+      let statusHtml = '';
+      
+      if (isRenewal) {
+        statusHtml = '<span class="status-renewal"><i class="fas fa-sync fa-spin"></i> RENOVAÇÃO</span>';
+      } else if (isRevoked) {
+        statusHtml = '<span class="status-revoked"><i class="fas fa-ban"></i> REVOGADO</span>';
+      } else if (expired) {
+        statusHtml = '<span class="status-expired"><i class="fas fa-exclamation-circle"></i> EXPIRADO</span>';
+      } else if (item.active === true) {
+        statusHtml = '<span class="status-active"><i class="fas fa-check-circle"></i> ATIVO</span>';
+      } else {
+        statusHtml = '<span class="status-pending"><i class="fas fa-clock"></i> PENDENTE</span>';
+      }
+
+      let planClass = 'plan-free';
+      if (item.planName === 'Diário') planClass = 'plan-daily';
+      else if (item.planName === 'Semanal') planClass = 'plan-weekly';
+      else if (item.planName === 'Mensal') planClass = 'plan-monthly';
+      else if (permanent) planClass = 'plan-permanent';
+
+      const initials = item.userName ? item.userName.substring(0, 2).toUpperCase() : '??';
+
+      let timerHtml = '<span class="timer-cell expired">--</span>';
+      if (permanent && item.active === true) {
+        timerHtml = '<span class="timer-cell permanent">♾️ PERMANENTE</span>';
+      } else if (item.active === true && !expired) {
+        timerHtml = `<span class="timer-cell" data-license-id="${item.id}">...</span>`;
+      } else if (expired) {
+        timerHtml = '<span class="timer-cell expired">EXPIRADO</span>';
+      }
+
+      const datesHtml = getDatesHtml(item);
+
+      let domainsHtml = '';
+      if (permanent) {
+        if (item.allDomains === true) {
+          domainsHtml = `<div class="domain-cell permanent">🌍 Todos os domínios</div>`;
+        } else if (Array.isArray(item.domains) && item.domains.length > 0) {
+          domainsHtml = item.domains.map(d => 
+            `<div class="domain-cell permanent" style="font-size: 0.72rem;">🌐 ${d}</div>`
+          ).join('');
+        } else {
+          domainsHtml = `<div class="domain-cell permanent">${item.domain || '--'}</div>`;
+        }
+      } else {
+        domainsHtml = `<div class="domain-cell">${item.domain || '--'}</div>`;
+      }
+
+      let actionsHtml = '';
+      
+      if (isRenewal) {
+        actionsHtml = `
+          <button class="btn-thin btn-renew" onclick="approveRenewal('${item.id}')">
+            <i class="fas fa-check"></i> APROVAR
+          </button>
+          <button class="btn-thin btn-danger" onclick="rejectRenewal('${item.id}')">
+            <i class="fas fa-times"></i>
+          </button>
+        `;
+      } else if (isRevoked) {
+        actionsHtml = `
+          <button class="btn-thin btn-reactivate" onclick="reactivate('${item.id}')">
+            <i class="fas fa-sync"></i> REATIVAR
+          </button>
+          <button class="btn-thin btn-danger" onclick="del('${item.id}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+      } else if (expired) {
+        actionsHtml = `
+          <button class="btn-thin btn-reactivate" onclick="reactivate('${item.id}')">
+            <i class="fas fa-redo"></i> REATIVAR
+          </button>
+          <button class="btn-thin btn-danger" onclick="del('${item.id}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+      } else if (!item.active) {
+        const label = permanent ? 'APROVAR ♾️' : 'APROVAR';
+        actionsHtml = `
+          <button class="btn-thin btn-approve" onclick="approve('${item.id}', '${item.planName}')">
+            <i class="fas fa-check"></i> ${label}
+          </button>
+          <button class="btn-thin btn-danger" onclick="del('${item.id}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+      } else {
+        actionsHtml = `
+          <button class="btn-thin btn-revoke" onclick="revoke('${item.id}')">
+            <i class="fas fa-ban"></i> REVOGAR
+          </button>
+          <button class="btn-thin btn-danger" onclick="del('${item.id}')">
+            <i class="fas fa-trash"></i>
+          </button>
+        `;
+      }
+
+      tr.innerHTML = `
+        <td>
+          <div class="user-cell">
+            <div class="user-avatar">${initials}</div>
+            <div>
+              <div>${item.userName || 'Cliente'}</div>
+              <div style="font-size: 0.6rem; color: var(--text-muted);">
+                <i class="fas fa-eye"></i> ver todos
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>${domainsHtml}</td>
+        <td><span class="plan-badge ${planClass}">${permanent ? '♾️ ' : ''}${item.planName}</span></td>
+        <td>${statusHtml}</td>
+        <td>${timerHtml}</td>
+        <td>${datesHtml}</td>
+        <td>
+          <div class="actions">
+            ${actionsHtml}
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
     });
 
-    sorted.forEach(lic => {
-      const isActive = lic.active === true;
-      const isFree = lic.planName === 'Grátis';
-      const isPerm = isPermanent(lic);
+    document.querySelectorAll('.timer-cell[data-license-id]').forEach(el => {
+      const licId = el.getAttribute('data-license-id');
+      const lic = allLicenses.find(l => l.id === licId);
+      if (lic) updateTimerCell(el, lic);
+    });
+  }
+
+  function setFilter(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderTable();
+  }
+
+  function filterTable() {
+    searchTerm = document.getElementById('searchInput').value;
+    renderTable();
+  }
+
+  // ========== MODAL DO USUÁRIO ==========
+  function openUserModal(userId, keepOpen = false) {
+    if (!userId) return;
+    currentModalUserId = userId;
+
+    const userLicenses = allLicenses.filter(l => l.userId === userId);
+
+    if (userLicenses.length === 0) {
+      alert('Este usuário não tem licenças cadastradas.');
+      return;
+    }
+
+    const userName = userLicenses[0].userName || 'Cliente';
+    const initials = userName.substring(0, 2).toUpperCase();
+
+    document.getElementById('modalAvatar').textContent = initials;
+    document.getElementById('modalUserName').textContent = userName;
+    document.getElementById('modalUserId').textContent = 'ID: ' + userId.substring(0, 12) + '...';
+
+    const totalDomains = userLicenses.length;
+    const activeDomains = userLicenses.filter(l => l.active === true && !isExpired(l)).length;
+    const permanentCount = userLicenses.filter(l => isPermanent(l)).length;
+    const freeUsed = userLicenses.filter(l => l.planName === 'Grátis').length;
+    const freeRemaining = Math.max(0, MAX_FREE_PLANS_PER_USER - freeUsed);
+
+    document.getElementById('modalTotalDomains').textContent = totalDomains;
+    document.getElementById('modalActiveDomains').textContent = activeDomains;
+    document.getElementById('modalPermanentCount').textContent = permanentCount;
+    document.getElementById('modalFreeUsed').textContent = freeUsed;
+    document.getElementById('modalFreeRemaining').textContent = freeRemaining;
+
+    const limitBox = document.getElementById('limitAlertBox');
+    if (freeUsed >= MAX_FREE_PLANS_PER_USER) {
+      limitBox.innerHTML = `
+        <div class="limit-alert">
+          <i class="fas fa-exclamation-triangle" style="font-size: 1.2rem;"></i>
+          <div>
+            <strong>⚠️ LIMITE DE PLANOS GRÁTIS ATINGIDO!</strong><br>
+            <span style="font-size: 0.72rem;">Este usuário já usou ${freeUsed}/${MAX_FREE_PLANS_PER_USER} planos grátis.</span>
+          </div>
+        </div>
+      `;
+    } else {
+      limitBox.innerHTML = `
+        <div class="limit-ok">
+          <i class="fas fa-check-circle" style="font-size: 1.1rem;"></i>
+          <div>
+            ✅ Este usuário ainda pode usar <strong>${freeRemaining}</strong> plano(s) grátis.
+          </div>
+        </div>
+      `;
+    }
+
+    const domainList = document.getElementById('modalDomainList');
+    domainList.innerHTML = '';
+
+    userLicenses.forEach(lic => {
       const isRenewal = lic.renovacaoSolicitada === true;
+      const isRevoked = !!lic.revogadaEm;
+      const expired = isExpired(lic);
+      const permanent = isPermanent(lic);
 
-      let timerHtml = '';
-      let warningHtml = '';
-
-      if (isActive) {
-        if (isPerm) {
-          timerHtml = `<div class="permanent-timer">♾️ NUNCA EXPIRA</div>`;
-        } else {
-          const duration = PLAN_DURATIONS[lic.planName];
-          if (duration && duration !== Infinity) {
-            const startTime = lic.spooferActivatedAt ? new Date(lic.spooferActivatedAt).getTime() : new Date(lic.createdAt).getTime();
-            const elapsed = (Date.now() - startTime) / 1000;
-            const remaining = Math.max(0, duration - elapsed);
-
-            if (remaining > 0) {
-              const mins = Math.floor(remaining / 60);
-              const secs = Math.floor(remaining % 60);
-              const hours = Math.floor(remaining / 3600);
-              const days = Math.floor(remaining / 86400);
-
-              let display = '';
-              if (remaining > 86400) display = `⏱️ ${days}d ${(hours % 24).toString().padStart(2, '0')}h`;
-              else if (remaining > 3600) display = `⏱️ ${hours}h ${mins.toString().padStart(2, '0')}m`;
-              else display = `⏱️ ${mins}:${secs.toString().padStart(2, '0')}`;
-
-              timerHtml = `<div class="countdown-timer">${display}</div>`;
-
-              if (!isFree && remaining <= 432000 && remaining > 0) {
-                warningHtml = `<div class="expiry-warning warning-yellow">⚠️ Expira em ${days}d ${hours}h. Renove agora!</div>`;
-              }
-              if (!isFree && remaining <= 1200 && remaining > 0) {
-                warningHtml = `<div class="expiry-warning">🚨 URGENTE! Expira em ${mins} min!</div>`;
-              }
-            } else {
-              db.ref('licenses/' + lic.id).update({
-                active: false,
-                expiredAt: new Date().toISOString()
-              });
-              timerHtml = `<div style="color: var(--red); font-size: 0.75rem;">⏰ PLANO EXPIRADO</div>`;
-            }
-          }
-        }
-      }
-
-      let statusText = '⏳ PENDENTE';
-      let statusColor = 'var(--yellow)';
-      let statusBg = 'rgba(245,158,11,0.15)';
+      let statusText = '';
+      let statusColor = '';
 
       if (isRenewal) {
-        statusText = '🔄 RENOVAÇÃO PENDENTE';
+        statusText = '🔄 Renovação';
         statusColor = 'var(--purple)';
-        statusBg = 'rgba(99, 102, 241, 0.15)';
-      } else if (isActive) {
-        statusText = isPerm ? '♾️ PERMANENTE ATIVO' : '✅ ATIVO';
-        statusColor = isPerm ? 'var(--gold)' : 'var(--green)';
-        statusBg = isPerm ? 'rgba(251, 191, 36, 0.15)' : 'rgba(16,185,129,0.15)';
+      } else if (isRevoked) {
+        statusText = '🚫 Revogado';
+        statusColor = 'var(--red)';
+      } else if (expired) {
+        statusText = '⏰ Expirado';
+        statusColor = 'var(--red)';
+      } else if (lic.active === true) {
+        statusText = permanent ? '♾️ Permanente Ativo' : '✅ Ativo';
+        statusColor = permanent ? 'var(--gold)' : 'var(--green)';
+      } else {
+        statusText = '⏳ Pendente';
+        statusColor = 'var(--yellow)';
       }
 
-      const card = document.createElement('div');
-      card.className = 'domain-card' + (isPerm ? ' permanent-card' : '');
-      card.setAttribute('data-license-id', lic.id);
+      const planBadgeClass = lic.planName === 'Grátis' ? 'plan-free'
+        : lic.planName === 'Diário' ? 'plan-daily'
+        : lic.planName === 'Semanal' ? 'plan-weekly'
+        : lic.planName === 'Mensal' ? 'plan-monthly'
+        : 'plan-permanent';
 
-      const domainsDisplay = getDomainsDisplay(lic);
+      const createdAt = lic.createdAt ? new Date(lic.createdAt) : null;
+      const expiresAt = lic.expiresAt ? new Date(lic.expiresAt) : null;
+      const expiredAt = lic.expiredAt ? new Date(lic.expiredAt) : null;
+      const revogadaEm = lic.revogadaEm ? new Date(lic.revogadaEm) : null;
 
-      let scriptHtml = '';
-      if (isActive) {
-        const scriptTag = `<script src="https://${SERVER_HOST}/js/theme-adjust.js?id=${lic.id}"><\/script>`;
-        let planInfo = '';
-        if (lic.planName === 'Diário') planInfo = '📅 24 horas';
-        else if (lic.planName === 'Semanal') planInfo = '📆 7 dias';
-        else if (lic.planName === 'Mensal') planInfo = '📊 30 dias';
-        else if (lic.planName === 'Grátis') planInfo = '🎁 10 min';
-        else if (isPerm) planInfo = '♾️ Permanente';
-
-        const boxId = `scriptBox_${lic.id}`;
-        scriptHtml = `
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:4px;">
-            <span style="font-size:0.7rem; color:var(--text-muted);">📋 Script para o Blogger:</span>
-            <span style="font-size:0.65rem; color: ${isPerm ? 'var(--gold)' : 'var(--cyan)'};">${planInfo}</span>
-          </div>
-          <div class="script-box" id="${boxId}"></div>`;
-        setTimeout(() => {
-          const box = document.getElementById(boxId);
-          if (box) box.textContent = scriptTag;
-        }, 50);
-      } else if (isRenewal) {
-        scriptHtml = `<span style="font-size:0.72rem; color: var(--purple);">🔄 Renovação aguardando aprovação...</span>`;
-      } else {
-        scriptHtml = `<span style="font-size:0.72rem; color: var(--red);">⏳ Aguardando aprovação do Admin.</span>`;
-      }
-
-      // 🔥 BOTÃO RENOVAR SEMPRE VISÍVEL
-      let actionButtons = '';
-      if (isRenewal) {
-        actionButtons = `<button class="renew-btn" onclick="openRenewModal('${lic.id}')">🔄 ALTERAR SOLICITAÇÃO</button>`;
-      } else if (isPerm) {
-        // Permanente não precisa renovar — só copiar script
-        if (isActive) {
-          actionButtons = `<button class="copy-btn" onclick="copiarScript('${lic.id}')">📋 Copiar Script</button>`;
-        }
-      } else {
-        // Planos normais: copiar (se ativo) + renovar (sempre)
-        if (isActive) {
-          actionButtons = `
-            <button class="copy-btn" onclick="copiarScript('${lic.id}')">📋 Copiar Script</button>
-            <button class="renew-btn" onclick="openRenewModal('${lic.id}')">🔄 RENOVAR</button>`;
+      let domainsListHtml = '';
+      if (permanent) {
+        if (lic.allDomains === true) {
+          domainsListHtml = `<div style="color: var(--gold); font-weight: 700; font-size: 0.85rem;">🌍 Todos os domínios autorizados</div>`;
+        } else if (Array.isArray(lic.domains) && lic.domains.length > 0) {
+          domainsListHtml = `
+            <div style="color: var(--gold); font-weight: 700; font-size: 0.85rem; margin-bottom: 6px;">
+              ♾️ ${lic.domains.length} domínio(s) autorizado(s):
+            </div>
+            <div class="domain-list-inside">
+              ${lic.domains.map(d => `<span>🌐 ${d}</span>`).join('')}
+            </div>
+          `;
         } else {
-          actionButtons = `<button class="renew-btn" onclick="openRenewModal('${lic.id}')">🔄 RENOVAR PLANO</button>`;
+          domainsListHtml = `<div style="color: var(--gold); font-weight: 700; font-size: 0.85rem;">🌐 ${lic.domain || '--'}</div>`;
         }
+      } else {
+        domainsListHtml = `<div class="domain-item-name">🌐 ${lic.domain || '--'}</div>`;
       }
 
-      card.innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:4px;">
-          <div class="domain-name domain-clickable" style="color: ${isPerm ? 'var(--gold)' : 'var(--cyan)'}; font-size:0.95rem; font-weight:700;">
-            ${domainsDisplay}
+      const item = document.createElement('div');
+      item.className = 'domain-item' + (permanent ? ' permanent-item' : '');
+      item.innerHTML = `
+        <div class="domain-item-header">
+          <div class="domain-item-name ${permanent ? 'permanent-name' : ''}">
+            ${domainsListHtml}
           </div>
-          <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-            ${isFree && isActive ? '<span class="free-badge">🎁 GRÁTIS</span>' : ''}
-            ${isPerm ? '<span class="permanent-badge">♾️ PERMANENTE</span>' : ''}
-            <span style="font-size:0.65rem; padding:3px 8px; border-radius:12px; font-weight:800; background: ${statusBg}; color: ${statusColor}">
+          <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+            <span class="plan-badge ${planBadgeClass}">${permanent ? '♾️ ' : ''}${lic.planName}</span>
+            <span style="color: ${statusColor}; font-weight: 700; font-size: 0.72rem;">
               ${statusText}
             </span>
           </div>
         </div>
-        <div style="font-size:0.72rem; color:var(--text-muted);">
-          Plano: ${lic.planName} ${!isFree ? `(${lic.price} MT)` : ''}
-          ${isFree ? '🎁 Teste 10min' : ''}
-          ${isPerm ? '♾️ Sem expiração' : ''}
-          ${lic.spooferActivatedAt ? '✅ Ativado' : '⏳ Aguardando ativação via ?spoofer=on'}
-          ${!isFree && !isPerm && lic.expiresAt ? `| Expira: ${new Date(lic.expiresAt).toLocaleDateString()}` : ''}
+        <div class="domain-item-meta">
+          ${createdAt ? `<span><i class="fas fa-calendar-plus"></i> Criado: ${createdAt.toLocaleDateString('pt-BR')}</span>` : '<span style="color: var(--yellow);">📅 Sem data de criação</span>'}
+          ${permanent && lic.active ? `<span style="color: var(--gold);"><i class="fas fa-infinity"></i> Sem expiração</span>` : ''}
+          ${!permanent && expiresAt ? `<span><i class="fas fa-calendar-times"></i> Expira: ${expiresAt.toLocaleDateString('pt-BR')}</span>` : ''}
+          ${expiredAt ? `<span style="color: var(--red);"><i class="fas fa-hourglass-end"></i> Expirou em: ${expiredAt.toLocaleDateString('pt-BR')}</span>` : ''}
+          ${revogadaEm ? `<span style="color: var(--red);"><i class="fas fa-ban"></i> Revogado: ${revogadaEm.toLocaleDateString('pt-BR')}</span>` : ''}
         </div>
-        ${timerHtml}
-        ${warningHtml}
-        <div style="margin-top:10px;">
-          ${scriptHtml}
-          <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-top:8px;">
-            ${actionButtons}
-          </div>
-        </div>`;
-      container.appendChild(card);
+        <div class="domain-item-actions">
+          ${isRevoked ? `
+            <button class="btn-thin btn-reactivate" onclick="reactivate('${lic.id}'); openUserModal('${userId}', true);">
+              <i class="fas fa-sync"></i> REATIVAR
+            </button>
+          ` : expired ? `
+            <button class="btn-thin btn-reactivate" onclick="reactivate('${lic.id}'); openUserModal('${userId}', true);">
+              <i class="fas fa-redo"></i> REATIVAR
+            </button>
+          ` : !lic.active ? `
+            <button class="btn-thin btn-approve" onclick="approve('${lic.id}', '${lic.planName}'); openUserModal('${userId}', true);">
+              <i class="fas fa-check"></i> APROVAR${permanent ? ' ♾️' : ''}
+            </button>
+          ` : `
+            <button class="btn-thin btn-revoke" onclick="revoke('${lic.id}'); openUserModal('${userId}', true);">
+              <i class="fas fa-ban"></i> REVOGAR
+            </button>
+          `}
+          <button class="btn-thin btn-danger" onclick="del('${lic.id}'); openUserModal('${userId}', true);">
+            <i class="fas fa-trash"></i> EXCLUIR
+          </button>
+        </div>
+      `;
+      domainList.appendChild(item);
     });
+
+    document.getElementById('userModal').classList.add('active');
   }
 
-  // ==================== COPIAR SCRIPT ====================
-  function copiarScript(licenseId) {
-    const box = document.getElementById('scriptBox_' + licenseId);
-    if (!box) return showToast('❌ Script não encontrado!', true);
-    const texto = box.textContent;
-    if (!texto || !texto.trim()) return showToast('❌ Script vazio!', true);
+  function closeUserModal() {
+    document.getElementById('userModal').classList.remove('active');
+    currentModalUserId = null;
+  }
 
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(texto).then(() => {
-        const card = box.closest('.domain-card');
-        const btn = card.querySelector('.copy-btn');
-        if (btn) {
-          btn.textContent = '✅ Copiado!';
-          btn.classList.add('copied');
-          setTimeout(() => {
-            btn.textContent = '📋 Copiar Script';
-            btn.classList.remove('copied');
-          }, 2000);
-        }
-        showToast('✅ Script copiado!');
-      }).catch(() => fallbackCopy(licenseId, texto));
+  document.getElementById('userModal').addEventListener('click', function(e) {
+    if (e.target === this) closeUserModal();
+  });
+
+  // ========== APROVAR ==========
+  function approve(id, planName) {
+    const isPermanent = planName === 'Permanente';
+    
+    const updateData = { 
+      active: true, 
+      spooferActivatedAt: null,
+      expiredAt: null,
+      revogadaEm: null,
+      approvedAt: new Date().toISOString()
+    };
+
+    if (!isPermanent) {
+      const seconds = PLAN_DURATIONS[planName] || 86400;
+      updateData.expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
     } else {
-      fallbackCopy(licenseId, texto);
+      updateData.expiresAt = null;
     }
+    
+    db.ref('licenses/' + id).update(updateData)
+    .then(() => {
+      if (!currentModalUserId) {
+        alert(`✅ Licença aprovada! Plano: ${planName}${isPermanent ? ' ♾️ PERMANENTE' : ''}`);
+      }
+    })
+    .catch(err => alert('❌ Erro: ' + err.message));
   }
 
-  function fallbackCopy(licenseId, texto) {
-    const ta = document.createElement('textarea');
-    ta.value = texto;
-    ta.style.position = 'fixed';
-    ta.style.left = '-9999px';
-    document.body.appendChild(ta);
-    ta.select();
-    try {
-      document.execCommand('copy');
-      showToast('✅ Script copiado!');
-    } catch (e) {
-      showToast('❌ Erro ao copiar.', true);
-    }
-    document.body.removeChild(ta);
-  }
-
-  // ==================== MODAL RENOVAR ====================
-  function openRenewModal(licenseId) {
-    const lic = userLicenses.find(l => l.id === licenseId);
+  // ========== APROVAR RENOVAÇÃO ==========
+  function approveRenewal(id) {
+    const lic = allLicenses.find(l => l.id === id);
     if (!lic) return;
 
     if (isPermanent(lic)) {
-      showToast('♾️ Permanente não precisa renovar!', true);
+      alert('♾️ Plano Permanente não precisa de renovação!');
       return;
     }
 
-    selectedRenewLicense = lic;
+    const seconds = PLAN_DURATIONS[lic.planName] || 86400;
+    const expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
 
-    document.getElementById('modalDomainInfo').innerText = `Domínio: ${lic.domain || '--'}`;
-    document.getElementById('modalCurrentPlan').innerText = `Plano atual: ${lic.planName}`;
-
-    // Reset planos
-    document.querySelectorAll('.renew-plan-option').forEach(p => p.classList.remove('selected'));
-    document.querySelector('.renew-plan-option[data-plan^="Diário"]').classList.add('selected');
-    document.getElementById('renewPlanSelect').value = 'Diário|20|paid';
-
-    // Reset painel permanente
-    document.getElementById('renewDomainsPanel').classList.remove('active');
-    document.getElementById('renewDomainInputs').innerHTML = `
-      <div class="domain-input-row">
-        <input type="text" placeholder="meublog1.blogspot.com" class="renew-perm-domain-input">
-        <button class="remove-domain" onclick="removeRenewDomainInput(this)">
-          <i class="fas fa-trash"></i>
-        </button>
-      </div>`;
-    updateRenewDomainCounter();
-    setRenewDomainMode('specific');
-
-    document.getElementById('renewModal').classList.add('active');
+    db.ref('licenses/' + id).update({
+      active: true,
+      expiresAt: expiresAt,
+      spooferActivatedAt: null,
+      createdAt: new Date().toISOString(),
+      renovacaoSolicitada: false,
+      renovacaoAprovadaEm: new Date().toISOString(),
+      expiredAt: null
+    })
+    .then(() => {
+      if (!currentModalUserId) alert(`✅ Renovação aprovada! Plano: ${lic.planName}`);
+    })
+    .catch(err => alert('❌ Erro: ' + err.message));
   }
 
-  function closeRenewModal() {
-    document.getElementById('renewModal').classList.remove('active');
-    selectedRenewLicense = null;
+  function rejectRenewal(id) {
+    if (!confirm("Rejeitar esta renovação?")) return;
+
+    db.ref('licenses/' + id).update({
+      renovacaoSolicitada: false,
+      renovacaoRejeitadaEm: new Date().toISOString()
+    })
+    .then(() => {
+      if (!currentModalUserId) alert('❌ Renovação rejeitada.');
+    })
+    .catch(err => alert('❌ Erro: ' + err.message));
   }
 
-  function selectRenewPlan(el) {
-    const value = el.getAttribute('data-plan');
-    const [planName] = value.split('|');
+  // ========== REVOGAR ==========
+  function revoke(id) {
+    const lic = allLicenses.find(l => l.id === id);
+    if (!lic) return;
 
-    document.querySelectorAll('.renew-plan-option').forEach(p => p.classList.remove('selected'));
-    el.classList.add('selected');
-    document.getElementById('renewPlanSelect').value = value;
+    const domainText = isPermanent(lic) 
+      ? (lic.allDomains ? 'TODOS os domínios' : (lic.domains || [lic.domain]).join(', '))
+      : lic.domain;
 
-    const panel = document.getElementById('renewDomainsPanel');
-    if (planName === 'Permanente') {
-      panel.classList.add('active');
-    } else {
-      panel.classList.remove('active');
-    }
+    if (!confirm(`REVOGAR a licença?\n\nDomínios: ${domainText}\n\nO usuário perderá o acesso.`)) return;
+
+    db.ref('licenses/' + id).update({
+      active: false,
+      revogadaEm: new Date().toISOString(),
+      revogadaMotivo: 'Revogada pelo Administrador'
+    })
+    .then(() => {
+      if (!currentModalUserId) alert(`✅ Licença REVOGADA!`);
+    })
+    .catch(err => alert('❌ Erro: ' + err.message));
   }
 
-  async function confirmRenew() {
-    if (!selectedRenewLicense) return;
+  // ========== REATIVAR ==========
+  function reactivate(id) {
+    const lic = allLicenses.find(l => l.id === id);
+    if (!lic) return;
 
-    const value = document.getElementById('renewPlanSelect').value;
-    const [planName, price] = value.split('|');
-    const isPermanent = planName === 'Permanente';
-
-    const licId = selectedRenewLicense.id;
-
-    let domainsArray = [];
-    let allDomains = false;
-
-    if (isPermanent) {
-      if (currentRenewMode === 'all') {
-        allDomains = true;
-      } else {
-        const inputs = document.querySelectorAll('.renew-perm-domain-input');
-        const seen = new Set();
-        for (const inp of inputs) {
-          const val = normalizeDomain(inp.value);
-          if (!val) continue;
-          if (seen.has(val)) return showToast(`❌ Duplicado: ${val}`, true);
-          seen.add(val);
-          domainsArray.push(val);
-        }
-        if (domainsArray.length === 0) return showToast("❌ Adicione 1 domínio", true);
-      }
-    }
+    const isPermanent = lic.planName === 'Permanente';
+    const agora = new Date().toISOString();
 
     const updateData = {
-      planName: planName,
-      price: price,
-      active: false,
-      renovacaoSolicitada: true,
-      renovacaoSolicitadaEm: new Date().toISOString(),
-      createdAt: new Date().toISOString(),
-      spooferActivatedAt: null
+      active: true,
+      createdAt: agora,
+      spooferActivatedAt: null,
+      expiredAt: null,
+      revogadaEm: null,
+      reativadaEm: agora
     };
 
     if (isPermanent) {
-      if (allDomains) {
-        updateData.allDomains = true;
-        updateData.domain = '[TODOS OS DOMÍNIOS]';
-        updateData.domains = [];
-      } else {
-        updateData.allDomains = false;
-        updateData.domains = domainsArray;
-        updateData.domain = domainsArray[0];
-      }
       updateData.expiresAt = null;
     } else {
-      const duration = PLAN_DURATIONS[planName];
-      updateData.expiresAt = new Date(Date.now() + duration * 1000).toISOString();
-      updateData.allDomains = false;
-      delete updateData.domains; // mantém domain atual
+      const seconds = PLAN_DURATIONS[lic.planName] || 86400;
+      updateData.expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
     }
 
-    try {
-      await db.ref('licenses/' + licId).update(updateData);
-      showToast(`📤 Renovação solicitada!`);
-      closeRenewModal();
-      fetchUserData();
-    } catch (err) {
-      showToast("❌ " + err.message, true);
+    if (!confirm(`REATIVAR a licença?\n\n${isPermanent ? '♾️ Plano Permanente — tempo não afeta' : 'O tempo será zerado.'}`)) return;
+
+    db.ref('licenses/' + id).update(updateData)
+    .then(() => {
+      if (!currentModalUserId) alert(`✅ Licença REATIVADA!${isPermanent ? ' ♾️' : ''}`);
+    })
+    .catch(err => alert('❌ Erro: ' + err.message));
+  }
+
+  // ========== REVOGAR TODAS ==========
+  function revokeAll() {
+    if (!confirm(`🚨 REVOGAR TODAS AS LICENÇAS?\n\nTodos perderão acesso imediatamente.`)) return;
+    if (!confirm(`⚠️ TEM CERTEZA? Ação irreversível!`)) return;
+
+    const updates = {};
+    const agora = new Date().toISOString();
+    
+    allLicenses.forEach(lic => {
+      updates[`${lic.id}/active`] = false;
+      updates[`${lic.id}/revogadaEm`] = agora;
+      updates[`${lic.id}/revogadaMotivo`] = 'Revogação em massa';
+    });
+
+    db.ref('licenses').update(updates)
+    .then(() => alert(`✅ ${allLicenses.length} licenças REVOGADAS!`))
+    .catch(err => alert('❌ Erro: ' + err.message));
+  }
+
+  // ========== REATIVAR TODAS ==========
+  function reactivateAll() {
+    if (!confirm(`♻️ REATIVAR TODAS?\n\nO tempo será ZERADO para todas (exceto Permanentes).`)) return;
+
+    const updates = {};
+    const agora = new Date().toISOString();
+    
+    allLicenses.forEach(lic => {
+      updates[`${lic.id}/active`] = true;
+      updates[`${lic.id}/createdAt`] = agora;
+      updates[`${lic.id}/spooferActivatedAt`] = null;
+      updates[`${lic.id}/expiredAt`] = null;
+      updates[`${lic.id}/revogadaEm`] = null;
+      updates[`${lic.id}/reativadaEm`] = agora;
+
+      if (lic.planName === 'Permanente') {
+        updates[`${lic.id}/expiresAt`] = null;
+      } else {
+        const seconds = PLAN_DURATIONS[lic.planName] || 86400;
+        const expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
+        updates[`${lic.id}/expiresAt`] = expiresAt;
+      }
+    });
+
+    db.ref('licenses').update(updates)
+    .then(() => alert(`✅ ${allLicenses.length} licenças REATIVADAS!`))
+    .catch(err => alert('❌ Erro: ' + err.message));
+  }
+
+  // ========== EXCLUIR ==========
+  function del(id) {
+    const lic = allLicenses.find(l => l.id === id);
+    const domainText = lic ? (isPermanent(lic) ? '♾️ Permanente' : lic.domain) : '';
+    
+    if (confirm(`Excluir esta licença permanentemente?\n\n${domainText}`)) {
+      db.ref('licenses/' + id).remove()
+        .then(() => {
+          if (!currentModalUserId) console.log(`🗑️ ${id} removida`);
+        })
+        .catch(err => console.error('Erro:', err));
     }
   }
 
-  document.getElementById('renewModal').addEventListener('click', function(e) {
-    if (e.target === this) closeRenewModal();
-  });
+  function deleteAll() {
+    if (!confirm("🚨 APAGAR TODAS as licenças?")) return;
+    if (!confirm("⚠️ ÚLTIMA CHANCE! IRREVERSÍVEL!")) return;
 
-  // ==================== INIT ====================
-  document.addEventListener('DOMContentLoaded', () => {
-    updateDomainCounter();
-    updateRenewDomainCounter();
-  });
-
-  setInterval(() => {
-    if (currentUser) {
-      checkExpirations();
-      checkExpiryWarnings();
-    }
-  }, 10000);
+    db.ref('licenses').remove()
+      .then(() => alert('🗑️ Todas as licenças removidas'))
+      .catch(err => console.error('Erro:', err));
+  }
 </script>
 </body>
 </html>
