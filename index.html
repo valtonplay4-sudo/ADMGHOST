@@ -19,7 +19,6 @@
       --yellow: #f59e0b;
       --red: #ef4444;
       --red-hover: #dc2626;
-      --gold: #fbbf24;
       --text-muted: #94a3b8;
       --text-white: #f8fafc;
     }
@@ -100,9 +99,6 @@
     }
     .filter-btn:hover { border-color: var(--purple); color: #fff; }
     .filter-btn.active { background: var(--purple); border-color: var(--purple); color: #fff; }
-    .filter-btn.active[data-filter="permanent"] {
-      background: var(--gold); border-color: var(--gold); color: #030712;
-    }
 
     /* ========== TABELA ========== */
     .table-wrapper {
@@ -127,7 +123,6 @@
     tr:hover td { background: rgba(99, 102, 241, 0.04); }
     tr.clickable { cursor: pointer; }
     tr.clickable:hover td { background: rgba(99, 102, 241, 0.08); }
-    tr.permanent-row td { background: rgba(251, 191, 36, 0.03); }
 
     .user-cell { display: flex; align-items: center; gap: 10px; }
     .user-avatar {
@@ -137,7 +132,6 @@
       color: #fff; flex-shrink: 0;
     }
     .domain-cell { color: var(--cyan); font-weight: 600; font-size: 0.8rem; }
-    .domain-cell.permanent { color: var(--gold); }
 
     .plan-badge {
       display: inline-block; padding: 2px 10px;
@@ -147,11 +141,6 @@
     .plan-daily { background: rgba(56, 189, 248, 0.15); color: var(--cyan); }
     .plan-weekly { background: rgba(99, 102, 241, 0.15); color: var(--purple); }
     .plan-monthly { background: rgba(16, 185, 129, 0.15); color: var(--green); }
-    .plan-permanent {
-      background: linear-gradient(135deg, var(--gold) 0%, #f59e0b 100%);
-      color: #030712;
-      font-weight: 900;
-    }
 
     .status-active { color: var(--green); font-weight: 700; font-size: 0.72rem; }
     .status-pending { color: var(--yellow); font-weight: 700; font-size: 0.72rem; }
@@ -184,12 +173,6 @@
       background: rgba(107, 114, 128, 0.1);
       border-color: rgba(107, 114, 128, 0.3);
       color: #6b7280;
-    }
-    .timer-cell.permanent {
-      background: rgba(251, 191, 36, 0.1);
-      border-color: rgba(251, 191, 36, 0.4);
-      color: var(--gold);
-      min-width: 130px;
     }
 
     .date-cell { font-size: 0.68rem; color: var(--text-muted); white-space: nowrap; }
@@ -289,7 +272,6 @@
     .stat-box.warning .stat-value { color: var(--yellow); }
     .stat-box.danger .stat-value { color: var(--red); }
     .stat-box.success .stat-value { color: var(--green); }
-    .stat-box.gold .stat-value { color: var(--gold); }
 
     .limit-alert {
       background: rgba(239, 68, 68, 0.1);
@@ -319,10 +301,6 @@
       transition: 0.2s;
     }
     .domain-item:hover { border-color: rgba(99, 102, 241, 0.4); }
-    .domain-item.permanent-item {
-      border-color: rgba(251, 191, 36, 0.35);
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.05) 0%, rgba(3, 7, 18, 0.6) 100%);
-    }
     .domain-item-header {
       display: flex; justify-content: space-between;
       align-items: center; margin-bottom: 8px;
@@ -332,23 +310,10 @@
       color: var(--cyan); font-weight: 700;
       font-size: 0.88rem; display: flex;
       align-items: center; gap: 6px;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .domain-item-name.permanent-name { color: var(--gold); }
-    .domain-list-inside {
-      display: flex; flex-direction: column; gap: 4px;
-      font-size: 0.75rem;
-      margin-top: 4px;
-    }
-    .domain-list-inside span {
-      color: var(--text-muted);
-      display: flex; align-items: center; gap: 4px;
     }
     .domain-item-meta {
       display: flex; gap: 12px; flex-wrap: wrap;
       font-size: 0.7rem; color: var(--text-muted);
-      margin-top: 8px;
     }
     .domain-item-meta span {
       display: inline-flex; align-items: center; gap: 4px;
@@ -405,7 +370,6 @@
       <div class="stats">
         <span id="totalLicenses"><i class="fas fa-hashtag"></i> 0</span>
         <span id="activeCount"><i class="fas fa-check-circle" style="color: var(--green);"></i> 0</span>
-        <span id="permanentCount"><i class="fas fa-infinity" style="color: var(--gold);"></i> 0</span>
         <span id="pendingCount"><i class="fas fa-clock" style="color: var(--yellow);"></i> 0</span>
         <span id="expiredCount"><i class="fas fa-exclamation-circle" style="color: var(--red);"></i> 0</span>
         <span id="revokedCount"><i class="fas fa-ban" style="color: var(--red);"></i> 0</span>
@@ -435,7 +399,6 @@
     <div class="filter-buttons">
       <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)"><i class="fas fa-list"></i> Todos</button>
       <button class="filter-btn" data-filter="active" onclick="setFilter('active', this)"><i class="fas fa-check-circle" style="color: var(--green);"></i> Ativos</button>
-      <button class="filter-btn" data-filter="permanent" onclick="setFilter('permanent', this)"><i class="fas fa-infinity" style="color: var(--gold);"></i> Permanentes</button>
       <button class="filter-btn" data-filter="pending" onclick="setFilter('pending', this)"><i class="fas fa-clock" style="color: var(--yellow);"></i> Pendentes</button>
       <button class="filter-btn" data-filter="renewal" onclick="setFilter('renewal', this)"><i class="fas fa-sync" style="color: var(--purple);"></i> Renovações <span class="notification-badge" id="renewalBadge" style="display:none;">0</span></button>
       <button class="filter-btn" data-filter="expired" onclick="setFilter('expired', this)"><i class="fas fa-exclamation-circle" style="color: var(--red);"></i> Expirados</button>
@@ -449,7 +412,7 @@
       <thead>
         <tr>
           <th>Usuário</th>
-          <th>Domínio(s)</th>
+          <th>Domínio</th>
           <th>Plano</th>
           <th>Status</th>
           <th>⏱️ Restante</th>
@@ -480,15 +443,11 @@
       <div class="modal-stats">
         <div class="stat-box">
           <div class="stat-value" id="modalTotalDomains">0</div>
-          <div class="stat-label">Total Licenças</div>
+          <div class="stat-label">Total Domínios</div>
         </div>
         <div class="stat-box success">
           <div class="stat-value" id="modalActiveDomains">0</div>
           <div class="stat-label">Ativos</div>
-        </div>
-        <div class="stat-box gold">
-          <div class="stat-value" id="modalPermanentCount">0</div>
-          <div class="stat-label">Permanentes</div>
         </div>
         <div class="stat-box warning">
           <div class="stat-value" id="modalFreeUsed">0</div>
@@ -503,7 +462,7 @@
       <div id="limitAlertBox"></div>
 
       <h3 style="font-size: 0.85rem; font-weight: 800; margin-bottom: 12px; color: var(--cyan);">
-        📋 Licenças deste usuário:
+        📋 Domínios deste usuário:
       </h3>
 
       <div class="domain-list" id="modalDomainList"></div>
@@ -527,16 +486,10 @@
     'Grátis': 600,
     'Diário': 86400,
     'Semanal': 604800,
-    'Mensal': 2592000,
-    'Permanente': Infinity
+    'Mensal': 2592000
   };
 
   const MAX_FREE_PLANS_PER_USER = 3;
-
-  // ========== HELPERS ==========
-  function isPermanent(lic) {
-    return lic.planName === 'Permanente';
-  }
 
   // ========== CARREGAR DADOS ==========
   db.ref('licenses').on('value', snapshot => {
@@ -576,10 +529,9 @@
         const lic = allLicenses.find(l => l.id === licId);
         
         if (!lic || lic.active !== true) return;
-        if (isPermanent(lic)) return;
         
         const duration = PLAN_DURATIONS[lic.planName];
-        if (!duration || duration === Infinity) return;
+        if (!duration) return;
         
         const startTime = lic.spooferActivatedAt 
           ? new Date(lic.spooferActivatedAt).getTime() 
@@ -605,14 +557,8 @@
   }
 
   function updateTimerCell(el, lic) {
-    if (isPermanent(lic)) {
-      el.className = 'timer-cell permanent';
-      el.innerHTML = '♾️ PERMANENTE';
-      return;
-    }
-
     const duration = PLAN_DURATIONS[lic.planName];
-    if (!duration || duration === Infinity) return;
+    if (!duration) return;
 
     const startTime = lic.spooferActivatedAt 
       ? new Date(lic.spooferActivatedAt).getTime() 
@@ -647,18 +593,23 @@
     return `${mins}m ${secs}s`;
   }
 
+  // 🔥 VERIFICAR SE ESTÁ EXPIRADO (CORRIGIDO!)
   function isExpired(lic) {
-    if (isPermanent(lic)) return false;
+    // Se foi revogada, não é expiração
     if (lic.revogadaEm) return false;
+    
+    // 🔥 SE TEM expiredAt DEFINIDO, É EXPIRADO (para qualquer plano!)
     if (lic.expiredAt) return true;
     
+    // Se não está ativa, verifica expiresAt
     if (lic.active !== true) {
       if (lic.expiresAt) return new Date(lic.expiresAt).getTime() < Date.now();
       return false;
     }
     
+    // 🔥 SE ESTÁ ATIVA, VERIFICA O TEMPO REAL
     const duration = PLAN_DURATIONS[lic.planName];
-    if (!duration || duration === Infinity) return false;
+    if (!duration) return false;
     
     const startTime = lic.spooferActivatedAt 
       ? new Date(lic.spooferActivatedAt).getTime() 
@@ -682,7 +633,6 @@
   function updateStats() {
     const total = allLicenses.length;
     const active = allLicenses.filter(l => l.active === true && !isExpired(l)).length;
-    const permanent = allLicenses.filter(l => isPermanent(l) && l.active === true).length;
     const pending = allLicenses.filter(l => l.active !== true && !l.renovacaoSolicitada && !l.revogadaEm && !isExpired(l)).length;
     const renewals = allLicenses.filter(l => l.renovacaoSolicitada === true).length;
     const expired = allLicenses.filter(l => isExpired(l)).length;
@@ -690,7 +640,6 @@
 
     document.getElementById('totalLicenses').innerHTML = `<i class="fas fa-hashtag"></i> ${total}`;
     document.getElementById('activeCount').innerHTML = `<i class="fas fa-check-circle" style="color: var(--green);"></i> ${active}`;
-    document.getElementById('permanentCount').innerHTML = `<i class="fas fa-infinity" style="color: var(--gold);"></i> ${permanent}`;
     document.getElementById('pendingCount').innerHTML = `<i class="fas fa-clock" style="color: var(--yellow);"></i> ${pending}`;
     document.getElementById('expiredCount').innerHTML = `<i class="fas fa-exclamation-circle" style="color: var(--red);"></i> ${expired}`;
     document.getElementById('revokedCount').innerHTML = `<i class="fas fa-ban" style="color: var(--red);"></i> ${revoked}`;
@@ -720,9 +669,7 @@
       html += `<div class="date-cell"><span class="label">📅 Criado:</span> ${createdAt.toLocaleDateString('pt-BR')} ${createdAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</div>`;
     }
 
-    if (isPermanent(lic) && lic.active === true) {
-      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--gold);">♾️ Sem expiração</span></div>`;
-    } else if (expiresAt) {
+    if (expiresAt) {
       const isExp = expiresAt.getTime() < agora.getTime();
       const color = isExp ? 'var(--red)' : 'var(--green)';
       html += `<div class="date-cell" style="margin-top: 2px;"><span class="label">⏰ Expira:</span> <span style="color: ${color};">${expiresAt.toLocaleDateString('pt-BR')} ${expiresAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
@@ -753,9 +700,7 @@
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase().trim();
       filtered = filtered.filter(item => {
-        const domainsStr = Array.isArray(item.domains) ? item.domains.join(' ') : '';
         return (item.domain && item.domain.toLowerCase().includes(term)) ||
-               (domainsStr && domainsStr.toLowerCase().includes(term)) ||
                (item.userName && item.userName.toLowerCase().includes(term)) ||
                (item.planName && item.planName.toLowerCase().includes(term)) ||
                (item.id && item.id.toLowerCase().includes(term));
@@ -764,8 +709,6 @@
 
     if (currentFilter === 'active') {
       filtered = filtered.filter(item => item.active === true && !isExpired(item));
-    } else if (currentFilter === 'permanent') {
-      filtered = filtered.filter(item => isPermanent(item) && item.active === true);
     } else if (currentFilter === 'pending') {
       filtered = filtered.filter(item => item.active !== true && !item.renovacaoSolicitada && !item.revogadaEm && !isExpired(item));
     } else if (currentFilter === 'renewal') {
@@ -794,12 +737,10 @@
     filtered.forEach(item => {
       const tr = document.createElement('tr');
       tr.className = 'clickable';
-      if (isPermanent(item)) tr.classList.add('permanent-row');
       
       const isRenewal = item.renovacaoSolicitada === true;
       const isRevoked = !!item.revogadaEm;
       const expired = isExpired(item);
-      const permanent = isPermanent(item);
 
       tr.onclick = (e) => {
         if (e.target.closest('button') || e.target.closest('a')) return;
@@ -808,6 +749,7 @@
 
       let statusHtml = '';
       
+      // 🔥 ORDEM CORRETA: RENOVAÇÃO → REVOGADO → EXPIRADO → ATIVO → PENDENTE
       if (isRenewal) {
         statusHtml = '<span class="status-renewal"><i class="fas fa-sync fa-spin"></i> RENOVAÇÃO</span>';
       } else if (isRevoked) {
@@ -824,35 +766,17 @@
       if (item.planName === 'Diário') planClass = 'plan-daily';
       else if (item.planName === 'Semanal') planClass = 'plan-weekly';
       else if (item.planName === 'Mensal') planClass = 'plan-monthly';
-      else if (permanent) planClass = 'plan-permanent';
 
       const initials = item.userName ? item.userName.substring(0, 2).toUpperCase() : '??';
 
       let timerHtml = '<span class="timer-cell expired">--</span>';
-      if (permanent && item.active === true) {
-        timerHtml = '<span class="timer-cell permanent">♾️ PERMANENTE</span>';
-      } else if (item.active === true && !expired) {
+      if (item.active === true && !expired) {
         timerHtml = `<span class="timer-cell" data-license-id="${item.id}">...</span>`;
       } else if (expired) {
         timerHtml = '<span class="timer-cell expired">EXPIRADO</span>';
       }
 
       const datesHtml = getDatesHtml(item);
-
-      let domainsHtml = '';
-      if (permanent) {
-        if (item.allDomains === true) {
-          domainsHtml = `<div class="domain-cell permanent">🌍 Todos os domínios</div>`;
-        } else if (Array.isArray(item.domains) && item.domains.length > 0) {
-          domainsHtml = item.domains.map(d => 
-            `<div class="domain-cell permanent" style="font-size: 0.72rem;">🌐 ${d}</div>`
-          ).join('');
-        } else {
-          domainsHtml = `<div class="domain-cell permanent">${item.domain || '--'}</div>`;
-        }
-      } else {
-        domainsHtml = `<div class="domain-cell">${item.domain || '--'}</div>`;
-      }
 
       let actionsHtml = '';
       
@@ -884,10 +808,9 @@
           </button>
         `;
       } else if (!item.active) {
-        const label = permanent ? 'APROVAR ♾️' : 'APROVAR';
         actionsHtml = `
           <button class="btn-thin btn-approve" onclick="approve('${item.id}', '${item.planName}')">
-            <i class="fas fa-check"></i> ${label}
+            <i class="fas fa-check"></i> APROVAR
           </button>
           <button class="btn-thin btn-danger" onclick="del('${item.id}')">
             <i class="fas fa-trash"></i>
@@ -916,8 +839,8 @@
             </div>
           </div>
         </td>
-        <td>${domainsHtml}</td>
-        <td><span class="plan-badge ${planClass}">${permanent ? '♾️ ' : ''}${item.planName}</span></td>
+        <td class="domain-cell">${item.domain || '--'}</td>
+        <td><span class="plan-badge ${planClass}">${item.planName}</span></td>
         <td>${statusHtml}</td>
         <td>${timerHtml}</td>
         <td>${datesHtml}</td>
@@ -970,13 +893,11 @@
 
     const totalDomains = userLicenses.length;
     const activeDomains = userLicenses.filter(l => l.active === true && !isExpired(l)).length;
-    const permanentCount = userLicenses.filter(l => isPermanent(l)).length;
     const freeUsed = userLicenses.filter(l => l.planName === 'Grátis').length;
     const freeRemaining = Math.max(0, MAX_FREE_PLANS_PER_USER - freeUsed);
 
     document.getElementById('modalTotalDomains').textContent = totalDomains;
     document.getElementById('modalActiveDomains').textContent = activeDomains;
-    document.getElementById('modalPermanentCount').textContent = permanentCount;
     document.getElementById('modalFreeUsed').textContent = freeUsed;
     document.getElementById('modalFreeRemaining').textContent = freeRemaining;
 
@@ -987,7 +908,7 @@
           <i class="fas fa-exclamation-triangle" style="font-size: 1.2rem;"></i>
           <div>
             <strong>⚠️ LIMITE DE PLANOS GRÁTIS ATINGIDO!</strong><br>
-            <span style="font-size: 0.72rem;">Este usuário já usou ${freeUsed}/${MAX_FREE_PLANS_PER_USER} planos grátis.</span>
+            <span style="font-size: 0.72rem;">Este usuário já usou ${freeUsed}/${MAX_FREE_PLANS_PER_USER} planos grátis. Novos planos grátis serão bloqueados.</span>
           </div>
         </div>
       `;
@@ -1009,7 +930,6 @@
       const isRenewal = lic.renovacaoSolicitada === true;
       const isRevoked = !!lic.revogadaEm;
       const expired = isExpired(lic);
-      const permanent = isPermanent(lic);
 
       let statusText = '';
       let statusColor = '';
@@ -1024,8 +944,8 @@
         statusText = '⏰ Expirado';
         statusColor = 'var(--red)';
       } else if (lic.active === true) {
-        statusText = permanent ? '♾️ Permanente Ativo' : '✅ Ativo';
-        statusColor = permanent ? 'var(--gold)' : 'var(--green)';
+        statusText = '✅ Ativo';
+        statusColor = 'var(--green)';
       } else {
         statusText = '⏳ Pendente';
         statusColor = 'var(--yellow)';
@@ -1034,43 +954,22 @@
       const planBadgeClass = lic.planName === 'Grátis' ? 'plan-free'
         : lic.planName === 'Diário' ? 'plan-daily'
         : lic.planName === 'Semanal' ? 'plan-weekly'
-        : lic.planName === 'Mensal' ? 'plan-monthly'
-        : 'plan-permanent';
+        : 'plan-monthly';
 
       const createdAt = lic.createdAt ? new Date(lic.createdAt) : null;
       const expiresAt = lic.expiresAt ? new Date(lic.expiresAt) : null;
       const expiredAt = lic.expiredAt ? new Date(lic.expiredAt) : null;
       const revogadaEm = lic.revogadaEm ? new Date(lic.revogadaEm) : null;
 
-      let domainsListHtml = '';
-      if (permanent) {
-        if (lic.allDomains === true) {
-          domainsListHtml = `<div style="color: var(--gold); font-weight: 700; font-size: 0.85rem;">🌍 Todos os domínios autorizados</div>`;
-        } else if (Array.isArray(lic.domains) && lic.domains.length > 0) {
-          domainsListHtml = `
-            <div style="color: var(--gold); font-weight: 700; font-size: 0.85rem; margin-bottom: 6px;">
-              ♾️ ${lic.domains.length} domínio(s) autorizado(s):
-            </div>
-            <div class="domain-list-inside">
-              ${lic.domains.map(d => `<span>🌐 ${d}</span>`).join('')}
-            </div>
-          `;
-        } else {
-          domainsListHtml = `<div style="color: var(--gold); font-weight: 700; font-size: 0.85rem;">🌐 ${lic.domain || '--'}</div>`;
-        }
-      } else {
-        domainsListHtml = `<div class="domain-item-name">🌐 ${lic.domain || '--'}</div>`;
-      }
-
       const item = document.createElement('div');
-      item.className = 'domain-item' + (permanent ? ' permanent-item' : '');
+      item.className = 'domain-item';
       item.innerHTML = `
         <div class="domain-item-header">
-          <div class="domain-item-name ${permanent ? 'permanent-name' : ''}">
-            ${domainsListHtml}
+          <div class="domain-item-name">
+            🌐 ${lic.domain}
           </div>
           <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-            <span class="plan-badge ${planBadgeClass}">${permanent ? '♾️ ' : ''}${lic.planName}</span>
+            <span class="plan-badge ${planBadgeClass}">${lic.planName}</span>
             <span style="color: ${statusColor}; font-weight: 700; font-size: 0.72rem;">
               ${statusText}
             </span>
@@ -1078,8 +977,7 @@
         </div>
         <div class="domain-item-meta">
           ${createdAt ? `<span><i class="fas fa-calendar-plus"></i> Criado: ${createdAt.toLocaleDateString('pt-BR')}</span>` : '<span style="color: var(--yellow);">📅 Sem data de criação</span>'}
-          ${permanent && lic.active ? `<span style="color: var(--gold);"><i class="fas fa-infinity"></i> Sem expiração</span>` : ''}
-          ${!permanent && expiresAt ? `<span><i class="fas fa-calendar-times"></i> Expira: ${expiresAt.toLocaleDateString('pt-BR')}</span>` : ''}
+          ${expiresAt ? `<span><i class="fas fa-calendar-times"></i> Expira: ${expiresAt.toLocaleDateString('pt-BR')}</span>` : ''}
           ${expiredAt ? `<span style="color: var(--red);"><i class="fas fa-hourglass-end"></i> Expirou em: ${expiredAt.toLocaleDateString('pt-BR')}</span>` : ''}
           ${revogadaEm ? `<span style="color: var(--red);"><i class="fas fa-ban"></i> Revogado: ${revogadaEm.toLocaleDateString('pt-BR')}</span>` : ''}
         </div>
@@ -1094,7 +992,7 @@
             </button>
           ` : !lic.active ? `
             <button class="btn-thin btn-approve" onclick="approve('${lic.id}', '${lic.planName}'); openUserModal('${userId}', true);">
-              <i class="fas fa-check"></i> APROVAR${permanent ? ' ♾️' : ''}
+              <i class="fas fa-check"></i> APROVAR
             </button>
           ` : `
             <button class="btn-thin btn-revoke" onclick="revoke('${lic.id}'); openUserModal('${userId}', true);">
@@ -1123,28 +1021,19 @@
 
   // ========== APROVAR ==========
   function approve(id, planName) {
-    const isPermanent = planName === 'Permanente';
+    const seconds = PLAN_DURATIONS[planName] || 86400;
+    const expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
     
-    const updateData = { 
+    db.ref('licenses/' + id).update({ 
       active: true, 
+      expiresAt: expiresAt,
       spooferActivatedAt: null,
       expiredAt: null,
       revogadaEm: null,
       approvedAt: new Date().toISOString()
-    };
-
-    if (!isPermanent) {
-      const seconds = PLAN_DURATIONS[planName] || 86400;
-      updateData.expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
-    } else {
-      updateData.expiresAt = null;
-    }
-    
-    db.ref('licenses/' + id).update(updateData)
+    })
     .then(() => {
-      if (!currentModalUserId) {
-        alert(`✅ Licença aprovada! Plano: ${planName}${isPermanent ? ' ♾️ PERMANENTE' : ''}`);
-      }
+      if (!currentModalUserId) alert(`✅ Licença aprovada! Plano: ${planName}`);
     })
     .catch(err => alert('❌ Erro: ' + err.message));
   }
@@ -1153,11 +1042,6 @@
   function approveRenewal(id) {
     const lic = allLicenses.find(l => l.id === id);
     if (!lic) return;
-
-    if (isPermanent(lic)) {
-      alert('♾️ Plano Permanente não precisa de renovação!');
-      return;
-    }
 
     const seconds = PLAN_DURATIONS[lic.planName] || 86400;
     const expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
@@ -1195,11 +1079,7 @@
     const lic = allLicenses.find(l => l.id === id);
     if (!lic) return;
 
-    const domainText = isPermanent(lic) 
-      ? (lic.allDomains ? 'TODOS os domínios' : (lic.domains || [lic.domain]).join(', '))
-      : lic.domain;
-
-    if (!confirm(`REVOGAR a licença?\n\nDomínios: ${domainText}\n\nO usuário perderá o acesso.`)) return;
+    if (!confirm(`REVOGAR a licença de ${lic.domain}?\n\nO usuário perderá o acesso imediatamente.`)) return;
 
     db.ref('licenses/' + id).update({
       active: false,
@@ -1217,30 +1097,23 @@
     const lic = allLicenses.find(l => l.id === id);
     if (!lic) return;
 
-    const isPermanent = lic.planName === 'Permanente';
+    const seconds = PLAN_DURATIONS[lic.planName] || 86400;
+    const expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
     const agora = new Date().toISOString();
 
-    const updateData = {
+    if (!confirm(`REATIVAR a licença de ${lic.domain}?\n\nO tempo será zerado.`)) return;
+
+    db.ref('licenses/' + id).update({
       active: true,
+      expiresAt: expiresAt,
       createdAt: agora,
       spooferActivatedAt: null,
       expiredAt: null,
       revogadaEm: null,
       reativadaEm: agora
-    };
-
-    if (isPermanent) {
-      updateData.expiresAt = null;
-    } else {
-      const seconds = PLAN_DURATIONS[lic.planName] || 86400;
-      updateData.expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
-    }
-
-    if (!confirm(`REATIVAR a licença?\n\n${isPermanent ? '♾️ Plano Permanente — tempo não afeta' : 'O tempo será zerado.'}`)) return;
-
-    db.ref('licenses/' + id).update(updateData)
+    })
     .then(() => {
-      if (!currentModalUserId) alert(`✅ Licença REATIVADA!${isPermanent ? ' ♾️' : ''}`);
+      if (!currentModalUserId) alert(`✅ Licença REATIVADA!`);
     })
     .catch(err => alert('❌ Erro: ' + err.message));
   }
@@ -1266,26 +1139,22 @@
 
   // ========== REATIVAR TODAS ==========
   function reactivateAll() {
-    if (!confirm(`♻️ REATIVAR TODAS?\n\nO tempo será ZERADO para todas (exceto Permanentes).`)) return;
+    if (!confirm(`♻️ REATIVAR TODAS?\n\nO tempo será ZERADO para todas.`)) return;
 
     const updates = {};
     const agora = new Date().toISOString();
     
     allLicenses.forEach(lic => {
+      const seconds = PLAN_DURATIONS[lic.planName] || 86400;
+      const expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
+      
       updates[`${lic.id}/active`] = true;
+      updates[`${lic.id}/expiresAt`] = expiresAt;
       updates[`${lic.id}/createdAt`] = agora;
       updates[`${lic.id}/spooferActivatedAt`] = null;
       updates[`${lic.id}/expiredAt`] = null;
       updates[`${lic.id}/revogadaEm`] = null;
       updates[`${lic.id}/reativadaEm`] = agora;
-
-      if (lic.planName === 'Permanente') {
-        updates[`${lic.id}/expiresAt`] = null;
-      } else {
-        const seconds = PLAN_DURATIONS[lic.planName] || 86400;
-        const expiresAt = new Date(Date.now() + seconds * 1000).toISOString();
-        updates[`${lic.id}/expiresAt`] = expiresAt;
-      }
     });
 
     db.ref('licenses').update(updates)
@@ -1295,10 +1164,7 @@
 
   // ========== EXCLUIR ==========
   function del(id) {
-    const lic = allLicenses.find(l => l.id === id);
-    const domainText = lic ? (isPermanent(lic) ? '♾️ Permanente' : lic.domain) : '';
-    
-    if (confirm(`Excluir esta licença permanentemente?\n\n${domainText}`)) {
+    if (confirm("Excluir esta licença permanentemente?")) {
       db.ref('licenses/' + id).remove()
         .then(() => {
           if (!currentModalUserId) console.log(`🗑️ ${id} removida`);
