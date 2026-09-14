@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>ADM | Anúncio Fantasma</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --bg: #030712;
@@ -27,6 +26,11 @@
     * { box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body { background: var(--bg); color: var(--text-white); min-height: 100vh; padding: 24px; overflow-x: hidden; }
 
+    /* ========== ÍCONES SVG BASE ========== */
+    .icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; display: inline-block; vertical-align: middle; flex-shrink: 0; }
+    .icon-sm { width: 14px; height: 14px; }
+    .icon-lg { width: 20px; height: 20px; }
+
     /* ========== HEADER ========== */
     .header {
       display: flex; justify-content: space-between; align-items: center;
@@ -34,24 +38,31 @@
       padding-bottom: 16px; border-bottom: 1px solid var(--border);
     }
     .header-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .header-left .logo { font-size: 2rem; }
+    .header-left .logo {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+    }
+    .header-left .logo svg { width: 24px; height: 24px; }
     .header-left h1 { font-size: 1.3rem; font-weight: 800; }
     .header-left h1 span { color: var(--cyan); }
     .header-left .badge {
-      background: var(--purple); padding: 2px 10px;
+      background: var(--purple); padding: 3px 10px;
       border-radius: 12px; font-size: 0.6rem;
       font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
     .header-right .stats {
-      display: flex; gap: 10px; font-size: 0.72rem;
+      display: flex; gap: 8px; font-size: 0.72rem;
       color: var(--text-muted); flex-wrap: wrap;
     }
     .header-right .stats span {
-      background: var(--card-bg); padding: 5px 12px;
-      border-radius: 8px; border: 1px solid var(--border);
-      display: inline-flex; align-items: center; gap: 5px;
-      transition: 0.2s;
+      background: var(--card-bg); padding: 6px 12px;
+      border-radius: 10px; border: 1px solid var(--border);
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: 0.2s; font-weight: 700;
     }
     .header-right .stats span:hover { border-color: var(--purple); }
 
@@ -63,12 +74,13 @@
       border-radius: 12px;
     }
     .mass-btn {
-      border: none; padding: 10px 16px; border-radius: 8px;
+      border: none; padding: 10px 16px; border-radius: 10px;
       font-weight: 700; font-size: 0.72rem; cursor: pointer;
       transition: 0.2s; display: inline-flex; align-items: center; gap: 6px;
       flex: 1; justify-content: center; min-width: 140px;
     }
     .mass-btn:active { transform: scale(0.97); }
+    .mass-btn svg { width: 16px; height: 16px; }
     .mass-btn-danger { background: var(--red); color: #fff; }
     .mass-btn-danger:hover { background: var(--red-hover); }
     .mass-btn-success { background: var(--green); color: #000; }
@@ -85,12 +97,13 @@
       flex: 1; min-width: 200px;
       display: flex; align-items: center;
       background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 10px; padding: 0 12px;
+      border-radius: 12px; padding: 0 14px;
+      transition: 0.2s;
     }
     .search-box:focus-within { border-color: var(--purple); }
-    .search-box i { color: var(--text-muted); font-size: 0.8rem; }
+    .search-box svg { color: var(--text-muted); }
     .search-box input {
-      background: transparent; border: none; padding: 10px;
+      background: transparent; border: none; padding: 12px 10px;
       color: #fff; font-size: 0.8rem; width: 100%; outline: none;
     }
     .search-box input::placeholder { color: var(--text-muted); }
@@ -104,16 +117,16 @@
     .filter-buttons::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 4px; }
     .filter-btn {
       background: var(--card-bg); border: 1px solid var(--border);
-      color: var(--text-muted); padding: 8px 14px;
-      border-radius: 8px; font-size: 0.7rem; font-weight: 600;
+      color: var(--text-muted); padding: 9px 14px;
+      border-radius: 10px; font-size: 0.7rem; font-weight: 700;
       cursor: pointer; transition: 0.2s; white-space: nowrap;
-      display: inline-flex; align-items: center; gap: 5px;
+      display: inline-flex; align-items: center; gap: 6px;
       flex-shrink: 0;
     }
     .filter-btn:hover { border-color: var(--purple); color: #fff; }
     .filter-btn.active { background: var(--purple); border-color: var(--purple); color: #fff; }
 
-    /* ========== TABELA / CARDS ========== */
+    /* ========== TABELA ========== */
     .table-wrapper {
       background: var(--card-bg); border: 1px solid var(--border);
       border-radius: 16px; overflow: hidden; overflow-x: auto;
@@ -139,8 +152,9 @@
 
     .user-cell { display: flex; align-items: center; gap: 10px; }
     .user-avatar {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: var(--purple); display: flex; align-items: center;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--purple-hover));
+      display: flex; align-items: center;
       justify-content: center; font-weight: 700; font-size: 0.7rem;
       color: #fff; flex-shrink: 0;
     }
@@ -153,7 +167,7 @@
     }
 
     .plan-badge {
-      display: inline-block; padding: 2px 10px;
+      display: inline-block; padding: 3px 10px;
       border-radius: 12px; font-size: 0.65rem; font-weight: 700;
       white-space: nowrap;
     }
@@ -167,14 +181,36 @@
       border: 1px solid rgba(16,185,129,0.4);
     }
 
-    .status-active { color: var(--green); font-weight: 700; font-size: 0.72rem; }
-    .status-pending { color: var(--yellow); font-weight: 700; font-size: 0.72rem; }
-    .status-expired { color: var(--red); font-weight: 700; font-size: 0.72rem; }
-    .status-revoked { color: var(--red); font-weight: 700; font-size: 0.72rem; text-decoration: line-through; }
+    /* ========== MODO BADGE (NOVO) ========== */
+    .mode-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: 8px;
+      font-size: 0.58rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+    .mode-badge svg { width: 11px; height: 11px; }
+    .mode-single {
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--purple);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+    .mode-individual {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--cyan);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .status-active { color: var(--green); font-weight: 700; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 4px; }
+    .status-pending { color: var(--yellow); font-weight: 700; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 4px; }
+    .status-expired { color: var(--red); font-weight: 700; font-size: 0.72rem; display: inline-flex; align-items: center; gap: 4px; }
+    .status-revoked { color: var(--red); font-weight: 700; font-size: 0.72rem; text-decoration: line-through; display: inline-flex; align-items: center; gap: 4px; }
     .status-renewal {
       color: var(--purple); font-weight: 700; font-size: 0.72rem;
       animation: pulse 1.5s infinite;
+      display: inline-flex; align-items: center; gap: 4px;
     }
+    .status-active svg, .status-pending svg, .status-expired svg, .status-revoked svg, .status-renewal svg { width: 13px; height: 13px; }
 
     @keyframes pulse {
       0%, 100% { opacity: 1; }
@@ -183,12 +219,14 @@
 
     .timer-cell {
       font-family: 'Courier New', monospace; font-weight: 700;
-      font-size: 0.72rem; padding: 4px 8px; border-radius: 6px;
+      font-size: 0.72rem; padding: 5px 10px; border-radius: 8px;
       background: rgba(245, 158, 11, 0.1);
       border: 1px solid rgba(245, 158, 11, 0.3);
       color: var(--yellow); text-align: center;
-      white-space: nowrap; display: inline-block; min-width: 90px;
+      white-space: nowrap; display: inline-flex; align-items: center; gap: 4px;
+      min-width: 90px; justify-content: center;
     }
+    .timer-cell svg { width: 12px; height: 12px; }
     .timer-cell.danger {
       background: rgba(239, 68, 68, 0.1);
       border-color: rgba(239, 68, 68, 0.3);
@@ -210,11 +248,12 @@
 
     .actions { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
     .btn-thin {
-      border: none; padding: 7px 11px; border-radius: 6px;
+      border: none; padding: 7px 11px; border-radius: 8px;
       font-weight: 700; font-size: 0.62rem; cursor: pointer;
       transition: 0.2s; display: inline-flex; align-items: center;
       gap: 4px; white-space: nowrap;
     }
+    .btn-thin svg { width: 12px; height: 12px; }
     .btn-thin:active { transform: scale(0.95); }
     .btn-approve { background: var(--green); color: #000; }
     .btn-approve:hover { background: var(--green-hover); }
@@ -228,7 +267,7 @@
     .btn-danger:hover { background: var(--red-hover); }
 
     .empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); }
-    .empty-state i { font-size: 3rem; margin-bottom: 12px; opacity: 0.3; }
+    .empty-state svg { width: 56px; height: 56px; opacity: 0.3; margin-bottom: 12px; }
     .empty-state h3 { color: #fff; margin-bottom: 4px; }
 
     .notification-badge {
@@ -237,7 +276,7 @@
       font-size: 0.55rem; font-weight: 700; animation: pulse 1s infinite;
     }
 
-    /* ========== CARDS MOBILE (substituem tabela em telas pequenas) ========== */
+    /* ========== CARDS MOBILE ========== */
     .mobile-cards { display: none; flex-direction: column; gap: 12px; }
     .mobile-card {
       background: var(--card-bg); border: 1px solid var(--border);
@@ -273,7 +312,7 @@
       margin: 8px 0;
     }
     .mobile-card-timer .timer-cell {
-      font-size: 0.75rem; padding: 5px 10px;
+      font-size: 0.75rem; padding: 6px 10px;
       min-width: auto; width: 100%;
     }
     .mobile-card-dates {
@@ -326,9 +365,10 @@
       min-width: 0; flex: 1;
     }
     .modal-header h2 .avatar-large {
-      width: 42px; height: 42px; border-radius: 50%;
-      background: var(--purple); display: flex; align-items: center;
-      justify-content: center; font-weight: 700; font-size: 0.85rem;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--purple-hover));
+      display: flex; align-items: center;
+      justify-content: center; font-weight: 700; font-size: 0.9rem;
       flex-shrink: 0;
     }
     .modal-header h2 .modal-title-text {
@@ -339,12 +379,13 @@
     }
     .modal-close {
       background: rgba(239, 68, 68, 0.15); color: var(--red);
-      border: 1px solid var(--red); width: 34px; height: 34px;
-      border-radius: 8px; cursor: pointer; display: flex;
+      border: 1px solid var(--red); width: 36px; height: 36px;
+      border-radius: 10px; cursor: pointer; display: flex;
       align-items: center; justify-content: center;
-      font-size: 0.9rem; transition: 0.2s; flex-shrink: 0;
+      transition: 0.2s; flex-shrink: 0;
     }
     .modal-close:hover { background: rgba(239, 68, 68, 0.3); }
+    .modal-close svg { width: 16px; height: 16px; }
 
     .modal-stats {
       display: grid;
@@ -354,8 +395,10 @@
     .stat-box {
       background: rgba(3, 7, 18, 0.6);
       border: 1px solid var(--border); border-radius: 12px;
-      padding: 12px; text-align: center;
+      padding: 14px; text-align: center;
+      transition: 0.2s;
     }
+    .stat-box:hover { border-color: rgba(99,102,241,0.3); }
     .stat-box .stat-value {
       font-size: 1.5rem; font-weight: 900;
       color: var(--cyan); line-height: 1;
@@ -363,7 +406,7 @@
     .stat-box .stat-label {
       font-size: 0.65rem; color: var(--text-muted);
       font-weight: 700; text-transform: uppercase;
-      margin-top: 4px;
+      margin-top: 6px;
     }
     .stat-box.warning .stat-value { color: var(--yellow); }
     .stat-box.danger .stat-value { color: var(--red); }
@@ -372,27 +415,30 @@
     .limit-alert {
       background: rgba(239, 68, 68, 0.1);
       border: 1px solid rgba(239, 68, 68, 0.3);
-      border-radius: 10px; padding: 12px 16px;
+      border-radius: 12px; padding: 14px 16px;
       margin-bottom: 16px;
       display: flex; align-items: center; gap: 10px;
       font-size: 0.8rem; color: var(--red); font-weight: 700;
     }
+    .limit-alert svg { width: 20px; height: 20px; flex-shrink: 0; }
 
     .limit-ok {
       background: rgba(16, 185, 129, 0.08);
       border: 1px solid rgba(16, 185, 129, 0.2);
-      border-radius: 10px; padding: 12px 16px;
+      border-radius: 12px; padding: 14px 16px;
       margin-bottom: 16px;
       display: flex; align-items: center; gap: 10px;
       font-size: 0.8rem; color: var(--green); font-weight: 700;
     }
+    .limit-ok svg { width: 20px; height: 20px; flex-shrink: 0; }
 
+    /* ========== DOMAIN ITEM (dentro do modal) ========== */
     .domain-list {
       display: flex; flex-direction: column; gap: 10px;
     }
     .domain-item {
       background: rgba(3, 7, 18, 0.6);
-      border: 1px solid var(--border); border-radius: 12px;
+      border: 1px solid var(--border); border-radius: 14px;
       padding: 14px;
       transition: 0.2s;
     }
@@ -408,28 +454,43 @@
       align-items: center; gap: 6px;
       word-break: break-all;
     }
+    .domain-item-name svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .domain-item-badges {
+      display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+    }
     .domain-item-domains-list {
-      margin: 8px 0; padding: 8px 10px;
+      margin: 8px 0; padding: 10px 12px;
       background: rgba(56, 189, 248, 0.06);
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid rgba(56, 189, 248, 0.15);
     }
     .domain-item-domains-list .list-title {
       font-size: 0.62rem; color: var(--cyan);
-      font-weight: 800; margin-bottom: 4px;
+      font-weight: 800; margin-bottom: 6px;
       text-transform: uppercase;
+      display: flex; align-items: center; gap: 5px;
     }
+    .domain-item-domains-list .list-title svg { width: 12px; height: 12px; }
     .domain-item-domains-list .list-item {
       font-size: 0.72rem; color: var(--text-muted);
-      padding: 2px 0; word-break: break-all;
+      padding: 3px 0; word-break: break-all;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .domain-item-domains-list .list-item::before {
+      content: '';
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--cyan); opacity: 0.5;
+      flex-shrink: 0;
     }
     .domain-item-meta {
       display: flex; gap: 12px; flex-wrap: wrap;
       font-size: 0.7rem; color: var(--text-muted);
+      margin-top: 6px;
     }
     .domain-item-meta span {
       display: inline-flex; align-items: center; gap: 4px;
     }
+    .domain-item-meta svg { width: 12px; height: 12px; }
     .domain-item-actions {
       display: flex; gap: 6px; margin-top: 10px;
       padding-top: 10px; border-top: 1px solid var(--border);
@@ -443,7 +504,6 @@
 
     /* ========== RESPONSIVIDADE ========== */
     @media (max-width: 900px) {
-      /* Esconde tabela, mostra cards */
       .table-wrapper { display: none; }
       .mobile-cards { display: flex; }
     }
@@ -451,15 +511,16 @@
     @media (max-width: 768px) {
       body { padding: 12px; }
       .header-left h1 { font-size: 1rem; }
-      .header-left .logo { font-size: 1.5rem; }
+      .header-left .logo { width: 36px; height: 36px; }
+      .header-left .logo svg { width: 20px; height: 20px; }
       .header-right .stats { font-size: 0.65rem; gap: 6px; }
-      .header-right .stats span { padding: 4px 8px; }
-      .filter-btn { font-size: 0.65rem; padding: 7px 12px; }
+      .header-right .stats span { padding: 5px 9px; }
+      .filter-btn { font-size: 0.65rem; padding: 8px 12px; }
       .mass-btn { font-size: 0.68rem; padding: 10px 12px; min-width: 100%; }
-      .modal-content { padding: 16px; border-radius: 16px; }
+      .modal-content { padding: 18px; border-radius: 16px; }
       .modal-stats { grid-template-columns: repeat(2, 1fr); }
       .modal-header h2 { font-size: 0.95rem; }
-      .modal-header h2 .avatar-large { width: 36px; height: 36px; font-size: 0.75rem; }
+      .modal-header h2 .avatar-large { width: 38px; height: 38px; font-size: 0.78rem; }
       .domain-item-actions .btn-thin { flex: 1 1 45%; }
     }
 
@@ -468,7 +529,7 @@
       .header { flex-direction: column; align-items: flex-start; gap: 10px; }
       .header-right { width: 100%; justify-content: flex-start; }
       .header-right .stats { width: 100%; }
-      .header-right .stats span { flex: 1 1 calc(50% - 5px); justify-content: center; }
+      .header-right .stats span { flex: 1 1 calc(50% - 3px); justify-content: center; }
       .filters { flex-direction: column; }
       .search-box { width: 100%; }
       .mass-actions { flex-direction: column; }
@@ -485,7 +546,7 @@
     }
     tbody tr, .mobile-card { animation: fadeIn 0.3s ease forwards; }
 
-    /* ========== CONFIRM MODAL CUSTOMIZADO ========== */
+    /* ========== CONFIRM MODAL ========== */
     .confirm-overlay {
       display: none; position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -496,25 +557,33 @@
     .confirm-box {
       background: var(--card-solid);
       border: 1px solid var(--border);
-      border-radius: 16px; padding: 24px;
+      border-radius: 16px; padding: 26px;
       max-width: 420px; width: 100%;
       text-align: center;
       animation: modalIn 0.25s ease;
     }
     .confirm-box .confirm-icon {
-      font-size: 2.5rem; margin-bottom: 12px;
+      width: 60px; height: 60px;
+      margin: 0 auto 14px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--purple);
     }
+    .confirm-box .confirm-icon svg { width: 30px; height: 30px; }
     .confirm-box h3 { font-size: 1.05rem; margin-bottom: 8px; font-weight: 800; }
-    .confirm-box p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
+    .confirm-box p { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; white-space: pre-line; }
     .confirm-box .confirm-actions {
       display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
     }
     .confirm-box .confirm-actions button {
       flex: 1; min-width: 110px;
-      padding: 10px 16px; border-radius: 8px;
+      padding: 11px 16px; border-radius: 10px;
       font-weight: 700; font-size: 0.78rem;
       border: none; cursor: pointer; transition: 0.2s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
     }
+    .confirm-box .confirm-actions button svg { width: 15px; height: 15px; }
     .confirm-box .confirm-actions .btn-cancel {
       background: rgba(148, 163, 184, 0.15);
       color: var(--text-muted);
@@ -532,14 +601,16 @@
       position: fixed; bottom: 20px; left: 50%;
       transform: translateX(-50%);
       background: var(--green); color: #fff;
-      padding: 12px 22px; border-radius: 10px;
+      padding: 12px 22px; border-radius: 12px;
       font-weight: 700; font-size: 0.82rem;
       z-index: 10001; display: none;
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
       max-width: 90vw;
       text-align: center;
+      align-items: center; gap: 8px;
     }
-    .toast-adm.show { display: block; animation: fadeInUp 0.3s ease; }
+    .toast-adm.show { display: flex; animation: fadeInUp 0.3s ease; }
+    .toast-adm svg { width: 16px; height: 16px; }
     .toast-adm.error { background: var(--red); }
     .toast-adm.warning { background: var(--yellow); color: #000; }
 
@@ -559,7 +630,9 @@
   <!-- CONFIRM MODAL -->
   <div class="confirm-overlay" id="confirmOverlay">
     <div class="confirm-box">
-      <div class="confirm-icon" id="confirmIcon">⚠️</div>
+      <div class="confirm-icon" id="confirmIcon">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
       <h3 id="confirmTitle">Confirmar</h3>
       <p id="confirmMessage">Tem certeza?</p>
       <div class="confirm-actions">
@@ -572,17 +645,36 @@
   <!-- HEADER -->
   <div class="header">
     <div class="header-left">
-      <span class="logo">👻</span>
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 10h.01M15 10h.01M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z"/>
+        </svg>
+      </div>
       <h1>Anúncio <span>Fantasma</span></h1>
       <span class="badge">ADMIN</span>
     </div>
     <div class="header-right">
       <div class="stats">
-        <span id="totalLicenses"><i class="fas fa-hashtag"></i> 0</span>
-        <span id="activeCount"><i class="fas fa-check-circle" style="color: var(--green);"></i> 0</span>
-        <span id="pendingCount"><i class="fas fa-clock" style="color: var(--yellow);"></i> 0</span>
-        <span id="expiredCount"><i class="fas fa-exclamation-circle" style="color: var(--red);"></i> 0</span>
-        <span id="revokedCount"><i class="fas fa-ban" style="color: var(--red);"></i> 0</span>
+        <span id="totalLicenses">
+          <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+          0
+        </span>
+        <span id="activeCount">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--green);"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          0
+        </span>
+        <span id="pendingCount">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--yellow);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          0
+        </span>
+        <span id="expiredCount">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--red);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          0
+        </span>
+        <span id="revokedCount">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--red);"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          0
+        </span>
       </div>
     </div>
   </div>
@@ -590,29 +682,56 @@
   <!-- AÇÕES EM MASSA -->
   <div class="mass-actions">
     <button class="mass-btn mass-btn-danger" onclick="revokeAll()">
-      <i class="fas fa-ban"></i> REVOGAR TODAS
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+      </svg>
+      REVOGAR TODAS
     </button>
     <button class="mass-btn mass-btn-success" onclick="reactivateAll()">
-      <i class="fas fa-sync"></i> REATIVAR TODAS
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>
+      </svg>
+      REATIVAR TODAS
     </button>
     <button class="mass-btn mass-btn-warning" onclick="deleteAll()">
-      <i class="fas fa-trash"></i> APAGAR TODOS OS REGISTOS
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+      </svg>
+      APAGAR TODOS
     </button>
   </div>
 
   <!-- FILTROS -->
   <div class="filters">
     <div class="search-box">
-      <i class="fas fa-search"></i>
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input type="text" id="searchInput" placeholder="Buscar por domínio, usuário ou plano..." oninput="filterTable()">
     </div>
     <div class="filter-buttons">
-      <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)"><i class="fas fa-list"></i> Todos</button>
-      <button class="filter-btn" data-filter="active" onclick="setFilter('active', this)"><i class="fas fa-check-circle" style="color: var(--green);"></i> Ativos</button>
-      <button class="filter-btn" data-filter="pending" onclick="setFilter('pending', this)"><i class="fas fa-clock" style="color: var(--yellow);"></i> Pendentes</button>
-      <button class="filter-btn" data-filter="renewal" onclick="setFilter('renewal', this)"><i class="fas fa-sync" style="color: var(--purple);"></i> Renovações <span class="notification-badge" id="renewalBadge" style="display:none;">0</span></button>
-      <button class="filter-btn" data-filter="expired" onclick="setFilter('expired', this)"><i class="fas fa-exclamation-circle" style="color: var(--red);"></i> Expirados</button>
-      <button class="filter-btn" data-filter="revoked" onclick="setFilter('revoked', this)"><i class="fas fa-ban" style="color: var(--red);"></i> Revogados</button>
+      <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Todos
+      </button>
+      <button class="filter-btn" data-filter="active" onclick="setFilter('active', this)">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--green);"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Ativos
+      </button>
+      <button class="filter-btn" data-filter="pending" onclick="setFilter('pending', this)">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--yellow);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Pendentes
+      </button>
+      <button class="filter-btn" data-filter="renewal" onclick="setFilter('renewal', this)">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--purple);"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+        Renovações <span class="notification-badge" id="renewalBadge" style="display:none;">0</span>
+      </button>
+      <button class="filter-btn" data-filter="expired" onclick="setFilter('expired', this)">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--red);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Expirados
+      </button>
+      <button class="filter-btn" data-filter="revoked" onclick="setFilter('revoked', this)">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--red);"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        Revogados
+      </button>
     </div>
   </div>
 
@@ -624,9 +743,10 @@
           <th>Usuário</th>
           <th>Domínio</th>
           <th>Plano</th>
+          <th>Modo</th>
           <th>Status</th>
-          <th>⏱️ Restante</th>
-          <th>📅 Datas</th>
+          <th>Restante</th>
+          <th>Datas</th>
           <th style="text-align: center;">Ações</th>
         </tr>
       </thead>
@@ -649,7 +769,9 @@
           </div>
         </h2>
         <button class="modal-close" onclick="closeUserModal()">
-          <i class="fas fa-times"></i>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
         </button>
       </div>
 
@@ -674,15 +796,19 @@
 
       <div id="limitAlertBox"></div>
 
-      <h3 style="font-size: 0.85rem; font-weight: 800; margin-bottom: 12px; color: var(--cyan);">
-        📋 Licenças deste usuário:
+      <h3 style="font-size: 0.85rem; font-weight: 800; margin-bottom: 12px; color: var(--cyan); display: flex; align-items: center; gap: 8px;">
+        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Licenças deste usuário:
       </h3>
 
       <div class="domain-list" id="modalDomainList"></div>
 
       <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
         <button class="mass-btn mass-btn-danger" style="width: 100%;" onclick="deleteUserRecords('${'${currentModalUserId}'}')">
-          <i class="fas fa-trash"></i> APAGAR TODOS OS REGISTOS DESTE USUÁRIO
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+          APAGAR TODOS OS REGISTOS DESTE USUÁRIO
         </button>
       </div>
     </div>
@@ -701,7 +827,6 @@
   let timerInterval = null;
   let currentModalUserId = null;
 
-  // 🔥 PLANO PERMANENTE ADICIONADO (Infinity = nunca expira)
   const PLAN_DURATIONS = {
     'Grátis': 600,
     'Diário': 86400,
@@ -712,22 +837,69 @@
 
   const MAX_FREE_PLANS_PER_USER = 3;
 
+  // ========== SVG ICONS ==========
+  const SVG = {
+    check: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+    x: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+    ban: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>',
+    clock: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    alert: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+    sync: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>',
+    redo: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>',
+    trash: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+    package: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+    wrench: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+    eye: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
+    calendarPlus: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>',
+    calendarTimes: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="10" y1="14" x2="14" y2="18"/><line x1="14" y1="14" x2="10" y2="18"/></svg>',
+    infinity: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18.178 8c5.096 0 5.096 8 0 8-2.317 0-4.146-1.585-5.428-3.6L12 11l-.75 1.4C9.968 14.415 8.139 16 5.822 16c-5.096 0-5.096-8 0-8 2.317 0 4.146 1.585 5.428 3.6L12 13l.75-1.4C14.032 9.585 15.861 8 18.178 8z"/></svg>',
+    globe: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+    inbox: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>',
+    link: '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
+  };
+
   // ========== TOAST ==========
   function showToast(message, type = 'success') {
     const toast = document.getElementById('toastAdm');
-    toast.textContent = message;
+    const iconMap = {
+      success: SVG.check,
+      error: SVG.alert,
+      warning: SVG.alert
+    };
+    toast.innerHTML = (iconMap[type] || SVG.check) + ' ' + message;
     toast.className = 'toast-adm show' + (type === 'error' ? ' error' : type === 'warning' ? ' warning' : '');
     clearTimeout(toast._timeout);
     toast._timeout = setTimeout(() => toast.classList.remove('show'), 3000);
   }
 
-  // ========== CONFIRM MODAL CUSTOMIZADO ==========
+  // ========== CONFIRM MODAL ==========
   let confirmResolver = null;
-  function showConfirm(title, message, icon = '⚠️', confirmText = 'Confirmar', isDanger = true) {
+  function showConfirm(title, message, iconKey = 'warning', confirmText = 'Confirmar', isDanger = true) {
     return new Promise(resolve => {
       document.getElementById('confirmTitle').textContent = title;
       document.getElementById('confirmMessage').textContent = message;
-      document.getElementById('confirmIcon').textContent = icon;
+      const iconEl = document.getElementById('confirmIcon');
+      if (iconKey === 'success') {
+        iconEl.innerHTML = SVG.check;
+        iconEl.style.background = 'rgba(16, 185, 129, 0.15)';
+        iconEl.style.color = 'var(--green)';
+      } else if (iconKey === 'ban') {
+        iconEl.innerHTML = SVG.ban;
+        iconEl.style.background = 'rgba(239, 68, 68, 0.15)';
+        iconEl.style.color = 'var(--red)';
+      } else if (iconKey === 'trash') {
+        iconEl.innerHTML = SVG.trash;
+        iconEl.style.background = 'rgba(239, 68, 68, 0.15)';
+        iconEl.style.color = 'var(--red)';
+      } else if (iconKey === 'sync') {
+        iconEl.innerHTML = SVG.sync;
+        iconEl.style.background = 'rgba(56, 189, 248, 0.15)';
+        iconEl.style.color = 'var(--cyan)';
+      } else {
+        iconEl.innerHTML = SVG.alert;
+        iconEl.style.background = 'rgba(99, 102, 241, 0.15)';
+        iconEl.style.color = 'var(--purple)';
+      }
       const btn = document.getElementById('confirmBtn');
       btn.textContent = confirmText;
       btn.className = 'btn-confirm' + (isDanger ? '' : ' green');
@@ -788,6 +960,15 @@
     return list[0] + ` (+${list.length - 1})`;
   }
 
+  // 🔥 MODO DE INSTALAÇÃO
+  function getInstallModeBadge(lic) {
+    const mode = lic.installMode || (getDomainsList(lic).length > 1 ? 'single' : 'single');
+    if (mode === 'individual') {
+      return `<span class="mode-badge mode-individual">${SVG.wrench} Individual</span>`;
+    }
+    return `<span class="mode-badge mode-single">${SVG.package} Único</span>`;
+  }
+
   // ========== TIMER ==========
   function startTimerUpdates() {
     if (timerInterval) clearInterval(timerInterval);
@@ -799,10 +980,9 @@
         
         if (!lic || lic.active !== true) return;
         
-        // 🔥 Permanente: nunca expira
         if (lic.planName === 'Permanente') {
           el.className = 'timer-cell permanent';
-          el.innerHTML = '♾️ NUNCA EXPIRA';
+          el.innerHTML = SVG.infinity + ' NUNCA EXPIRA';
           return;
         }
 
@@ -818,7 +998,7 @@
         
         if (remaining <= 0) {
           el.className = 'timer-cell expired';
-          el.innerHTML = '⏰ EXPIROU';
+          el.innerHTML = SVG.alert + ' EXPIROU';
           
           db.ref('licenses/' + lic.id).update({
             active: false,
@@ -833,10 +1013,9 @@
   }
 
   function updateTimerCell(el, lic) {
-    // 🔥 Permanente
     if (lic.planName === 'Permanente') {
       el.className = 'timer-cell permanent';
-      el.innerHTML = '♾️ NUNCA EXPIRA';
+      el.innerHTML = SVG.infinity + ' NUNCA EXPIRA';
       return;
     }
 
@@ -852,11 +1031,11 @@
 
     if (remaining <= 0) {
       el.className = 'timer-cell expired';
-      el.innerHTML = '⏰ EXPIROU';
+      el.innerHTML = SVG.alert + ' EXPIROU';
       return;
     }
 
-    el.innerHTML = formatTime(remaining);
+    el.innerHTML = SVG.clock + ' ' + formatTime(remaining);
 
     if (remaining < 3600) {
       el.className = 'timer-cell danger';
@@ -876,24 +1055,16 @@
     return `${mins}m ${secs}s`;
   }
 
-  // 🔥 VERIFICAR SE ESTÁ EXPIRADO (com suporte a Permanente)
   function isExpired(lic) {
-    // Se foi revogada, não é expiração
     if (lic.revogadaEm) return false;
-    
-    // 🔥 Permanente NUNCA expira
     if (lic.planName === 'Permanente') return false;
-    
-    // 🔥 SE TEM expiredAt DEFINIDO, É EXPIRADO
     if (lic.expiredAt) return true;
     
-    // Se não está ativa, verifica expiresAt
     if (lic.active !== true) {
       if (lic.expiresAt) return new Date(lic.expiresAt).getTime() < Date.now();
       return false;
     }
     
-    // 🔥 SE ESTÁ ATIVA, VERIFICA O TEMPO REAL
     const duration = PLAN_DURATIONS[lic.planName];
     if (!duration || duration === Infinity) return false;
     
@@ -924,11 +1095,11 @@
     const expired = allLicenses.filter(l => isExpired(l)).length;
     const revoked = allLicenses.filter(l => l.revogadaEm).length;
 
-    document.getElementById('totalLicenses').innerHTML = `<i class="fas fa-hashtag"></i> ${total}`;
-    document.getElementById('activeCount').innerHTML = `<i class="fas fa-check-circle" style="color: var(--green);"></i> ${active}`;
-    document.getElementById('pendingCount').innerHTML = `<i class="fas fa-clock" style="color: var(--yellow);"></i> ${pending}`;
-    document.getElementById('expiredCount').innerHTML = `<i class="fas fa-exclamation-circle" style="color: var(--red);"></i> ${expired}`;
-    document.getElementById('revokedCount').innerHTML = `<i class="fas fa-ban" style="color: var(--red);"></i> ${revoked}`;
+    document.getElementById('totalLicenses').innerHTML = `<svg class="icon icon-sm" viewBox="0 0 24 24"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg> ${total}`;
+    document.getElementById('activeCount').innerHTML = `<svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--green);"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> ${active}`;
+    document.getElementById('pendingCount').innerHTML = `<svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--yellow);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> ${pending}`;
+    document.getElementById('expiredCount').innerHTML = `<svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--red);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> ${expired}`;
+    document.getElementById('revokedCount').innerHTML = `<svg class="icon icon-sm" viewBox="0 0 24 24" style="color: var(--red);"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg> ${revoked}`;
 
     const badge = document.getElementById('renewalBadge');
     if (badge) {
@@ -952,28 +1123,27 @@
     let html = '';
 
     if (createdAt) {
-      html += `<div class="date-cell"><span class="label">📅 Criado:</span> ${createdAt.toLocaleDateString('pt-BR')} ${createdAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</div>`;
+      html += `<div class="date-cell"><span class="label">${SVG.calendarPlus} Criado:</span> ${createdAt.toLocaleDateString('pt-BR')} ${createdAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</div>`;
     }
 
-    // 🔥 Permanente: não mostra expiração
     if (lic.planName === 'Permanente') {
-      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--green);">♾️ Permanente:</span> <span style="color: var(--green);">Nunca expira</span></div>`;
+      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--green);">${SVG.infinity} Permanente:</span> <span style="color: var(--green);">Nunca expira</span></div>`;
     } else if (expiresAt) {
       const isExp = expiresAt.getTime() < agora.getTime();
       const color = isExp ? 'var(--red)' : 'var(--green)';
-      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label">⏰ Expira:</span> <span style="color: ${color};">${expiresAt.toLocaleDateString('pt-BR')} ${expiresAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
+      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label">${SVG.clock} Expira:</span> <span style="color: ${color};">${expiresAt.toLocaleDateString('pt-BR')} ${expiresAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
     }
 
     if (expiredAt) {
-      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--red);">⏰ Expirou:</span> <span style="color: var(--red);">${expiredAt.toLocaleDateString('pt-BR')} ${expiredAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
+      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--red);">${SVG.alert} Expirou:</span> <span style="color: var(--red);">${expiredAt.toLocaleDateString('pt-BR')} ${expiredAt.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
     }
 
     if (revogadaEm) {
-      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--red);">🚫 Revogado:</span> <span style="color: var(--red);">${revogadaEm.toLocaleDateString('pt-BR')} ${revogadaEm.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
+      html += `<div class="date-cell" style="margin-top: 2px;"><span class="label" style="color: var(--red);">${SVG.ban} Revogado:</span> <span style="color: var(--red);">${revogadaEm.toLocaleDateString('pt-BR')} ${revogadaEm.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'})}</span></div>`;
     }
 
     if (!html) {
-      html = `<div class="date-cell" style="color: var(--yellow);"><i class="fas fa-exclamation-triangle"></i> Sem data registrada</div>`;
+      html = `<div class="date-cell" style="color: var(--yellow);">${SVG.alert} Sem data registrada</div>`;
     }
 
     return html;
@@ -1016,39 +1186,39 @@
 
     if (isRenewal) {
       return {
-        html: '<span class="status-renewal"><i class="fas fa-sync fa-spin"></i> RENOVAÇÃO</span>',
-        text: '🔄 Renovação',
+        html: `<span class="status-renewal">${SVG.sync} RENOVAÇÃO</span>`,
+        text: 'Renovação',
         color: 'var(--purple)',
         type: 'renewal'
       };
     }
     if (isRevoked) {
       return {
-        html: '<span class="status-revoked"><i class="fas fa-ban"></i> REVOGADO</span>',
-        text: '🚫 Revogado',
+        html: `<span class="status-revoked">${SVG.ban} REVOGADO</span>`,
+        text: 'Revogado',
         color: 'var(--red)',
         type: 'revoked'
       };
     }
     if (expired) {
       return {
-        html: '<span class="status-expired"><i class="fas fa-exclamation-circle"></i> EXPIRADO</span>',
-        text: '⏰ Expirado',
+        html: `<span class="status-expired">${SVG.alert} EXPIRADO</span>`,
+        text: 'Expirado',
         color: 'var(--red)',
         type: 'expired'
       };
     }
     if (item.active === true) {
       return {
-        html: '<span class="status-active"><i class="fas fa-check-circle"></i> ATIVO</span>',
-        text: '✅ Ativo',
+        html: `<span class="status-active">${SVG.check} ATIVO</span>`,
+        text: 'Ativo',
         color: 'var(--green)',
         type: 'active'
       };
     }
     return {
-      html: '<span class="status-pending"><i class="fas fa-clock"></i> PENDENTE</span>',
-      text: '⏳ Pendente',
+      html: `<span class="status-pending">${SVG.clock} PENDENTE</span>`,
+      text: 'Pendente',
       color: 'var(--yellow)',
       type: 'pending'
     };
@@ -1073,39 +1243,39 @@
     if (isRenewal) {
       return `
         <button class="btn-thin btn-renew" onclick="approveRenewal('${item.id}')">
-          <i class="fas fa-check"></i> APROVAR
+          ${SVG.check} APROVAR
         </button>
         <button class="btn-thin btn-danger" onclick="rejectRenewal('${item.id}')">
-          <i class="fas fa-times"></i>
+          ${SVG.x}
         </button>
       `;
     }
     if (isRevoked || expired) {
       return `
         <button class="btn-thin btn-reactivate" onclick="reactivate('${item.id}')">
-          <i class="fas fa-redo"></i> REATIVAR
+          ${SVG.redo} REATIVAR
         </button>
         <button class="btn-thin btn-danger" onclick="del('${item.id}')">
-          <i class="fas fa-trash"></i>
+          ${SVG.trash}
         </button>
       `;
     }
     if (!isActive) {
       return `
         <button class="btn-thin btn-approve" onclick="approve('${item.id}', '${item.planName}')">
-          <i class="fas fa-check"></i> APROVAR
+          ${SVG.check} APROVAR
         </button>
         <button class="btn-thin btn-danger" onclick="del('${item.id}')">
-          <i class="fas fa-trash"></i>
+          ${SVG.trash}
         </button>
       `;
     }
     return `
       <button class="btn-thin btn-revoke" onclick="revoke('${item.id}')">
-        <i class="fas fa-ban"></i> REVOGAR
+        ${SVG.ban} REVOGAR
       </button>
       <button class="btn-thin btn-danger" onclick="del('${item.id}')">
-        <i class="fas fa-trash"></i>
+        ${SVG.trash}
       </button>
     `;
   }
@@ -1119,9 +1289,9 @@
     if (filtered.length === 0) {
       tbody.innerHTML = `
         <tr>
-          <td colspan="7">
+          <td colspan="8">
             <div class="empty-state">
-              <i class="fas fa-inbox"></i>
+              ${SVG.inbox}
               <h3>Nenhuma licença encontrada</h3>
               <p>${allLicenses.length === 0 ? 'Ainda não há licenças cadastradas.' : 'Tente ajustar os filtros.'}</p>
             </div>
@@ -1140,6 +1310,7 @@
       const domainsList = getDomainsList(item);
       const domainsDisplay = getDomainsDisplay(item);
       const planClass = getPlanBadgeClass(item.planName);
+      const modeBadge = getInstallModeBadge(item);
       const initials = item.userName ? item.userName.substring(0, 2).toUpperCase() : '??';
 
       tr.onclick = (e) => {
@@ -1149,11 +1320,11 @@
 
       let timerHtml = '<span class="timer-cell expired">--</span>';
       if (item.planName === 'Permanente' && item.active === true && !expired) {
-        timerHtml = `<span class="timer-cell permanent" data-license-id="${item.id}">♾️ NUNCA EXPIRA</span>`;
+        timerHtml = `<span class="timer-cell permanent" data-license-id="${item.id}">${SVG.infinity} NUNCA EXPIRA</span>`;
       } else if (item.active === true && !expired) {
-        timerHtml = `<span class="timer-cell" data-license-id="${item.id}">...</span>`;
+        timerHtml = `<span class="timer-cell" data-license-id="${item.id}">${SVG.clock} ...</span>`;
       } else if (expired) {
-        timerHtml = '<span class="timer-cell expired">EXPIRADO</span>';
+        timerHtml = `<span class="timer-cell expired">${SVG.alert} EXPIRADO</span>`;
       }
 
       const datesHtml = getDatesHtml(item);
@@ -1166,7 +1337,7 @@
             <div>
               <div>${item.userName || 'Cliente'}</div>
               <div style="font-size: 0.6rem; color: var(--text-muted);">
-                <i class="fas fa-eye"></i> ver todos
+                ${SVG.eye} ver todos
               </div>
             </div>
           </div>
@@ -1176,6 +1347,7 @@
           ${domainsList.length > 1 ? `<span class="multi-badge">${domainsList.length} blogs</span>` : ''}
         </td>
         <td><span class="plan-badge ${planClass}">${item.planName}</span></td>
+        <td>${modeBadge}</td>
         <td>${status.html}</td>
         <td>${timerHtml}</td>
         <td>${datesHtml}</td>
@@ -1206,7 +1378,7 @@
     if (filtered.length === 0) {
       container.innerHTML = `
         <div class="empty-state">
-          <i class="fas fa-inbox"></i>
+          ${SVG.inbox}
           <h3>Nenhuma licença encontrada</h3>
           <p>${allLicenses.length === 0 ? 'Ainda não há licenças cadastradas.' : 'Tente ajustar os filtros.'}</p>
         </div>
@@ -1220,6 +1392,7 @@
       const domainsList = getDomainsList(item);
       const domainsDisplay = getDomainsDisplay(item);
       const planClass = getPlanBadgeClass(item.planName);
+      const modeBadge = getInstallModeBadge(item);
       const initials = item.userName ? item.userName.substring(0, 2).toUpperCase() : '??';
 
       const card = document.createElement('div');
@@ -1232,11 +1405,11 @@
 
       let timerHtml = '<span class="timer-cell expired">--</span>';
       if (item.planName === 'Permanente' && item.active === true && !expired) {
-        timerHtml = `<span class="timer-cell permanent" data-license-id="${item.id}">♾️ NUNCA EXPIRA</span>`;
+        timerHtml = `<span class="timer-cell permanent" data-license-id="${item.id}">${SVG.infinity} NUNCA EXPIRA</span>`;
       } else if (item.active === true && !expired) {
-        timerHtml = `<span class="timer-cell" data-license-id="${item.id}">...</span>`;
+        timerHtml = `<span class="timer-cell" data-license-id="${item.id}">${SVG.clock} ...</span>`;
       } else if (expired) {
-        timerHtml = '<span class="timer-cell expired">EXPIRADO</span>';
+        timerHtml = `<span class="timer-cell expired">${SVG.alert} EXPIRADO</span>`;
       }
 
       card.innerHTML = `
@@ -1245,18 +1418,19 @@
             <div class="user-avatar">${initials}</div>
             <div class="user-info">
               <div class="name">${item.userName || 'Cliente'}</div>
-              <div class="domain">🌐 ${domainsDisplay}</div>
+              <div class="domain">${SVG.globe} ${domainsDisplay}</div>
             </div>
           </div>
           <div class="mobile-card-badges">
             <span class="plan-badge ${planClass}">${item.planName}</span>
-            ${status.html}
+            ${modeBadge}
           </div>
         </div>
+        <div style="margin-bottom: 8px;">${status.html}</div>
         ${domainsList.length > 1 ? `
           <div class="domain-item-domains-list">
-            <div class="list-title">📌 ${domainsList.length} blogs vinculados</div>
-            ${domainsList.map(d => `<div class="list-item">• ${d}</div>`).join('')}
+            <div class="list-title">${SVG.link} ${domainsList.length} blogs vinculados</div>
+            ${domainsList.map(d => `<div class="list-item">${d}</div>`).join('')}
           </div>
         ` : ''}
         <div class="mobile-card-timer">
@@ -1326,7 +1500,7 @@
     if (freeUsed >= MAX_FREE_PLANS_PER_USER) {
       limitBox.innerHTML = `
         <div class="limit-alert">
-          <i class="fas fa-exclamation-triangle" style="font-size: 1.2rem;"></i>
+          ${SVG.alert}
           <div>
             <strong>⚠️ LIMITE DE PLANOS GRÁTIS ATINGIDO!</strong><br>
             <span style="font-size: 0.72rem;">Este usuário já usou ${freeUsed}/${MAX_FREE_PLANS_PER_USER} planos grátis.</span>
@@ -1336,7 +1510,7 @@
     } else {
       limitBox.innerHTML = `
         <div class="limit-ok">
-          <i class="fas fa-check-circle" style="font-size: 1.1rem;"></i>
+          ${SVG.check}
           <div>
             ✅ Este usuário ainda pode usar <strong>${freeRemaining}</strong> plano(s) grátis.
           </div>
@@ -1351,6 +1525,7 @@
       const status = getStatusInfo(lic);
       const domainsList = getDomainsList(lic);
       const planBadgeClass = getPlanBadgeClass(lic.planName);
+      const modeBadge = getInstallModeBadge(lic);
 
       const createdAt = lic.createdAt ? new Date(lic.createdAt) : null;
       const expiresAt = lic.expiresAt ? new Date(lic.expiresAt) : null;
@@ -1361,8 +1536,8 @@
       if (domainsList.length > 1) {
         domainsHtml = `
           <div class="domain-item-domains-list">
-            <div class="list-title">📌 ${domainsList.length} domínios vinculados (script único):</div>
-            ${domainsList.map(d => `<div class="list-item">• ${d}</div>`).join('')}
+            <div class="list-title">${SVG.link} ${domainsList.length} domínios vinculados (script único)</div>
+            ${domainsList.map(d => `<div class="list-item">${d}</div>`).join('')}
           </div>
         `;
       }
@@ -1372,10 +1547,11 @@
       item.innerHTML = `
         <div class="domain-item-header">
           <div class="domain-item-name">
-            🌐 ${domainsList.length === 1 ? domainsList[0] : `${domainsList.length} domínios`}
+            ${SVG.globe} ${domainsList.length === 1 ? domainsList[0] : `${domainsList.length} domínios`}
           </div>
-          <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+          <div class="domain-item-badges">
             <span class="plan-badge ${planBadgeClass}">${lic.planName}</span>
+            ${modeBadge}
             <span style="color: ${status.color}; font-weight: 700; font-size: 0.72rem;">
               ${status.text}
             </span>
@@ -1383,11 +1559,11 @@
         </div>
         ${domainsHtml}
         <div class="domain-item-meta">
-          ${createdAt ? `<span><i class="fas fa-calendar-plus"></i> Criado: ${createdAt.toLocaleDateString('pt-BR')}</span>` : '<span style="color: var(--yellow);">📅 Sem data</span>'}
-          ${lic.planName === 'Permanente' ? `<span style="color: var(--green);"><i class="fas fa-infinity"></i> Permanente</span>` : ''}
-          ${expiresAt && lic.planName !== 'Permanente' ? `<span><i class="fas fa-calendar-times"></i> Expira: ${expiresAt.toLocaleDateString('pt-BR')}</span>` : ''}
-          ${expiredAt ? `<span style="color: var(--red);"><i class="fas fa-hourglass-end"></i> Expirou: ${expiredAt.toLocaleDateString('pt-BR')}</span>` : ''}
-          ${revogadaEm ? `<span style="color: var(--red);"><i class="fas fa-ban"></i> Revogado: ${revogadaEm.toLocaleDateString('pt-BR')}</span>` : ''}
+          ${createdAt ? `<span>${SVG.calendarPlus} Criado: ${createdAt.toLocaleDateString('pt-BR')}</span>` : `<span style="color: var(--yellow);">${SVG.alert} Sem data</span>`}
+          ${lic.planName === 'Permanente' ? `<span style="color: var(--green);">${SVG.infinity} Permanente</span>` : ''}
+          ${expiresAt && lic.planName !== 'Permanente' ? `<span>${SVG.calendarTimes} Expira: ${expiresAt.toLocaleDateString('pt-BR')}</span>` : ''}
+          ${expiredAt ? `<span style="color: var(--red);">${SVG.alert} Expirou: ${expiredAt.toLocaleDateString('pt-BR')}</span>` : ''}
+          ${revogadaEm ? `<span style="color: var(--red);">${SVG.ban} Revogado: ${revogadaEm.toLocaleDateString('pt-BR')}</span>` : ''}
         </div>
         <div class="domain-item-actions">
           ${getActionsHtml(lic)}
@@ -1396,7 +1572,6 @@
       domainList.appendChild(item);
     });
 
-    // Atualiza o botão de apagar registos do usuário
     const deleteBtn = document.querySelector('#userModal .mass-btn-danger');
     if (deleteBtn) {
       deleteBtn.setAttribute('onclick', `deleteUserRecords('${userId}')`);
@@ -1434,9 +1609,7 @@
       permanente: isPermanent,
       approvedAt: new Date().toISOString()
     })
-    .then(() => {
-      showToast(`✅ Licença aprovada! Plano: ${planName}`, 'success');
-    })
+    .then(() => showToast(`✅ Licença aprovada! Plano: ${planName}`, 'success'))
     .catch(err => showToast('❌ Erro: ' + err.message, 'error'));
   }
 
@@ -1461,9 +1634,7 @@
       expiredAt: null,
       permanente: isPermanent
     })
-    .then(() => {
-      showToast(`✅ Renovação aprovada! Plano: ${lic.planName}`, 'success');
-    })
+    .then(() => showToast(`✅ Renovação aprovada! Plano: ${lic.planName}`, 'success'))
     .catch(err => showToast('❌ Erro: ' + err.message, 'error'));
   }
 
@@ -1471,7 +1642,7 @@
     const ok = await showConfirm(
       'Rejeitar renovação?',
       'O usuário será notificado que a renovação foi recusada.',
-      '❌',
+      'alert',
       'Rejeitar'
     );
     if (!ok) return;
@@ -1497,7 +1668,7 @@
     const ok = await showConfirm(
       'Revogar licença?',
       `Revogar a licença de "${domainsText}"?\n\nO usuário perderá o acesso imediatamente.`,
-      '🚫',
+      'ban',
       'Revogar'
     );
     if (!ok) return;
@@ -1531,7 +1702,7 @@
     const ok = await showConfirm(
       'Reativar licença?',
       `Reativar a licença de "${domainsText}"?\n\nO tempo será zerado.`,
-      '♻️',
+      'sync',
       'Reativar',
       false
     );
@@ -1561,7 +1732,7 @@
     const ok = await showConfirm(
       'Revogar TODAS as licenças?',
       `Isto irá revogar ${allLicenses.length} licenças.\n\nTodos perderão acesso imediatamente.`,
-      '🚨',
+      'ban',
       'Revogar TUDO'
     );
     if (!ok) return;
@@ -1569,7 +1740,7 @@
     const ok2 = await showConfirm(
       'TEM CERTEZA?',
       'Ação irreversível! Todas as licenças serão revogadas agora.',
-      '⚠️',
+      'alert',
       'Sim, revogar tudo'
     );
     if (!ok2) return;
@@ -1598,7 +1769,7 @@
     const ok = await showConfirm(
       'Reativar TODAS as licenças?',
       `Isto irá reativar ${allLicenses.length} licenças.\n\nO tempo será ZERADO para todas.`,
-      '♻️',
+      'sync',
       'Reativar TUDO',
       false
     );
@@ -1629,7 +1800,7 @@
     .catch(err => showToast('❌ Erro: ' + err.message, 'error'));
   }
 
-  // ========== EXCLUIR (APAGAR REGISTO) ==========
+  // ========== EXCLUIR ==========
   async function del(id) {
     const lic = allLicenses.find(l => l.id === id);
     if (!lic) return;
@@ -1642,7 +1813,7 @@
     const ok = await showConfirm(
       'Apagar registo?',
       `Apagar permanentemente o registo de "${domainsText}"?\n\nEsta ação NÃO pode ser desfeita.`,
-      '🗑️',
+      'trash',
       'Apagar'
     );
     if (!ok) return;
@@ -1668,7 +1839,7 @@
     const ok = await showConfirm(
       'Apagar TODOS os registos deste usuário?',
       `Isto irá apagar permanentemente ${userLicenses.length} registo(s).\n\nAção IRREVERSÍVEL.`,
-      '🗑️',
+      'trash',
       'Apagar TUDO'
     );
     if (!ok) return;
@@ -1696,7 +1867,7 @@
     const ok = await showConfirm(
       'APAGAR TODOS OS REGISTOS?',
       `Isto irá apagar permanentemente ${allLicenses.length} registo(s) do Firebase.\n\nAção IRREVERSÍVEL!`,
-      '🚨',
+      'trash',
       'APAGAR TUDO'
     );
     if (!ok) return;
@@ -1704,7 +1875,7 @@
     const ok2 = await showConfirm(
       'ÚLTIMA CHANCE!',
       'Tem ABSOLUTA certeza? Todos os registos serão apagados do Firebase e NÃO poderão ser recuperados.',
-      '⚠️',
+      'alert',
       'SIM, APAGAR TUDO'
     );
     if (!ok2) return;
@@ -1714,7 +1885,6 @@
       .catch(err => showToast('❌ Erro: ' + err.message, 'error'));
   }
 
-  // Fechar modal de confirmação ao clicar fora
   document.getElementById('confirmOverlay').addEventListener('click', function(e) {
     if (e.target === this) closeConfirm(false);
   });
